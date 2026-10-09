@@ -1,0 +1,26 @@
+{
+  "slug": "tiny-programs",
+  "name": "Tiny Programs",
+  "category": "experiments",
+  "order": 7,
+  "featured": false,
+  "treatment": "neutral",
+  "source": "https://github.com/ignabelitzky/tiny-programs",
+  "technologies": ["C++", "SFML", "OpenMP"],
+  "translations": {
+    "en": {
+      "summary": "A collection of small programs exploring graphics, numerical ideas, algorithms, and interactive behavior.",
+      "context": "Short, focused experiments with individual build files and source directories.",
+      "engineeringFocus": "Browse selected experiments to see specific ideas in code, rather than treating the collection as one application.",
+      "role": "Development work represented in my public collection.",
+      "features": []
+    },
+    "es": {
+      "summary": "Una colección de pequeños programas para explorar gráficos, ideas numéricas, algoritmos e interacción.",
+      "context": "Experimentos concretos y acotados, cada uno con su directorio de código y archivos de compilación.",
+      "engineeringFocus": "La galería permite ver ideas específicas en código, sin presentar toda la colección como una sola aplicación.",
+      "role": "Trabajo de desarrollo reflejado en mi colección pública.",
+      "features": []
+    }
+  }
+}

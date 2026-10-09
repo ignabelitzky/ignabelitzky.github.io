@@ -1,0 +1,38 @@
+{
+  "slug": "periodic-table",
+  "name": "Periodic Table",
+  "category": "desktop",
+  "order": 4,
+  "featured": false,
+  "treatment": "neutral",
+  "source": "https://github.com/ignabelitzky/periodic-table",
+  "technologies": ["C++17", "Qt Widgets", "JSON", "CMake"],
+  "translations": {
+    "en": {
+      "summary": "A C++/Qt application for exploring chemical elements through a searchable, color-coded periodic table.",
+      "context": "Bringing structured element information into a desktop interface.",
+      "engineeringFocus": "Element data is loaded separately from the interface, then used to build navigable table entries and detailed views.",
+      "role": "Development work represented in my public repository.",
+      "features": [
+        "Clickable elements",
+        "detail dialogs",
+        "search by name with completion",
+        "category colors and legend",
+        "JSON-backed element data"
+      ]
+    },
+    "es": {
+      "summary": "Una aplicación en C++ y Qt para explorar elementos químicos mediante una tabla periódica con búsqueda y categorías identificadas por color.",
+      "context": "Llevar información estructurada de los elementos a una interfaz de escritorio.",
+      "engineeringFocus": "Los datos se cargan por separado de la interfaz y se usan para construir la tabla y sus vistas de información detallada.",
+      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "features": [
+        "Elementos seleccionables",
+        "ventanas de información detallada",
+        "búsqueda por nombre con autocompletado",
+        "colores y referencias de categorías",
+        "datos de elementos en JSON"
+      ]
+    }
+  }
+}

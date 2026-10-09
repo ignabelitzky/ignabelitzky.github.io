@@ -1,0 +1,39 @@
+{
+  "slug": "periodic-table-3d",
+  "name": "Periodic Table 3D",
+  "category": "graphics",
+  "order": 5,
+  "featured": false,
+  "treatment": "neutral",
+  "source": "https://github.com/ignabelitzky/periodic-table-3D",
+  "technologies": ["C#", "Unity", "Cinemachine", "Unity Input System", "TextMesh Pro", "JSON"],
+  "translations": {
+    "en": {
+      "summary": "A Unity application that presents chemical elements as interactive 3D objects with selectable information panels.",
+      "context": "Exploring an alternative way to navigate and display element information in a 3D scene.",
+      "engineeringFocus": "Structured data populates reusable scene objects and their associated information displays. Interaction scripts connect the scene, input, and readable element details.",
+      "role": "Development work represented in my public repository.",
+      "features": [
+        "Data-driven element objects",
+        "category materials",
+        "hover feedback",
+        "click-to-view properties",
+        "camera movement and zoom"
+      ]
+    },
+    "es": {
+      "summary": "Una aplicación en Unity que presenta los elementos químicos como objetos 3D interactivos con paneles de información seleccionables.",
+      "context": "Explorar otra forma de recorrer y mostrar información de los elementos en una escena tridimensional.",
+      "engineeringFocus": "Los datos estructurados completan objetos reutilizables de la escena y sus paneles de información. Los scripts de interacción conectan la escena, los controles y los detalles de cada elemento.",
+      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "features": [
+        "Objetos generados a partir de datos",
+        "materiales según categoría",
+        "respuesta visual al pasar el cursor",
+        "selección para consultar propiedades",
+        "movimiento de cámara y zoom"
+      ]
+    }
+  },
+  "recording": "https://youtu.be/NiIifN4v_2w"
+}

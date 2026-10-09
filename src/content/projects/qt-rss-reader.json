@@ -1,0 +1,38 @@
+{
+  "slug": "qt-rss-reader",
+  "name": "Qt RSS Reader",
+  "category": "desktop",
+  "order": 1,
+  "featured": true,
+  "treatment": "neutral",
+  "source": "https://github.com/ignabelitzky/qt-rss-reader",
+  "technologies": ["C++17", "Qt Widgets", "Qt Network", "Qt SQL", "SQLite", "qmake"],
+  "translations": {
+    "en": {
+      "summary": "A C++/Qt desktop reader that fetches RSS and Atom feeds, manages feed settings locally, and displays articles through Qt's Model/View architecture.",
+      "context": "A desktop workflow for following multiple feeds and opening articles in a browser.",
+      "engineeringFocus": "Fetching, parsing, persistence, and presentation have separate responsibilities. Qt table models connect feed and article data to the interface, while the parser handles common date formats and differences between RSS and Atom.",
+      "role": "Development work represented in my public repository.",
+      "features": [
+        "Asynchronous feed fetching",
+        "RSS and Atom parsing",
+        "feed-name search and editable settings",
+        "SQLite storage for feed metadata",
+        "article links that open in the browser"
+      ]
+    },
+    "es": {
+      "summary": "Un lector de escritorio en C++ y Qt que consulta fuentes RSS y Atom, guarda su configuración localmente y muestra artículos mediante la arquitectura Model/View de Qt.",
+      "context": "Una forma de seguir varias fuentes desde el escritorio y abrir sus artículos en el navegador.",
+      "engineeringFocus": "Las consultas, el análisis de datos, la persistencia y la presentación tienen responsabilidades separadas. Los modelos de tabla de Qt conectan los datos con la interfaz, mientras que el analizador contempla formatos de fecha comunes y diferencias entre RSS y Atom.",
+      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "features": [
+        "Consultas de fuentes asincrónicas",
+        "análisis de RSS y Atom",
+        "búsqueda de fuentes por nombre y configuración editable",
+        "almacenamiento de sus metadatos en SQLite",
+        "apertura de artículos en el navegador"
+      ]
+    }
+  }
+}

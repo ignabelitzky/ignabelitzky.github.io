@@ -1,0 +1,37 @@
+{
+  "slug": "kineticbox-1d",
+  "name": "KineticBox 1D",
+  "category": "research",
+  "order": 8,
+  "featured": false,
+  "treatment": "neutral",
+  "source": "https://github.com/ignabelitzky/kinetic-box-1d",
+  "technologies": ["C99", "OpenMP", "GCC", "GNU Make"],
+  "translations": {
+    "en": {
+      "summary": "A one-dimensional gas simulation in C/OpenMP, with a limited contribution to an existing academic codebase.",
+      "engineeringFocus": "Parallel particle updates, statistical output, input validation, and checkpoint handling are visible in the public code.",
+      "features": [],
+      "role": "My contribution to the existing simulation code was small relative to the broader research team's work.",
+      "context": "KineticBox 1D is connected to the collaborative preprint The problem of relaxation to equilibrium."
+    },
+    "es": {
+      "summary": "Una simulación de gas unidimensional en C y OpenMP, con una contribución limitada a un código académico existente.",
+      "engineeringFocus": "El código público muestra actualizaciones paralelas de partículas, salidas estadísticas, validación de parámetros y manejo de archivos para guardar o retomar la simulación.",
+      "features": [],
+      "role": "Mi aporte al código existente de la simulación fue pequeño en relación con el trabajo del equipo de investigación.",
+      "context": "KineticBox 1D está vinculado al preprint colaborativo The problem of relaxation to equilibrium."
+    }
+  },
+  "research": {
+    "title": "The problem of relaxation to equilibrium",
+    "preprint": "https://arxiv.org/html/2605.16417v1",
+    "authors": [
+      "Silvina Limandri",
+      "Silvina Segui",
+      "Bruno Castellano",
+      "Ignacio Belitzky",
+      "Gustavo Castellano"
+    ]
+  }
+}

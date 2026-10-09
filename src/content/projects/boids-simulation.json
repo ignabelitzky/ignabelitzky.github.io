@@ -1,0 +1,37 @@
+{
+  "slug": "boids-simulation",
+  "name": "Boids Simulation",
+  "category": "graphics",
+  "order": 3,
+  "featured": true,
+  "treatment": "soft",
+  "source": "https://github.com/ignabelitzky/boids-simulation",
+  "technologies": ["C++23", "SFML", "GNU Make"],
+  "translations": {
+    "en": {
+      "summary": "An interactive C++/SFML flocking simulation built around separation, alignment, and cohesion.",
+      "context": "Exploring how simple local rules combine into group movement.",
+      "engineeringFocus": "Each agent combines nearby agents' positions and velocities into steering forces. Adjustable parameters make the relationship between individual rules and the visible flock easier to explore.",
+      "role": "Development work represented in my public repository.",
+      "features": [
+        "Three flocking rules",
+        "wraparound movement",
+        "on-screen controls for steering parameters and perception radius",
+        "graphical rendering with SFML"
+      ]
+    },
+    "es": {
+      "summary": "Una simulación interactiva de movimiento colectivo en C++ y SFML, basada en separación, alineación y cohesión.",
+      "context": "Explorar cómo reglas locales simples producen movimiento en grupo.",
+      "engineeringFocus": "Cada agente combina posiciones y velocidades de agentes cercanos para calcular fuerzas de dirección. Los parámetros ajustables permiten explorar la relación entre las reglas individuales y el movimiento visible del grupo.",
+      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "features": [
+        "Tres reglas de movimiento colectivo",
+        "continuidad entre bordes",
+        "controles en pantalla para los parámetros de movimiento y el radio de percepción",
+        "representación gráfica con SFML"
+      ]
+    }
+  },
+  "recording": "https://www.youtube.com/watch?v=skfMvKqt_Qw"
+}

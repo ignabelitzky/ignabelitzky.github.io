@@ -1,0 +1,39 @@
+{
+  "slug": "video-to-ascii",
+  "name": "Video to ASCII",
+  "category": "graphics",
+  "order": 2,
+  "featured": true,
+  "treatment": "inverse",
+  "source": "https://github.com/ignabelitzky/video-to-ascii",
+  "technologies": ["C++17", "OpenCV", "ncurses", "miniaudio", "GNU Make"],
+  "translations": {
+    "en": {
+      "summary": "A C++ terminal application that turns video frames into ASCII characters using OpenCV and ncurses.",
+      "context": "An exploration of how moving images can be represented using a terminal's character grid.",
+      "engineeringFocus": "The conversion pipeline connects video decoding, terminal dimensions, character density, and frame timing. It provides a concrete way to examine the tradeoffs between visual detail and the constraints of a text interface.",
+      "role": "Development work represented in my public repository.",
+      "features": [
+        "Video selection from a built-in menu",
+        "frame resizing and grayscale conversion",
+        "intensity-to-character mapping",
+        "terminal playback",
+        "accompanying audio through miniaudio"
+      ]
+    },
+    "es": {
+      "summary": "Una aplicación de terminal en C++ que transforma cuadros de video en caracteres ASCII mediante OpenCV y ncurses.",
+      "context": "Una exploración de cómo representar imágenes en movimiento usando la cuadrícula de caracteres de una terminal.",
+      "engineeringFocus": "El proceso conecta la decodificación de video, las dimensiones de la terminal, la densidad de caracteres y el tiempo entre cuadros. Permite explorar el equilibrio entre el detalle visual y las limitaciones de una interfaz de texto.",
+      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "features": [
+        "Selección de videos desde un menú integrado",
+        "ajuste del tamaño y conversión a escala de grises",
+        "correspondencia entre intensidad y caracteres",
+        "reproducción en terminal",
+        "audio mediante miniaudio"
+      ]
+    }
+  },
+  "recording": "https://youtu.be/L0wPt0Xwfbs"
+}
