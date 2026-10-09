@@ -80,10 +80,10 @@ const publicFiles = [...sourceFiles, ...files(resolve(root, 'public'))].filter((
 const combined = publicFiles.map((path) => readFileSync(path, 'utf8')).join('\n');
 const checks = [
   {
-    name: 'Static Astro, future root origin, no SSR adapter or repo base',
+    name: 'Static Astro, approved custom-domain root origin, no SSR adapter or repo base',
     pass:
       /output:\s*'static'/.test(config) &&
-      /site:\s*'https:\/\/ignabelitzky\.github\.io'/.test(config) &&
+      /site:\s*'https:\/\/ignaciobelitzky\.dev'/.test(config) &&
       !/\bbase\s*:|\badapter\s*:/.test(config),
   },
   {

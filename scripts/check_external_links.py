@@ -9,7 +9,7 @@ import json, datetime, socket
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'evidence/phase5/external-links.json'
-ORIGIN = 'https://ignabelitzky.github.io'
+ORIGIN = 'https://ignaciobelitzky.dev'
 sources = {}
 class Links(HTMLParser):
     def __init__(self, page): super().__init__(); self.page=page

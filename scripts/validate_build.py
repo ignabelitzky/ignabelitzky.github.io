@@ -7,7 +7,7 @@ from html import unescape
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist'
-ORIGIN = 'https://ignabelitzky.github.io'
+ORIGIN = 'https://ignaciobelitzky.dev'
 indexing_match = re.search(r'\bindexable:\s*(true|false)', (ROOT/'src/data/site.ts').read_text())
 if not indexing_match: raise RuntimeError('Explicit indexing policy is required')
 INDEXABLE = indexing_match.group(1) == 'true'
