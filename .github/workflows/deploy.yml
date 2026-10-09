@@ -1,0 +1,86 @@
+name: Manual Pages release
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved_sha:
+        description: Full 40-character main commit SHA explicitly approved for Phase 7
+        required: true
+        type: string
+      confirmation:
+        description: Type PUBLISH to confirm this public release
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  QA_EVIDENCE_DIR: evidence/release
+
+jobs:
+  build:
+    name: Check approval, test and upload dist
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout the dispatched commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use tested Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24.19.0'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Fail unless this exact main commit is approved
+        env:
+          RELEASE_APPROVED_SHA: ${{ vars.PAGES_APPROVED_SHA }}
+          RELEASE_INPUT_SHA: ${{ inputs.approved_sha }}
+          RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
+        run: node scripts/release-guard.mjs
+      - name: Use tested npm
+        run: npm install --global npm@11.9.0
+      - name: Install locked dependencies
+        run: npm ci --no-fund
+      - name: Install browser and Linux dependencies
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Official Astro build and Pages artifact
+        uses: withastro/action@3eafd002e65cc31b4f0eae0bb05450d521562247 # v6
+        with:
+          node-version: '24.19.0'
+          # Let the official action detect package-lock.json for its cache key.
+          # verify-ci.sh checks npm 11.9.0 after the action's Node setup.
+          cache: 'false'
+          out-dir: dist
+          build-cmd: bash scripts/verify-release.sh
+      - name: Keep diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: release-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/release/
+          retention-days: 7
+          if-no-files-found: warn
+
+  deploy:
+    name: Publish approved artifact
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy the tested Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5

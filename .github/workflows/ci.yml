@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  QA_EVIDENCE_DIR: evidence/ci
+
+jobs:
+  validate:
+    name: Validate source and production build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use tested Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24.19.0'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Use tested npm
+        run: npm install --global npm@11.9.0
+      - name: Install locked dependencies
+        run: npm ci --no-fund
+      - name: Install browser and Linux dependencies
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Validate the exact production output
+        run: bash scripts/verify-ci.sh
+      - name: Keep diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: ci-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/ci/
+          retention-days: 7
+          if-no-files-found: warn
