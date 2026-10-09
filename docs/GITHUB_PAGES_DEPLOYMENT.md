@@ -1,3 +1,7 @@
+# Current deployment configuration — 2026-10-09
+
+Phase 7 was published successfully and accepted. The public repository already exists; do not recreate it or change Pages to branch-based publishing. Phase 8 authorizes the purchased DonWeb domain `ignaciobelitzky.dev` as the canonical apex, with www redirected to it. The configured source origin is now `https://ignaciobelitzky.dev`; Pages Source remains GitHub Actions and releases remain manual. Read `DONWEB_DOMAIN_SETUP.md` for current domain instructions. The initial verified release is `0e4f50b45fe83f3e2748e4ae4e6236d663f1ad0f`, CI run 37961357189 and release run 37961979745. The older preparation notes below are historical; statements that the repository is absent or permission is pending no longer describe current status.
+
 # GitHub Pages deployment — owner runbook
 
 Updated 2026-10-09 for the authorized Phase 7 release. Ignacio has approved public repository creation, reviewed source upload, indexing, GitHub Pages and publication. No GitHub operation or deployment has yet been executed. The publication permission is already granted; a successful live release must still be established from actual workflow and HTTPS evidence.
@@ -31,7 +35,7 @@ Protected branches are available for public repositories on Free and private rep
 - The Astro action runs `npm install` internally. Its build override first rejects package/lockfile drift, then repeats **`npm ci`**, checks the exact runtime versions, and runs the common verification path. Autodetection preserves the action's `package-lock.json` cache key; its npm-version input is not relied on to install npm. Astro output caching is disabled. A dependency or runtime drift fails rather than silently releasing a different build.
 - SHA-256 manifests identify the exact `dist/` files tested and uploaded. Normal CI uploads diagnostic evidence only, not a deployable Pages artifact. Release Pages artifact is uploaded by the Astro action only after successful checks. Both workflows preserve diagnostic reports for seven days; private-repository Actions usage may consume plan minutes/storage, so review the owner's budget before running.
 
-The configured origin is `https://ignabelitzky.github.io`. It is a **user site**, served from `/`; `astro.config.mjs` deliberately has no project-repository `base`. Pages receives built **`dist/` via Actions**, not manually committed output on `main`. The `dist/`, `node_modules/`, `brief/`, and `evidence/` trees are excluded from Git. Use `IGNACIO_PORTFOLIO_PHASE7_RELEASE_CANDIDATE.zip` for GitHub upload; the full checkpoint ZIP includes internal working records and should not be uploaded wholesale. No license choice has been made.
+The configured origin is `https://ignaciobelitzky.dev`; `https://ignabelitzky.github.io` is the original recovery host. It is a **user site**, served from `/`; `astro.config.mjs` deliberately has no project-repository `base`. Pages receives built **`dist/` via Actions**, not manually committed output on `main`. The `dist/`, `node_modules/`, `brief/`, and `evidence/` trees are excluded from Git. Use `IGNACIO_PORTFOLIO_PHASE7_RELEASE_CANDIDATE.zip` for GitHub upload; the full checkpoint ZIP includes internal working records and should not be uploaded wholesale. No license choice has been made.
 
 ## A. GitHub web UI instructions
 

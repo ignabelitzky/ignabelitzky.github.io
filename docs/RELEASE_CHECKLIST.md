@@ -1,3 +1,7 @@
+# Current release checklist scope — Phase 8
+
+The checklist below is retained from Phase 7 preparation. Phase 7 was deployed and accepted. For Phase 8, domain configuration is authorized, the configured origin is `https://ignaciobelitzky.dev`, and Pages Source stays GitHub Actions. Use `DONWEB_DOMAIN_SETUP.md` for the domain-specific checks. For every new commit, verify successful CI, manually release the exact approved SHA, clear the approval marker and independently verify HTTPS/artifact bytes. Old unchecked boxes are historical and do not describe the current repository status.
+
 # Release checklist
 
 Phase 6 was approved and public repository creation/source upload/indexing/Pages/publication were authorized on 2026-10-09. Unchecked boxes remain unexecuted tasks. This checklist does not certify an actual release.
