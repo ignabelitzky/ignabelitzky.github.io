@@ -1,0 +1,50 @@
+{
+  "name": "ignabelitzky-portfolio",
+  "version": "0.7.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.19.0 <25",
+    "npm": ">=11 <12"
+  },
+  "packageManager": "npm@11.9.0",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "check": "astro check",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "lint": "eslint src tests scripts/*.mjs playwright.config.ts --max-warnings=0",
+    "check:ts": "tsc --noEmit",
+    "format": "prettier --write src tests scripts astro.config.mjs eslint.config.mjs package.json tsconfig.json playwright.config.ts .github/workflows/*.yml",
+    "format:check": "prettier --check src tests scripts astro.config.mjs eslint.config.mjs package.json tsconfig.json playwright.config.ts .github/workflows/*.yml",
+    "test": "node --test tests/*.test.mjs",
+    "test:build": "node scripts/validate-build.mjs",
+    "validate": "npm run format:check && npm run lint && npm run check && npm run check:ts && npm test && npm run build && npm run test:build && npm run audit:source",
+    "test:e2e": "playwright test",
+    "test:e2e:list": "playwright test --list --reporter=list",
+    "test:lighthouse": "node scripts/lighthouse.mjs",
+    "test:links": "python3 scripts/check_external_links.py",
+    "audit:source": "node scripts/audit-source.mjs",
+    "qa": "npm run validate && npm run test:e2e && npm run test:lighthouse"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "7.3.8",
+    "tailwindcss": "4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.0",
+    "@types/node": "24.19.1",
+    "eslint": "10.12.0",
+    "lighthouse": "13.5.0",
+    "prettier": "3.9.9",
+    "prettier-plugin-astro": "1.1.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.1",
+    "yaml": "2.9.1"
+  }
+}

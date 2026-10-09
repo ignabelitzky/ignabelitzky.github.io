@@ -1,0 +1,12 @@
+node_modules/
+dist/
+evidence/
+brief/
+.astro/
+.env
+.env.*
+!.env.example
+*.log
+evidence/phase5/browser/test-results/
+evidence/phase5/browser/html-report/
+evidence/phase5/lighthouse/.chrome-profile/
