@@ -1,0 +1,16 @@
+{
+  "name": "Falling Sand",
+  "slug": "falling-sand-simulation",
+  "order": 6,
+  "status": "prototype",
+  "source": "https://github.com/ignabelitzky/tiny-programs/tree/main/falling-sand-simulation",
+  "technologies": ["C++", "SFML"],
+  "translations": {
+    "en": {
+      "summary": "A basic grid experiment in which randomly spawned grains fall into empty cells below."
+    },
+    "es": {
+      "summary": "Un experimento básico de cuadrícula en el que los granos aparecen en columnas aleatorias y caen a las celdas vacías inferiores."
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Ray Casting",
+  "slug": "ray-casting",
+  "order": 2,
+  "status": "highlight",
+  "source": "https://github.com/ignabelitzky/tiny-programs/tree/main/ray-casting",
+  "technologies": ["C++", "SFML"],
+  "translations": {
+    "en": {
+      "summary": "A 2D geometry experiment that casts rays against line segments and displays the nearest intersections."
+    },
+    "es": {
+      "summary": "Un experimento de geometría 2D que proyecta rayos contra segmentos y muestra las intersecciones más cercanas."
+    }
+  },
+  "recording": "https://www.youtube.com/watch?v=G4E0592SJgU",
+  "combinedRecording": true
+}

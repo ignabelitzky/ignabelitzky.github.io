@@ -1,0 +1,17 @@
+{
+  "name": "Smart Rockets",
+  "slug": "smart-rockets",
+  "order": 4,
+  "status": "highlight",
+  "source": "https://github.com/ignabelitzky/tiny-programs/tree/main/smart-rockets",
+  "technologies": ["C++", "SFML"],
+  "translations": {
+    "en": {
+      "summary": "A visual evolutionary experiment using selection, crossover, and mutation to evolve rocket trajectories toward a target."
+    },
+    "es": {
+      "summary": "Un experimento evolutivo visual que usa selección, cruce y mutación para desarrollar trayectorias hacia un objetivo."
+    }
+  },
+  "recording": "https://www.youtube.com/watch?v=qhOWHsmHPQg"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Reaction-Diffusion",
+  "slug": "reaction-diffusion",
+  "order": 1,
+  "status": "highlight",
+  "source": "https://github.com/ignabelitzky/tiny-programs/tree/main/reaction-diffusion",
+  "technologies": ["C++", "SFML", "OpenMP"],
+  "translations": {
+    "en": {
+      "summary": "An interactive two-field grid simulation with local diffusion calculations and OpenMP loops."
+    },
+    "es": {
+      "summary": "Una simulación interactiva de dos campos sobre una cuadrícula, con cálculos locales de difusión y bucles con OpenMP."
+    }
+  }
+}

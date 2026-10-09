@@ -1,0 +1,16 @@
+{
+  "name": "Double Pendulum",
+  "slug": "double-pendulum",
+  "order": 3,
+  "status": "highlight",
+  "source": "https://github.com/ignabelitzky/tiny-programs/tree/main/double-pendulum",
+  "technologies": ["C++", "SFML"],
+  "translations": {
+    "en": {
+      "summary": "A graphical exploration of coupled pendulum motion with controls for masses, lengths, and update step."
+    },
+    "es": {
+      "summary": "Una exploración gráfica del movimiento de un péndulo doble, con controles de masas, longitudes y paso de actualización."
+    }
+  }
+}
