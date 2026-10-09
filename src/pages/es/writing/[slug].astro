@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { publishedArticles } from '../../../lib/collections.ts';
+import ArticlePage from '../../../components/ArticlePage.astro';
+export async function getStaticPaths() {
+  return (await publishedArticles())
+    .filter((article) => article.data.locale === 'es')
+    .map((article) => ({ params: { slug: article.data.slug }, props: { article } }));
+}
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+const { article } = Astro.props;
+---
+
+<ArticlePage article={article} />
