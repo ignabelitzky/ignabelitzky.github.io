@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       approved_sha:
-        description: Full 40-character main commit SHA explicitly approved for Phase 7
+        description: Full 40-character main commit SHA explicitly approved for this release
         required: true
         type: string
       confirmation:
