@@ -1,0 +1,18 @@
+---
+import { ui } from '../i18n/ui.ts';
+import { site } from '../data/site.ts';
+import type { Locale } from '../i18n/routes.ts';
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = ui[locale];
+---
+
+<section class="section contact-strip">
+  <h2>{copy.contactHeading}</h2>
+  <p class="muted">{copy.contactText}</p>
+  <a class="email" href={`mailto:${site.email}`}>
+    {site.email}
+  </a>
+</section>

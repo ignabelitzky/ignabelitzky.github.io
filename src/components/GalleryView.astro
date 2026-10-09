@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+import { editorial } from '../i18n/editorial.ts';
+import { ui } from '../i18n/ui.ts';
+import { detailPath, type Locale } from '../i18n/routes.ts';
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = editorial[locale];
+const experiments = (await getCollection('experiments')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<section class="page-intro">
+  <p class="eyebrow">{ui[locale].categories.experiments}</p>
+  <h1>Tiny Programs</h1>
+  <p>{copy.gallery_intro}</p>
+  <a class="text-link" href={detailPath(locale, 'projects', 'tiny-programs')}>
+    {copy.context} <span aria-hidden="true">→</span>
+  </a>
+</section>
+<section class="section gallery" aria-label={ui[locale].selected}>
+  <div class="grid-two">
+    {experiments
+      .filter((e) => e.data.status === 'highlight')
+      .map(({ data: e }) => (
+        <article class="project-card" id={e.slug}>
+          <div class="title-panel" aria-hidden="true">
+            <span class="panel-top">{e.technologies.join(' / ')}</span>
+            <div class="panel-title">{e.name}</div>
+            <span class="panel-bottom">{String(e.order).padStart(2, '0')}</span>
+          </div>
+          <h2>
+            <a href={e.source}>{e.name}</a>
+          </h2>
+          <p>{e.translations[locale].summary}</p>
+          <a class="text-link" href={e.source} aria-label={`${copy.directory} — ${e.name}`}>
+            {copy.directory}
+            <span aria-hidden="true">↗</span>
+          </a>
+          {e.recording && (
+            <div class="recording">
+              <a href={e.recording} aria-label={`${copy.recording} — ${e.name}`}>
+                {copy.recording}
+              </a>
+              <p class="notice">
+                {e.combinedRecording && `${copy.combined} `}
+                {copy.recordingNote}
+              </p>
+            </div>
+          )}
+        </article>
+      ))}
+  </div>
+</section>
+<section class="section">
+  <h2>{copy.other}</h2>
+  <div class="minor-experiments">
+    {experiments
+      .filter((e) => e.data.status !== 'highlight')
+      .map(({ data: e }) => (
+        <article id={e.slug}>
+          <p class="status">{e.status === 'experimental' ? copy.experimental : copy.prototype}</p>
+          <h3>{e.name}</h3>
+          <p class="muted">{e.translations[locale].summary}</p>
+          <a class="text-link" href={e.source} aria-label={`${copy.directory} — ${e.name}`}>
+            {copy.directory}
+            <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+      ))}
+  </div>
+</section>

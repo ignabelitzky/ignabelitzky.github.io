@@ -1,0 +1,123 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ProjectPanel from './ProjectPanel.astro';
+import ContactStrip from './ContactStrip.astro';
+import { ui } from '../i18n/ui.ts';
+import { editorial } from '../i18n/editorial.ts';
+import { routePath, detailPath, type Locale } from '../i18n/routes.ts';
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+const { project, locale } = Astro.props;
+const p = project.data;
+const text = p.translations[locale];
+const copy = editorial[locale];
+const alternates = {
+  en: detailPath('en', 'projects', p.slug),
+  es: detailPath('es', 'projects', p.slug),
+};
+---
+
+<SiteLayout
+  locale={locale}
+  route="project"
+  title={p.name}
+  description={text.summary}
+  alternates={alternates}
+>
+  <section class="page-intro">
+    <a class="breadcrumb" href={routePath(locale, 'projects')}>
+      ← {copy.back}
+    </a>
+    <p class="eyebrow">{ui[locale].categories[p.category]}</p>
+    <h1>{p.name}</h1>
+    <p>{text.summary}</p>
+    <div class="actions">
+      <a class="text-link" href={p.source}>
+        {ui[locale].source} <span aria-hidden="true">↗</span>
+      </a>
+      {p.slug === 'tiny-programs' && (
+        <a class="text-link" href={routePath(locale, 'gallery')}>
+          {copy.gallery} <span aria-hidden="true">→</span>
+        </a>
+      )}
+    </div>
+  </section>
+  <div class="detail-panel">
+    <ProjectPanel project={project} locale={locale} />
+  </div>
+  <div class="detail-grid">
+    <div class="prose">
+      {text.context && (
+        <section>
+          <h2>{copy.context}</h2>
+          <p>{text.context}</p>
+        </section>
+      )}
+      {text.features.length > 0 && (
+        <section>
+          <h2>{copy.features}</h2>
+          <ul>
+            {text.features.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+      {text.engineeringFocus && (
+        <section>
+          <h2>{copy.focus}</h2>
+          <p>{text.engineeringFocus}</p>
+        </section>
+      )}
+      {text.role && (
+        <section>
+          <h2>{copy.role}</h2>
+          <p>{text.role}</p>
+        </section>
+      )}
+      {p.research && (
+        <section class="research research-credit">
+          <h2>{copy.research}</h2>
+          <p>
+            <a href={p.research.preprint}>
+              <cite>{p.research.title}</cite>
+            </a>
+          </p>
+          <h3>{copy.team}</h3>
+          <ol>
+            {p.research.authors.map((author) => (
+              <li>{author}</li>
+            ))}
+          </ol>
+          <a class="text-link" href={p.research.preprint}>
+            {copy.paper} <span aria-hidden="true">↗</span>
+          </a>
+        </section>
+      )}
+      {p.recording && (
+        <section class="recording">
+          <h2>{copy.recording}</h2>
+          <a class="text-link" href={p.recording} aria-label={`${copy.recording} — ${p.name}`}>
+            YouTube <span aria-hidden="true">↗</span>
+          </a>
+          <p class="notice">{copy.recordingNote}</p>
+        </section>
+      )}
+    </div>
+    <aside aria-label={copy.stack}>
+      <h2 class="aside-heading">{copy.stack}</h2>
+      <ul class="stack-list">
+        {p.technologies.map((technology) => (
+          <li>{technology}</li>
+        ))}
+      </ul>
+      <a class="text-link" href={p.source}>
+        {ui[locale].source} <span aria-hidden="true">↗</span>
+      </a>
+    </aside>
+  </div>
+  <ContactStrip locale={locale} />
+</SiteLayout>

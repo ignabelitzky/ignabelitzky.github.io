@@ -1,0 +1,45 @@
+---
+import { publishedArticles } from '../lib/collections.ts';
+import { formatDate } from '../lib/articles.ts';
+import { detailPath, routePath, type Locale } from '../i18n/routes.ts';
+import { ui } from '../i18n/ui.ts';
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = ui[locale];
+const articles = (await publishedArticles()).filter((entry) => entry.data.locale === locale);
+---
+
+<section class="page-intro">
+  <h1>{copy.titles.writing}</h1>
+</section>
+{articles.length ? (
+  <section class="section article-list" aria-label={copy.titles.writing}>
+    {articles.map(({ data }) => (
+      <article>
+        <time datetime={data.pubDate.toISOString().slice(0, 10)}>
+          {formatDate(data.pubDate, locale)}
+        </time>
+        <h2>
+          <a href={detailPath(locale, 'writing', data.slug)}>{data.title}</a>
+        </h2>
+        <p class="muted">{data.description}</p>
+      </article>
+    ))}
+  </section>
+) : (
+  <section class="empty">
+    <div class="empty-mark" aria-hidden="true">
+      {'{ }'}
+    </div>
+    <div>
+      <h2>{copy.writingEmpty}</h2>
+      <p>{copy.writingSupport}</p>
+      <a class="text-link" href={routePath(locale, 'projects')}>
+        {copy.meanwhile}
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+)}

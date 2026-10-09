@@ -1,0 +1,17 @@
+---
+import { editorial } from '../i18n/editorial.ts';
+import { detailPath, type Locale } from '../i18n/routes.ts';
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = editorial[locale];
+---
+
+<div class="research">
+  <h3>{copy.research}</h3>
+  <p class="muted">{copy.research_text}</p>
+  <a class="text-link" href={detailPath(locale, 'projects', 'kineticbox-1d')}>
+    KineticBox 1D <span aria-hidden="true">→</span>
+  </a>
+</div>

@@ -1,0 +1,44 @@
+---
+import { ui } from '../i18n/ui.ts';
+import {
+  equivalentPath,
+  isCurrent,
+  otherLocale,
+  routePath,
+  type CoreRoute,
+  type Locale,
+  type RouteKey,
+} from '../i18n/routes.ts';
+interface Props {
+  locale: Locale;
+  route: RouteKey;
+  mobile?: boolean;
+  languagePath?: string;
+}
+const { locale, route, mobile = false, languagePath } = Astro.props;
+const copy = ui[locale];
+const target = otherLocale(locale);
+const items: CoreRoute[] = ['home', 'projects', 'about', 'writing', 'contact'];
+const translatedPath = languagePath ?? equivalentPath(Astro.url.pathname, target);
+const languageLabel =
+  route !== 'home' && translatedPath === routePath(target, 'home')
+    ? copy.languageHomeLabel
+    : copy.languageLabel;
+---
+
+<nav
+  class:list={[mobile ? 'mobile-nav' : 'nav']}
+  aria-label={mobile ? copy.mobileNav : copy.mainNav}
+>
+  {items.map((item) => (
+    <a
+      href={routePath(locale, item)}
+      aria-current={isCurrent(route, item) ? (route === item ? 'page' : 'location') : undefined}
+    >
+      {copy.nav[item]}
+    </a>
+  ))}
+  <a class="lang" href={translatedPath} lang={target} hreflang={target} aria-label={languageLabel}>
+    {copy.language}
+  </a>
+</nav>

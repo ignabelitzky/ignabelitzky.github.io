@@ -1,0 +1,52 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import { publishedArticles } from '../lib/collections.ts';
+import { articleAlternates, formatDate } from '../lib/articles.ts';
+import { routePath } from '../i18n/routes.ts';
+import { editorial } from '../i18n/editorial.ts';
+import SiteLayout from '../layouts/SiteLayout.astro';
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+const { article } = Astro.props;
+const { Content } = await render(article);
+const d = article.data;
+const copy = editorial[d.locale];
+const alternates = articleAlternates(article, await publishedArticles());
+---
+
+<SiteLayout
+  locale={d.locale}
+  route="article"
+  title={d.title}
+  description={d.description}
+  alternates={alternates}
+  article={{ published: d.pubDate, updated: d.updatedDate }}
+>
+  <article class="article-page">
+    <div class="page-intro">
+      <a class="breadcrumb" href={routePath(d.locale, 'writing')}>
+        ← {copy.backWriting}
+      </a>
+      <h1>{d.title}</h1>
+      <p>{d.description}</p>
+      <p class="article-byline">
+        {d.author} ·{' '}
+        <time datetime={d.pubDate.toISOString().slice(0, 10)}>
+          {formatDate(d.pubDate, d.locale)}
+        </time>
+      </p>
+      {d.updatedDate && (
+        <p class="notice">
+          {copy.updated}:{' '}
+          <time datetime={d.updatedDate.toISOString().slice(0, 10)}>
+            {formatDate(d.updatedDate, d.locale)}
+          </time>
+        </p>
+      )}
+    </div>
+    <div class="prose article-body">
+      <Content />
+    </div>
+  </article>
+</SiteLayout>

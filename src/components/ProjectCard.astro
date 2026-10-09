@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ui } from '../i18n/ui.ts';
+import { detailPath, type Locale } from '../i18n/routes.ts';
+import { editorial } from '../i18n/editorial.ts';
+import ProjectPanel from './ProjectPanel.astro';
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+  featured?: boolean;
+}
+const { project, locale, featured = false } = Astro.props;
+const p = project.data;
+---
+
+<article class:list={[featured ? 'feature' : 'project-card']}>
+  <ProjectPanel project={project} locale={locale} />
+  <div>
+    {featured && <p class="eyebrow">{ui[locale].categories[p.category]}</p>}
+    <h3>
+      <a href={detailPath(locale, 'projects', p.slug)}>{p.name}</a>
+    </h3>
+    <p class="muted">{p.translations[locale].summary}</p>
+    <ul class="tags" aria-label={locale === 'en' ? 'Technologies' : 'Tecnologías'}>
+      {p.technologies.map((technology) => (
+        <li class="tag">{technology}</li>
+      ))}
+    </ul>
+    <div class="actions">
+      <a
+        class="text-link"
+        href={detailPath(locale, 'projects', p.slug)}
+        aria-label={`${editorial[locale].detail} — ${p.name}`}
+      >
+        {editorial[locale].detail} <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={p.source} aria-label={`${ui[locale].source} — ${p.name}`}>
+        {ui[locale].source} <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</article>

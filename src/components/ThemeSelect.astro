@@ -1,0 +1,38 @@
+---
+import type { Locale } from '../i18n/routes.ts';
+import { ui } from '../i18n/ui.ts';
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = ui[locale];
+---
+
+<label class="theme" hidden data-theme-control>
+  {copy.theme}
+  <select data-theme-select>
+    <option value="system">{copy.themes.system}</option>
+    <option value="light">{copy.themes.light}</option>
+    <option value="dark">{copy.themes.dark}</option>
+  </select>
+</label>
+<script>
+  import { normalizeTheme, writeTheme } from '../lib/theme.ts';
+  const control = document.querySelector<HTMLElement>('[data-theme-control]');
+  const select = document.querySelector<HTMLSelectElement>('[data-theme-select]');
+  if (control && select) {
+    const root = document.documentElement;
+    select.value = normalizeTheme(root.dataset.theme);
+    control.hidden = false;
+    select.addEventListener('change', () => {
+      const value = normalizeTheme(select.value);
+      if (value === 'system') delete root.dataset.theme;
+      else root.dataset.theme = value;
+      try {
+        writeTheme(window.localStorage, value);
+      } catch {
+        /* Storage access itself may be blocked. */
+      }
+    });
+  }
+</script>

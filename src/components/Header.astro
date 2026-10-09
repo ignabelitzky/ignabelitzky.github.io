@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import mark from '../assets/monogram.png';
+import Navigation from './Navigation.astro';
+import { ui } from '../i18n/ui.ts';
+import { routePath, type Locale, type RouteKey } from '../i18n/routes.ts';
+import { site } from '../data/site.ts';
+interface Props {
+  locale: Locale;
+  route: RouteKey;
+  languagePath?: string;
+}
+const { locale, route, languagePath } = Astro.props;
+---
+
+<header>
+  <div class="wrap header">
+    <a
+      class="brand"
+      href={routePath(locale, 'home')}
+      aria-label={`${site.name} — ${ui[locale].nav.home}`}
+    >
+      <Image
+        src={mark}
+        alt=""
+        aria-hidden="true"
+        width={38}
+        height={38}
+        densities={[1, 2]}
+        format="webp"
+        loading="eager"
+        class="monogram-image"
+      />
+      <span class="brand-name">{site.name}</span>
+    </a>
+    <Navigation locale={locale} route={route} languagePath={languagePath} />
+    <details class="mobile-menu">
+      <summary>{ui[locale].menu}</summary>
+      <Navigation locale={locale} route={route} languagePath={languagePath} mobile />
+    </details>
+  </div>
+</header>

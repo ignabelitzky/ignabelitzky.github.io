@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { ui } from '../i18n/ui.ts';
+import type { Locale } from '../i18n/routes.ts';
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+const { project, locale } = Astro.props;
+const p = project.data;
+---
+
+{p.media ? (
+  <figure>
+    <Image
+      src={p.media.image}
+      alt={p.media.alt[locale]}
+      widths={[350, 560, 1120]}
+      sizes="(max-width: 767px) calc(100vw - 40px), 560px"
+      format="webp"
+      loading="lazy"
+      class="project-image"
+    />
+    <figcaption class="notice">{p.media.credit[locale]}</figcaption>
+  </figure>
+) : (
+  <div
+    class:list={[
+      'title-panel',
+      { ascii: p.treatment === 'inverse', boids: p.treatment === 'soft' },
+    ]}
+    aria-hidden="true"
+  >
+    <div class="panel-top">
+      <span>{ui[locale].categories[p.category]}</span>
+      <span>{String(p.order).padStart(2, '0')}</span>
+    </div>
+    <div class="panel-title">{p.name}</div>
+    <div class="panel-bottom">{p.technologies.slice(0, 2).join(' / ')}</div>
+  </div>
+)}
