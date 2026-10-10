@@ -1,5 +1,4 @@
 ---
-import ThemeSelect from './ThemeSelect.astro';
 import { site } from '../data/site.ts';
 import { ui } from '../i18n/ui.ts';
 import { routePath, type Locale } from '../i18n/routes.ts';
@@ -17,7 +16,6 @@ const { locale } = Astro.props;
     <div class="footer-links">
       <a href={site.github}>GitHub</a>
       <a href={routePath(locale, 'contact')}>{ui[locale].nav.contact}</a>
-      <ThemeSelect locale={locale} />
     </div>
   </div>
 </footer>

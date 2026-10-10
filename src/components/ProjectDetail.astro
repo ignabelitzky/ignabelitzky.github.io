@@ -35,6 +35,11 @@ const alternates = {
     <h1>{p.name}</h1>
     <p>{text.summary}</p>
     <div class="actions">
+      {p.website && (
+        <a class="button" href={p.website}>
+          {ui[locale].visitWebsite} <span aria-hidden="true">↗</span>
+        </a>
+      )}
       <a class="text-link" href={p.source}>
         {ui[locale].source} <span aria-hidden="true">↗</span>
       </a>
@@ -45,9 +50,11 @@ const alternates = {
       )}
     </div>
   </section>
-  <div class="detail-panel">
-    <ProjectPanel project={project} locale={locale} />
-  </div>
+  {(!p.website || p.media) && (
+    <div class="detail-panel">
+      <ProjectPanel project={project} locale={locale} />
+    </div>
+  )}
   <div class="detail-grid">
     <div class="prose">
       {text.context && (
@@ -77,6 +84,11 @@ const alternates = {
           <h2>{copy.role}</h2>
           <p>{text.role}</p>
         </section>
+      )}
+      {p.slug === 'veterinaria-dacor' && (
+        <a class="text-link" href={`${routePath(locale, 'about')}#dacor`}>
+          {ui[locale].experienceLink} <span aria-hidden="true">→</span>
+        </a>
       )}
       {p.research && (
         <section class="research research-credit">

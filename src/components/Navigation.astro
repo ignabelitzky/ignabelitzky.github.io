@@ -1,9 +1,7 @@
 ---
 import { ui } from '../i18n/ui.ts';
 import {
-  equivalentPath,
   isCurrent,
-  otherLocale,
   routePath,
   type CoreRoute,
   type Locale,
@@ -13,17 +11,17 @@ interface Props {
   locale: Locale;
   route: RouteKey;
   mobile?: boolean;
-  languagePath?: string;
+  showWriting: boolean;
 }
-const { locale, route, mobile = false, languagePath } = Astro.props;
+const { locale, route, mobile = false, showWriting } = Astro.props;
 const copy = ui[locale];
-const target = otherLocale(locale);
-const items: CoreRoute[] = ['home', 'projects', 'about', 'writing', 'contact'];
-const translatedPath = languagePath ?? equivalentPath(Astro.url.pathname, target);
-const languageLabel =
-  route !== 'home' && translatedPath === routePath(target, 'home')
-    ? copy.languageHomeLabel
-    : copy.languageLabel;
+const items: CoreRoute[] = [
+  'home',
+  'projects',
+  'about',
+  ...(showWriting ? ['writing' as const] : []),
+  'contact',
+];
 ---
 
 <nav
@@ -38,7 +36,4 @@ const languageLabel =
       {copy.nav[item]}
     </a>
   ))}
-  <a class="lang" href={translatedPath} lang={target} hreflang={target} aria-label={languageLabel}>
-    {copy.language}
-  </a>
 </nav>

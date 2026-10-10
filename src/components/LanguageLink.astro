@@ -1,0 +1,26 @@
+---
+import { ui } from '../i18n/ui.ts';
+import {
+  equivalentPath,
+  otherLocale,
+  routePath,
+  type Locale,
+  type RouteKey,
+} from '../i18n/routes.ts';
+interface Props {
+  locale: Locale;
+  route: RouteKey;
+  languagePath?: string;
+}
+const { locale, route, languagePath } = Astro.props;
+const target = otherLocale(locale);
+const path = languagePath ?? equivalentPath(Astro.url.pathname, target);
+const label =
+  route !== 'home' && path === routePath(target, 'home')
+    ? ui[locale].languageHomeLabel
+    : ui[locale].languageLabel;
+---
+
+<a class="lang" href={path} lang={target} hreflang={target} aria-label={label}>
+  <span aria-hidden="true">{target === 'es' ? 'ES' : 'EN'}</span>
+</a>

@@ -1,4 +1,6 @@
 ---
+import { dacor, experiencePeriod } from '../data/experience.ts';
+import { detailPath } from '../i18n/routes.ts';
 import { ui } from '../i18n/ui.ts';
 import { editorial } from '../i18n/editorial.ts';
 import { site, availableCV } from '../data/site.ts';
@@ -44,10 +46,27 @@ const cv = availableCV(locale);
       ))}
     </ul>
   </section>
-  <section class="section">
+  <section class="section" id="dacor">
     <h2>{copy.practical}</h2>
-    <h3>{copy.dacor}</h3>
-    <p class="muted">{copy.dacor_text}</p>
+    <p class="eyebrow">{experiencePeriod(locale)}</p>
+    <h3>{dacor.translations[locale].title}</h3>
+    <p class="muted">{dacor.translations[locale].text}</p>
+    <ul class="responsibilities">
+      {dacor.translations[locale].responsibilities.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+    <div class="actions">
+      <a class="text-link" href={detailPath(locale, 'projects', dacor.caseStudySlug)}>
+        {copy.detail} <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={dacor.website}>
+        {ui[locale].visitWebsite} <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+  <section class="section" id="research">
+    <h2>{copy.research}</h2>
     <ResearchCallout locale={locale} />
   </section>
   {cv && (
