@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "Ignacio Belitzky",
+  "short_name": "Ignacio Belitzky",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#071C13",
+  "theme_color": "#071C13",
+  "icons": [
+    {
+      "src": "./app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
