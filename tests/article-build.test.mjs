@@ -74,6 +74,10 @@ test('The actual article template builds Markdown, pairs locales, and excludes d
     const en = readFileSync(join(dist, 'writing/test-fixture/index.html'), 'utf8');
     const es = readFileSync(join(dist, 'es/writing/test-fixture/index.html'), 'utf8');
     const single = readFileSync(join(dist, 'writing/single-fixture/index.html'), 'utf8');
+    const home = readFileSync(join(dist, 'index.html'), 'utf8');
+    const esHome = readFileSync(join(dist, 'es/index.html'), 'utf8');
+    assert.match(home, /href="\/writing\/"/);
+    assert.match(esHome, /href="\/es\/writing\/"/);
     assert.match(en, /<strong>rendering<\/strong>/);
     assert.match(en, /property="og:type" content="article"/);
     assert.match(en, /name="author" content="Ignacio Belitzky"/);
