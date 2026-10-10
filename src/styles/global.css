@@ -917,6 +917,17 @@ aside dd {
   padding-top: 30px;
   margin-top: 30px;
 }
+.contact-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.contact-heading svg {
+  flex: none;
+}
+.contact-options .text-link {
+  overflow-wrap: anywhere;
+}
 .subheading {
   margin-top: 36px;
 }

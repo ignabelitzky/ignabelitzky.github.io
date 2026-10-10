@@ -160,10 +160,51 @@ const categories = ['desktop', 'graphics', 'tools', 'web', 'experiments', 'resea
         {site.email}
       </a>
       <div class="contact-options">
-        <h2>GitHub</h2>
+        <h2 class="contact-heading">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M9 19c-4.3 1.3-4.3-2.2-6-2.7M15 22v-3.9c0-1.1-.1-1.8-.6-2.4 2.6-.3 5.4-1.3 5.4-6A4.7 4.7 0 0 0 18.5 6c.1-.3.6-1.7-.1-3.5 0 0-1.1-.3-3.6 1.4a12.3 12.3 0 0 0-6.6 0C5.7 2.2 4.6 2.5 4.6 2.5 3.9 4.3 4.4 5.7 4.5 6a4.7 4.7 0 0 0-1.3 3.7c0 4.7 2.8 5.7 5.4 6-.5.6-.6 1.3-.6 2.4V22" />
+          </svg>
+          GitHub
+        </h2>
         <p class="muted">{copy.githubText}</p>
         <a class="text-link" href={site.github}>
           github.com/ignabelitzky <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <div class="contact-options">
+        <h2 class="contact-heading">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <path d="M7.5 10.5v7M11.5 17.5v-7m0 3a3 3 0 0 1 6 0v4" />
+            <circle cx="7.5" cy="7" r=".75" fill="currentColor" stroke="none" />
+          </svg>
+          LinkedIn
+        </h2>
+        <p class="muted">{copy.linkedinText}</p>
+        <a class="text-link" href={site.linkedin}>
+          linkedin.com/in/ignacio-belitzky <span aria-hidden="true">↗</span>
         </a>
       </div>
     </section>

@@ -32,6 +32,7 @@ interface Copy {
   contactText: string;
   emailText: string;
   githubText: string;
+  linkedinText: string;
   writingEmpty: string;
   writingSupport: string;
   meanwhile: string;
@@ -115,6 +116,7 @@ export const ui = {
     contactText: 'For software-development opportunities or questions about my work, email me.',
     emailText: 'Send me an email.',
     githubText: 'Explore my applications, tools, and experiments on GitHub.',
+    linkedinText: 'View my professional profile and connect with me on LinkedIn.',
     writingEmpty: 'No articles published yet.',
     writingSupport: 'This space is reserved for technical notes on software development.',
     meanwhile: 'Explore my projects',
@@ -202,6 +204,7 @@ export const ui = {
       'Si querés conversar sobre una oportunidad de desarrollo de software o consultar por mis proyectos, escribime por correo.',
     emailText: 'Escribime por correo.',
     githubText: 'Explorá mis aplicaciones, herramientas y experimentos en GitHub.',
+    linkedinText: 'Conocé mi perfil profesional y conectá conmigo en LinkedIn.',
     writingEmpty: 'Todavía no hay artículos publicados.',
     writingSupport: 'Este espacio está reservado para notas técnicas sobre desarrollo de software.',
     meanwhile: 'Explorá mis proyectos',
