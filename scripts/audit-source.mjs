@@ -36,12 +36,16 @@ const pairs = [
   ['link', 'accent', 'bg', 4.5],
   ['surface link', 'accent', 'surface', 4.5],
   ['hover link', 'accent-hover', 'bg', 4.5],
-  ['button text', 'bg', 'accent', 4.5],
-  ['button hover text', 'bg', 'accent-hover', 4.5],
+  ['button text', 'button-text', 'accent', 4.5],
+  ['button hover text', 'button-text', 'accent-hover', 4.5],
   ['inverse panel', 'bg', 'ink', 4.5],
   ['tag text', 'ink', 'soft', 4.5],
   ['control border', 'control', 'bg', 3],
-  ['focus outline', 'accent', 'bg', 3],
+  ['focus outline', 'focus', 'bg', 3],
+  ['surface focus outline', 'focus', 'surface', 3],
+  ['surface control border', 'control', 'surface', 3],
+  ['dropdown active option', 'ink', 'soft', 4.5],
+  ['dropdown selection mark', 'accent', 'soft', 3],
 ];
 const contrast = [];
 for (const [theme, tokens] of [

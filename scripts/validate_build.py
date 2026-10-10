@@ -49,7 +49,7 @@ for file in DIST.rglob('*.html'):
     p=Page();p.feed(file.read_text());pages[file.resolve()]=p
 projects = sorted([json.loads(p.read_text()) for p in (ROOT/'src/content/projects').glob('*.json')],key=lambda p:p['order'])
 experiments = sorted([json.loads(p.read_text()) for p in (ROOT/'src/content/experiments').glob('*.json')],key=lambda e:e['order'])
-check('30 localized core, project and error pages built',len(pages)==30,len(pages))
+check('32 localized core, project and error pages built',len(pages)==32,len(pages))
 expected=['','projects','gallery','about','writing','contact'] + ['projects/'+p['slug'] for p in projects]
 for lang in ('en','es'):
     prefix='es/' if lang=='es' else ''
@@ -75,6 +75,9 @@ for file,p in pages.items():
         refs+=1;target,fragment=resolved
         if not target.is_file():errors.append({'page':relative,'reference':url,'error':'missing file'})
         elif fragment and target in pages and fragment not in pages[target].ids:errors.append({'page':relative,'reference':url,'error':'missing fragment'})
+    check(relative+' single header combobox and matching options', sum(a.get('role')=='combobox' for t,a in p.tags)==1 and sum(a.get('role')=='listbox' for t,a in p.tags)==1 and sum(a.get('role')=='option' for t,a in p.tags)==3)
+    check(relative+' exact brand logo sizing',any(t=='img' and a.get('src')=='/brand/phosphor-web.svg' and a.get('width')=='48' and a.get('height')=='48' for t,a in p.tags))
+    check(relative+' writing absent from empty-collection public navigation',not any(t=='a' and a.get('class')!='lang' and a.get('href') in ('/writing/','/es/writing/') for t,a in p.tags))
     social=resolve(p.meta('property','og:image') or '',file)
     check(relative+' local processed social asset',social is not None and social[0].is_file() and '/_astro/' in (p.meta('property','og:image') or ''))
 check('All built internal page/asset/fragment references resolve',not errors,{'references':refs,'errors':errors})
@@ -91,12 +94,12 @@ check('Sitemap generated',sitemap.is_file() and index.is_file())
 if sitemap.is_file():
     xml=ET.parse(sitemap);ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     urls=[node.text for node in xml.findall('.//s:loc',ns)]
-    check('Sitemap has exactly 28 core and project URLs, no 404/article routes',len(urls)==28 and len(set(urls))==28 and all(u.startswith(ORIGIN+'/') and '/404' not in u for u in urls),urls)
+    check('Sitemap has exactly 30 core and project URLs, no 404/article routes',len(urls)==30 and len(set(urls))==30 and all(u.startswith(ORIGIN+'/') and '/404' not in u for u in urls),urls)
 css='\n'.join(p.read_text() for p in (DIST/'_astro').glob('*.css'))
 check('Tailwind v4 and approved design tokens compiled','tailwindcss' in css and '--bg:' in css and '--accent:' in css)
 check('Responsive/reduced-motion/focus rules retained', 'prefers-reduced-motion' in css and 'prefers-color-scheme' in css and ':focus-visible' in css and '767px' in css)
 check('No remote CSS/font requests',not re.search(r'@import\s+(?:url\()?\s*["\']?https?://|url\(["\']?https?://',css))
-check('Real Astro image pipeline emitted WebP assets',any(p.suffix=='.webp' for p in (DIST/'_astro').iterdir()))
+check('Astro social-image processing retained',any(p.suffix=='.png' for p in (DIST/'_astro').iterdir()))
 check('No blog/post files published',not (DIST/'writing/rss.xml').exists() and all(not any(t=='article' for t,a in p.tags) for file,p in pages.items() if '/writing/' in str(file)))
 
 for lang in ('en','es'):
@@ -106,12 +109,12 @@ for lang in ('en','es'):
     home=(DIST/(prefix+'index.html')).read_text()
     about=(DIST/(prefix+'about/index.html')).read_text()
     writing=(DIST/(prefix+'writing/index.html')).read_text()
-    check(lang+' full index links all eight details and exact sources',all('/'+prefix+'projects/'+p['slug']+'/' in index and p['source'] in index for p in projects))
+    check(lang+' full index links all nine details and exact sources',all('/'+prefix+'projects/'+p['slug']+'/' in index and p['source'] in index for p in projects))
     check(lang+' home keeps the three approved featured projects',all('/'+prefix+'projects/'+p['slug']+'/' in home for p in projects[:3]) and '/'+prefix+'projects/periodic-table/' not in home)
     check(lang+' all six gallery entries and source directories',all(e['name'] in gallery and e['source'] in gallery and e['translations'][lang]['summary'] in unescape(gallery) for e in experiments))
     check(lang+' gallery experimental/prototype labels',('Experimental' if lang=='es' else 'Experimental') in gallery and ('Prototipo' if lang=='es' else 'Prototype') in gallery)
-    check(lang+' practical work has approved bounded wording',('He realizado tareas de soporte técnico y desarrollo de software para DACOR Veterinaria, en Córdoba, Argentina.' if lang=='es' else 'I have carried out technical support and software-development work for DACOR Veterinaria in Córdoba, Argentina.') in about)
-    check(lang+' real empty writing state',('Próximamente, artículos técnicos.' if lang=='es' else 'Technical articles coming soon.') in writing and 'article:published_time' not in writing)
+    check(lang+' practical work has approved ongoing period and confirmed responsibilities', ('2023–actualidad' if lang=='es' else '2023–present') in about and 'https://www.veterinariadacor.com/' in about and ('Reconstruir el logo existente' if lang=='es' else 'Reconstruct the existing logo') in about and '/'+prefix+'projects/veterinaria-dacor/' in about)
+    check(lang+' real empty writing state',('Todavía no hay artículos publicados.' if lang=='es' else 'No articles published yet.') in writing and 'article:published_time' not in writing)
     for project in projects:
         file=(DIST/(prefix+'projects/'+project['slug']+'/index.html')).resolve()
         page=pages.get(file)
@@ -128,7 +131,7 @@ for lang in ('en','es'):
             check(lang+' modest research role and full ordered team credit',authors is not None and all(author in unescape(authors.group(1)) for author in project['research']['authors']) and [unescape(authors.group(1)).find(author) for author in project['research']['authors']]==sorted(unescape(authors.group(1)).find(author) for author in project['research']['authors']) and project['research']['preprint'] in html)
 check('No authored articles introduced',not list((ROOT/'src/content/articles').rglob('*.md')))
 
-report={'phase':5,'method':'Actual built HTML, CSS, routes, metadata, sitemap and local asset inspection. No browser execution.','passed':sum(c['pass'] for c in checks),'total':len(checks),'checks':checks,'browser_qa':'not run'}
+report={'phase':'improvement-2','method':'Actual built HTML, CSS, routes, metadata, sitemap and local asset inspection. No browser execution.','passed':sum(c['pass'] for c in checks),'total':len(checks),'checks':checks,'browser_qa':'not run'}
 evidence = ROOT / os.environ['QA_EVIDENCE_DIR'] if os.environ.get('QA_EVIDENCE_DIR') else ROOT / 'evidence'
 evidence.mkdir(parents=True, exist_ok=True)
 (evidence/('build-validation.json' if os.environ.get('QA_EVIDENCE_DIR') else 'phase5-build-validation.json')).write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')

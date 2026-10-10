@@ -2,6 +2,10 @@
 
 Bilingual English/Spanish portfolio for Ignacio Belitzky, Software Developer from Córdoba, Argentina. Astro, TypeScript and Tailwind CSS; English at `/` and Spanish at `/es/`.
 
+## Current improvement review
+
+This checkout contains the unpublished Phase 3 release candidate: Phosphor assets/Inter, sticky header, accessible header theme dropdown, published-content-driven Writing navigation, revised English/Spanish copy and DACOR experience/case study. See `docs/WORK_STATUS.md` and `docs/IMPROVEMENT_PHASE3_QA.md`. Static and actual browser validation have been completed; limitations are recorded in the QA report. Historical release authorization below does not authorize publishing this candidate.
+
 ## Local development
 
 Use Node 24.19.0, npm 11.9.0 and Python 3.

@@ -7,10 +7,10 @@
   "technologies": ["C++", "SFML"],
   "translations": {
     "en": {
-      "summary": "A 2D geometry experiment that casts rays against line segments and displays the nearest intersections."
+      "summary": "A 2D geometry experiment that casts rays toward line-segment boundaries and renders the closest visible intersections."
     },
     "es": {
-      "summary": "Un experimento de geometría 2D que proyecta rayos contra segmentos y muestra las intersecciones más cercanas."
+      "summary": "Un experimento de geometría 2D que proyecta rayos hacia segmentos y dibuja las intersecciones visibles más cercanas."
     }
   },
   "recording": "https://www.youtube.com/watch?v=G4E0592SJgU",

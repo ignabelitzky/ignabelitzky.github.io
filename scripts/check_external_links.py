@@ -5,10 +5,10 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from concurrent.futures import ThreadPoolExecutor
-import json, datetime, socket
+import json, datetime, socket, os
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'evidence/phase5/external-links.json'
+OUT = ROOT / os.environ.get('QA_EVIDENCE_DIR', 'evidence/phase5') / 'external-links.json'
 ORIGIN = 'https://ignaciobelitzky.dev'
 sources = {}
 class Links(HTMLParser):
@@ -46,6 +46,6 @@ def inspect(item):
 with ThreadPoolExecutor(max_workers=4) as pool: results=list(pool.map(inspect,sorted(sources.items())))
 OUT.parent.mkdir(parents=True,exist_ok=True)
 summary={status:sum(r['status']==status for r in results) for status in sorted({r['status'] for r in results})}
-OUT.write_text(json.dumps({'phase':5,'summary':summary,'results':results,'media_playback_verified':False},ensure_ascii=False,indent=2)+'\n')
+OUT.write_text(json.dumps({'phase':'local-link-audit','summary':summary,'results':results,'media_playback_verified':False},ensure_ascii=False,indent=2)+'\n')
 print(json.dumps({'unique_external_urls':len(results),'summary':summary,'report':str(OUT.relative_to(ROOT))}))
 raise SystemExit(1 if any(r['status'] in ('broken_http','unavailable_media') for r in results) else 0)

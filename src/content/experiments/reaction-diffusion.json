@@ -7,10 +7,10 @@
   "technologies": ["C++", "SFML", "OpenMP"],
   "translations": {
     "en": {
-      "summary": "An interactive two-field grid simulation with local diffusion calculations and OpenMP loops."
+      "summary": "A two-field reaction–diffusion simulation with mouse-driven changes, current/next grids, and OpenMP-parallelized grid loops."
     },
     "es": {
-      "summary": "Una simulación interactiva de dos campos sobre una cuadrícula, con cálculos locales de difusión y bucles con OpenMP."
+      "summary": "Una simulación de reacción–difusión de dos campos, con cambios mediante el mouse, grillas de estado actual y siguiente, y bucles de grilla paralelizados con OpenMP."
     }
   }
 }

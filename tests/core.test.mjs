@@ -92,8 +92,8 @@ const projectFiles = readdirSync(new URL('../src/content/projects/', import.meta
 const entries = projectFiles.map((file) =>
   JSON.parse(readFileSync(new URL('../src/content/projects/' + file, import.meta.url), 'utf8')),
 );
-test('All eight public project entries validate against the actual project schema', () => {
-  assert.equal(entries.length, 8);
+test('All nine public project entries validate against the actual project schema', () => {
+  assert.equal(entries.length, 9);
   for (const entry of entries) assert.equal(projectSchema.safeParse(entry).success, true);
   assert.equal(new Set(entries.map((p) => p.slug)).size, entries.length);
   assert.deepEqual(
@@ -107,6 +107,7 @@ test('All eight public project entries validate against the actual project schem
       'EasySubber',
       'Tiny Programs',
       'KineticBox 1D',
+      'Veterinaria DACOR',
     ],
   );
 });
@@ -126,6 +127,13 @@ test('Schema rejects missing translations, unsafe URLs, invalid slugs and unveri
     { ...source, slug: '../escape' },
     { ...source, technologies: [] },
     { ...source, inventedSpeedup: '10x' },
+    ...[
+      'http://www.veterinariadacor.com/',
+      'https://evil.example/',
+      'https://www.veterinariadacor.com/?token=fixture',
+      'https://name@www.veterinariadacor.com/',
+      'https://www.veterinariadacor.com/path/',
+    ].map((website) => ({ ...source, website })),
   ];
   for (const entry of failures) assert.equal(projectSchema.safeParse(entry).success, false);
 });
@@ -180,8 +188,9 @@ test('Featured order, public source attribution and research credit remain exact
     }).success,
     false,
   );
-  assert.match(research.translations.en.role, /small relative/);
-  assert.match(research.translations.es.role, /pequeño/);
+  assert.match(research.translations.en.role, /small contribution/);
+  assert.match(research.translations.en.role, /vast majority/);
+  assert.match(research.translations.es.role, /pequeña|pequeño/);
 });
 test('Six curated experiments validate and link to exact lowercase source directories', () => {
   const base = new URL('../src/content/experiments/', import.meta.url);
@@ -265,5 +274,5 @@ test('Extended editorial labels are paired and unavailable CV has no UI target',
   assert.deepEqual(Object.keys(editorial.en).sort(), Object.keys(editorial.es).sort());
   assert.equal(availableCV('en'), null);
   assert.equal(availableCV('es'), null);
-  assert.match(editorial.es.dacor_text, /He realizado tareas/);
+  assert.match(editorial.es.dacor_text, /Desde 2023/);
 });

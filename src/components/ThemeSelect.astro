@@ -1,6 +1,7 @@
 ---
 import type { Locale } from '../i18n/routes.ts';
 import { ui } from '../i18n/ui.ts';
+import { themeOptions } from '../lib/theme-dropdown.ts';
 interface Props {
   locale: Locale;
 }
@@ -8,31 +9,170 @@ const { locale } = Astro.props;
 const copy = ui[locale];
 ---
 
-<label class="theme" hidden data-theme-control>
-  {copy.theme}
-  <select data-theme-select>
-    <option value="system">{copy.themes.system}</option>
-    <option value="light">{copy.themes.light}</option>
-    <option value="dark">{copy.themes.dark}</option>
-  </select>
-</label>
+<div class="theme" hidden data-theme-control>
+  <button
+    type="button"
+    class="theme-trigger"
+    role="combobox"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-controls="theme-options"
+    aria-labelledby="theme-label theme-value"
+    data-theme-select
+  >
+    <svg
+      class="theme-icon"
+      aria-hidden="true"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+    >
+      <rect x="3" y="4" width="18" height="12" rx="2" />
+      <path d="M8 21h8M12 16v5" />
+    </svg>
+    <span id="theme-label" class="theme-label">
+      {copy.theme}
+    </span>
+    <span id="theme-value" class="theme-value">
+      {copy.themes.system}
+    </span>
+    <svg
+      class="theme-chevron"
+      aria-hidden="true"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </button>
+  <ul class="theme-options" id="theme-options" role="listbox" aria-labelledby="theme-label" hidden>
+    {themeOptions.map((value) => (
+      <li
+        id={`theme-option-${value}`}
+        role="option"
+        aria-selected={value === 'system' ? 'true' : 'false'}
+        data-theme-option={value}
+      >
+        <span>{copy.themes[value]}</span>
+        <svg
+          class="theme-check"
+          aria-hidden="true"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="m5 12 4 4L19 6" />
+        </svg>
+      </li>
+    ))}
+  </ul>
+</div>
 <script>
-  import { normalizeTheme, writeTheme } from '../lib/theme.ts';
+  import { normalizeTheme, writeTheme, themeKey } from '../lib/theme.ts';
+  import { themeKeyResult, themeOptions, type DropdownState } from '../lib/theme-dropdown.ts';
   const control = document.querySelector<HTMLElement>('[data-theme-control]');
-  const select = document.querySelector<HTMLSelectElement>('[data-theme-select]');
-  if (control && select) {
+  const trigger = control?.querySelector<HTMLButtonElement>('[data-theme-select]');
+  const list = control?.querySelector<HTMLElement>('[role="listbox"]');
+  const visibleValue = control?.querySelector<HTMLElement>('.theme-value');
+  if (control && trigger && list && visibleValue) {
+    const options = Array.from(list.querySelectorAll<HTMLElement>('[data-theme-option]'));
     const root = document.documentElement;
-    select.value = normalizeTheme(root.dataset.theme);
-    control.hidden = false;
-    select.addEventListener('change', () => {
-      const value = normalizeTheme(select.value);
-      if (value === 'system') delete root.dataset.theme;
-      else root.dataset.theme = value;
-      try {
-        writeTheme(window.localStorage, value);
-      } catch {
-        /* Storage access itself may be blocked. */
+    let state: DropdownState = {
+      open: false,
+      active: 0,
+      selected: normalizeTheme(root.dataset.theme),
+    };
+    const render = () => {
+      trigger.setAttribute('aria-expanded', String(state.open));
+      trigger.dataset.value = state.selected;
+      list.hidden = !state.open;
+      visibleValue.textContent =
+        options[themeOptions.indexOf(state.selected)]?.querySelector('span')?.textContent ?? '';
+      if (state.open) trigger.setAttribute('aria-activedescendant', options[state.active]!.id);
+      else trigger.removeAttribute('aria-activedescendant');
+      options.forEach((option, index) => {
+        option.setAttribute('aria-selected', String(themeOptions[index] === state.selected));
+        option.dataset.active = String(state.open && index === state.active);
+      });
+    };
+    const apply = (value: unknown, persist = false) => {
+      const selected = normalizeTheme(value);
+      if (selected === 'system') delete root.dataset.theme;
+      else root.dataset.theme = selected;
+      state = { open: false, active: themeOptions.indexOf(selected), selected };
+      if (persist) {
+        try {
+          writeTheme(window.localStorage, selected);
+        } catch {
+          /* Storage can be unavailable. */
+        }
       }
+      render();
+    };
+    const close = () => {
+      state = { ...state, open: false, active: themeOptions.indexOf(state.selected) };
+      render();
+    };
+    apply(state.selected);
+    control.hidden = false;
+    trigger.addEventListener('click', () => {
+      const mobile = document.querySelector<HTMLDetailsElement>('.mobile-menu');
+      if (mobile) mobile.open = false;
+      state = { ...state, open: !state.open, active: themeOptions.indexOf(state.selected) };
+      render();
+    });
+    let query = '';
+    let lastTyped = 0;
+    trigger.addEventListener('keydown', (event) => {
+      const result = themeKeyResult(state, event.key);
+      if (result.handled) event.preventDefault();
+      state = result.state;
+      if (result.commit) apply(result.commit, true);
+      else render();
+      if (
+        event.key.length === 1 &&
+        event.key !== ' ' &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey
+      ) {
+        event.preventDefault();
+        const now = Date.now();
+        query = now - lastTyped > 700 ? event.key : query + event.key;
+        lastTyped = now;
+        const match = options.findIndex((option) =>
+          option.textContent?.trim().toLocaleLowerCase().startsWith(query.toLocaleLowerCase()),
+        );
+        if (match !== -1) {
+          state = { ...state, open: true, active: match };
+          render();
+        }
+      }
+    });
+    options.forEach((option) => {
+      option.addEventListener('pointerdown', (event) => event.preventDefault());
+      option.addEventListener('click', () => {
+        apply(option.dataset.themeOption, true);
+        trigger.focus();
+      });
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (event.target instanceof Node && !control.contains(event.target)) close();
+    });
+    trigger.addEventListener('blur', close);
+    // Keep another tab's explicit preference in sync; System remains visibly System.
+    window.addEventListener('storage', (event) => {
+      if (event.key === themeKey || event.key === null) apply(event.newValue);
     });
   }
 </script>

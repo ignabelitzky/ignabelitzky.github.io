@@ -7,10 +7,10 @@
   "technologies": ["C++", "SFML"],
   "translations": {
     "en": {
-      "summary": "Complex-number iteration displayed with grayscale shading and view navigation. Mathematical fidelity remains under review."
+      "summary": "A C++/SFML fractal experiment that maps complex-number iterations to grayscale pixels, with view panning and zoom controls."
     },
     "es": {
-      "summary": "Iteraciones con números complejos representadas en escala de grises, con navegación de la vista. La fidelidad matemática está en revisión."
+      "summary": "Un experimento fractal en C++ y SFML que transforma iteraciones con números complejos en píxeles en escala de grises, con desplazamiento y zoom de la vista."
     }
   }
 }

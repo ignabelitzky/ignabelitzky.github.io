@@ -7,10 +7,10 @@
   "technologies": ["C++", "SFML"],
   "translations": {
     "en": {
-      "summary": "A graphical exploration of coupled pendulum motion with controls for masses, lengths, and update step."
+      "summary": "A visual double-pendulum simulation that updates coupled angular motion and exposes length and mass controls."
     },
     "es": {
-      "summary": "Una exploración gráfica del movimiento de un péndulo doble, con controles de masas, longitudes y paso de actualización."
+      "summary": "Una simulación visual de péndulo doble que actualiza el movimiento angular acoplado y permite ajustar longitudes y masas."
     }
   }
 }

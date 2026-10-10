@@ -29,7 +29,7 @@ export const projectSchema = z
   .object({
     slug: slugSchema,
     name: nonempty,
-    category: z.enum(['desktop', 'graphics', 'tools', 'experiments', 'research']),
+    category: z.enum(['desktop', 'graphics', 'tools', 'web', 'experiments', 'research']),
     order: z.number().int().positive(),
     featured: z.boolean().default(false),
     treatment: z.enum(['neutral', 'inverse', 'soft']).default('neutral'),
@@ -44,6 +44,20 @@ export const projectSchema = z
         /^\/ignabelitzky\/[A-Za-z0-9_.-]+\/?$/.test(url.pathname)
       );
     }, 'Use the approved public GitHub project source'),
+    website: z
+      .url()
+      .refine((value) => {
+        const url = new URL(value);
+        return (
+          url.origin === 'https://www.veterinariadacor.com' &&
+          !url.username &&
+          !url.password &&
+          !url.search &&
+          !url.hash &&
+          url.pathname === '/'
+        );
+      }, 'Use the approved HTTPS DACOR website')
+      .optional(),
     technologies: z.array(nonempty).min(1),
     recording: recordingSchema.optional(),
     research: z

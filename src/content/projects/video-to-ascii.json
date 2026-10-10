@@ -9,30 +9,28 @@
   "technologies": ["C++17", "OpenCV", "ncurses", "miniaudio", "GNU Make"],
   "translations": {
     "en": {
-      "summary": "A C++ terminal application that turns video frames into ASCII characters using OpenCV and ncurses.",
-      "context": "An exploration of how moving images can be represented using a terminal's character grid.",
-      "engineeringFocus": "The conversion pipeline connects video decoding, terminal dimensions, character density, and frame timing. It provides a concrete way to examine the tradeoffs between visual detail and the constraints of a text interface.",
-      "role": "Development work represented in my public repository.",
+      "summary": "A C++ terminal video player that maps grayscale frames to ASCII characters using OpenCV and ncurses, with audio playback through miniaudio.",
+      "context": "An experiment in representing moving images within a terminal’s character grid. The current interface offers a menu of preset clips.",
       "features": [
-        "Video selection from a built-in menu",
-        "frame resizing and grayscale conversion",
-        "intensity-to-character mapping",
-        "terminal playback",
-        "accompanying audio through miniaudio"
-      ]
+        "Select a preset clip from the terminal menu.",
+        "Resize video frames to the available character grid.",
+        "Map grayscale intensity to a density ramp of ASCII characters.",
+        "Play a separate audio track and return to the menu or exit."
+      ],
+      "engineeringFocus": "OpenCV decodes and resizes each frame before grayscale conversion. A character-density ramp translates pixel intensity into terminal output. The loop uses the clip’s frame rate to calculate a target delay; audio is handled separately by miniaudio.",
+      "role": "I implemented the frame-to-character conversion and terminal playback workflow, combining OpenCV, ncurses, and the audio component."
     },
     "es": {
-      "summary": "Una aplicación de terminal en C++ que transforma cuadros de video en caracteres ASCII mediante OpenCV y ncurses.",
-      "context": "Una exploración de cómo representar imágenes en movimiento usando la cuadrícula de caracteres de una terminal.",
-      "engineeringFocus": "El proceso conecta la decodificación de video, las dimensiones de la terminal, la densidad de caracteres y el tiempo entre cuadros. Permite explorar el equilibrio entre el detalle visual y las limitaciones de una interfaz de texto.",
-      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "summary": "Un reproductor de video para la terminal en C++ que convierte fotogramas en escala de grises a caracteres ASCII con OpenCV y ncurses, e incorpora audio mediante miniaudio.",
+      "context": "Un experimento para representar imágenes en movimiento dentro de la cuadrícula de caracteres de una terminal. La interfaz actual ofrece un menú de clips predefinidos.",
       "features": [
-        "Selección de videos desde un menú integrado",
-        "ajuste del tamaño y conversión a escala de grises",
-        "correspondencia entre intensidad y caracteres",
-        "reproducción en terminal",
-        "audio mediante miniaudio"
-      ]
+        "Seleccionar un clip predefinido desde el menú de la terminal.",
+        "Redimensionar los fotogramas a la cuadrícula disponible.",
+        "Convertir la intensidad de gris a una escala de caracteres ASCII.",
+        "Reproducir una pista de audio separada y volver al menú o salir."
+      ],
+      "engineeringFocus": "OpenCV decodifica y redimensiona cada fotograma antes de convertirlo a escala de grises. Una escala de densidad de caracteres transforma la intensidad de cada píxel en salida de terminal. El bucle usa los FPS del clip para calcular una espera objetivo; miniaudio reproduce el audio por separado.",
+      "role": "Implementé la conversión de fotogramas a caracteres y el flujo de reproducción en la terminal, integrando OpenCV, ncurses y el componente de audio."
     }
   },
   "recording": "https://youtu.be/L0wPt0Xwfbs"

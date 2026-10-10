@@ -1,0 +1,37 @@
+{
+  "slug": "veterinaria-dacor",
+  "name": "Veterinaria DACOR",
+  "category": "web",
+  "order": 9,
+  "featured": false,
+  "treatment": "neutral",
+  "source": "https://github.com/ignabelitzky/veterinaria-dacor",
+  "website": "https://www.veterinariadacor.com/",
+  "technologies": ["HTML", "CSS", "JavaScript", "GitHub Pages"],
+  "translations": {
+    "en": {
+      "summary": "A website for a veterinary clinic and pet shop, combining a searchable product catalog, service information, and direct contact paths.",
+      "context": "Veterinaria DACOR is a veterinary clinic and pet shop in Córdoba, Argentina. I developed and maintain its website as part of an ongoing working relationship that began in 2023. The site gives visitors a place to browse products, consult services, and contact the appropriate area of the business.",
+      "features": [
+        "Browse products with search, category and subcategory filters, sorting, and availability filtering.",
+        "View product variants, prices, and images with client-side pagination.",
+        "Consult service information and business contact details.",
+        "Choose a contact path for veterinary consultations or pet-shop questions."
+      ],
+      "engineeringFocus": "The current site uses HTML, CSS, and JavaScript and is hosted on GitHub Pages. JavaScript loads catalog data from a spreadsheet-backed feed, normalizes product variants, and applies filters before rendering each page of results. Separate scripts handle service content and contact interactions.",
+      "role": "I developed and maintain the website and its catalog and contact interactions. I also reconstructed the business’s existing logo from a PNG into vector and production assets for digital and physical use, preserving the supplied design."
+    },
+    "es": {
+      "summary": "Un sitio para una veterinaria y pet shop, con catálogo de productos con búsqueda, información de servicios y opciones directas de contacto.",
+      "context": "Veterinaria DACOR es una veterinaria y pet shop de Córdoba, Argentina. Desarrollé y mantengo su sitio como parte de una relación de trabajo que comenzó en 2023 y continúa. El sitio permite recorrer productos, consultar servicios y contactar al área correspondiente del comercio.",
+      "features": [
+        "Recorrer productos con búsqueda, filtros por categoría y subcategoría, ordenamiento y filtro de disponibilidad.",
+        "Consultar variantes, precios e imágenes, con paginación del catálogo en el navegador.",
+        "Consultar información de servicios y datos de contacto del comercio.",
+        "Elegir una vía de contacto para consultas veterinarias o del pet shop."
+      ],
+      "engineeringFocus": "El sitio actual utiliza HTML, CSS y JavaScript, y está alojado en GitHub Pages. JavaScript carga el catálogo desde una fuente vinculada con una planilla, normaliza las variantes de los productos y aplica los filtros antes de mostrar cada página de resultados. Otros scripts resuelven los servicios y las interacciones de contacto.",
+      "role": "Desarrollé y mantengo el sitio y sus interacciones de catálogo y contacto. También reconstruí el logo existente a partir de un PNG para obtener recursos vectoriales y de producción destinados a usos digitales y físicos, conservando el diseño suministrado."
+    }
+  }
+}
