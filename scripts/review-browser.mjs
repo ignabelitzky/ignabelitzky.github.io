@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const output = resolve(root, 'evidence/phase5/manual');
+const output = resolve(root, process.env.QA_EVIDENCE_DIR ?? 'evidence/phase5', 'manual');
 mkdirSync(output, { recursive: true });
 const socket = createServer();
 await new Promise((done) => socket.listen(0, '127.0.0.1', done));
@@ -74,7 +74,7 @@ try {
     await capture(page, `${name}-skip-focus`, false);
     await page.keyboard.press('Enter');
     assert.equal(await page.locator('#main').evaluate((el) => el === document.activeElement), true);
-    // Review the native keyboard path as it is presented, including the footer select.
+    // Review the native keyboard path as it is presented, including the header theme combobox.
     await page.goto(`${origin}${prefix}/`);
     const keyboard = [];
     for (let index = 0; index < 65; index++) {
@@ -95,14 +95,21 @@ try {
       keyboard.push(focus);
       assert(focus.visible, `${name}: focused control is visible`);
       assert(!focus.outline.includes(' none '), `${name}: visible keyboard outline`);
-      if (focus.tag === 'SELECT') await capture(page, `${name}-theme-focus`, false);
-      if (width < 768 && focus.tag === 'SUMMARY') {
+      if (focus.tag === 'BUTTON') await capture(page, `${name}-theme-focus`, false);
+      if (width < 1024 && focus.tag === 'SUMMARY') {
         await page.keyboard.press('Enter');
         assert.equal(await page.locator('.mobile-menu').getAttribute('open'), '');
         await capture(page, `${name}-menu-keyboard`, false);
       }
     }
     observations.push({ name, keyboard, keyboardCycleCompleted: keyboard.length < 65 });
+    await page.goto(`${origin}${prefix}/`);
+    const trigger = page.getByRole('combobox');
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await capture(page, `${name}-theme-popup`, false);
+    assert.equal(await trigger.getAttribute('aria-expanded'), 'true');
+    await page.keyboard.press('Escape');
     const arrows = [];
     // axe marks non-text arrow glyphs as incomplete. Check their actual inherited
     // colors against the painted ancestor, rather than treating "incomplete" as a pass.
@@ -186,7 +193,8 @@ try {
   const errors = [];
   storagePage.on('pageerror', (error) => errors.push(error.message));
   await storagePage.goto(`${origin}/es/`);
-  await storagePage.locator('[data-theme-select]').selectOption('dark');
+  await storagePage.getByRole('combobox').click();
+  await storagePage.locator('[data-theme-option="dark"]').click();
   assert.equal(await storagePage.locator('html').getAttribute('data-theme'), 'dark');
   assert.deepEqual(errors, []);
   await capture(storagePage, 'storage-denied-dark');
