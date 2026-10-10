@@ -24,6 +24,7 @@ export const site = {
   location: 'Córdoba, Argentina',
   email: 'ignabelitzky@gmail.com',
   github: 'https://github.com/ignabelitzky',
+  linkedin: 'https://www.linkedin.com/in/ignacio-belitzky',
   origin: 'https://ignaciobelitzky.dev',
   indexable: true,
   analytics: { enabled: false },
