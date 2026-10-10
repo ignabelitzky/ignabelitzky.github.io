@@ -1,61 +1,20 @@
-# Current release checklist scope — Phase 8
+# Improvement release checklist — current candidate
 
-The checklist below is retained from Phase 7 preparation. Phase 7 was deployed and accepted. For Phase 8, domain configuration is authorized, the configured origin is `https://ignaciobelitzky.dev`, and Pages Source stays GitHub Actions. Use `DONWEB_DOMAIN_SETUP.md` for the domain-specific checks. For every new commit, verify successful CI, manually release the exact approved SHA, clear the approval marker and independently verify HTTPS/artifact bytes. Old unchecked boxes are historical and do not describe the current repository status.
+This is the current improvement checklist. Earlier original-build approvals do not authorize this candidate's publication.
 
-# Release checklist
+- [x] Phase 1 copy/direction approved; Phase 2 implemented; Phase 3 authorized with browser QA required.
+- [x] Existing local candidate isolated; original Phase 2 checkout preserved.
+- [x] Sticky header, Phosphor/Inter, bilingual copy, DACOR 2023–present/case study, refined layouts and Writing rule implemented.
+- [x] Actual browser QA, local screenshots, focused keyboard/touch/OS/storage tests and automated accessibility checks executed.
+- [x] Build/types/lint/format/node/build-output/contrast checks and dependency/link audit executed; see QA report for exact results and limits.
+- [x] Asset bytes and approved copy/research credit preserved; no new project media, dependency or tracking.
+- [x] Read-only current main and successful manual deployment identified for rollback.
+- [x] Source diff, build manifest, review evidence and maintenance notes prepared.
+- [ ] Owner accepts this concrete candidate and expressly authorizes Phase 4 source integration/publication.
+- [ ] Recheck actual checkout/main/settings; preserve newer or unrelated work.
+- [ ] Integrate reviewed diff; record actual remote main SHA and successful CI. Local reconstructed SHA is not a release SHA.
+- [ ] Verify authorization covers exact resulting source; set approval variable and dispatch manual workflow with matching SHA/PUBLISH.
+- [ ] Confirm successful deploy; verify actual HTTPS/routes/assets/themes/locales/404/indexing and archive evidence.
+- [ ] Clear approval marker and record actual deployed SHA/run and rollback target.
 
-Phase 6 was approved and public repository creation/source upload/indexing/Pages/publication were authorized on 2026-10-09. Unchecked boxes remain unexecuted tasks. This checklist does not certify an actual release.
-
-## Phase 6 prepared result
-
-- [x] Phase 5 approved 2026-10-09, including deliberate prelaunch SEO 66.
-- [x] Local CI/release YAML prepared separately; actions pinned to inspected official commits.
-- [x] CI uses push/PR and read-only permissions; no deployment.
-- [x] Manual-only release checks target repo/main/exact approval SHA/confirmation.
-- [x] Tested source/configured origin is `https://ignabelitzky.github.io` with no project base.
-- [x] Web UI and Fedora paths, plan/visibility boundaries and rollback instructions supplied.
-- [x] Repository upload payload excludes internal brief/evidence/working notes.
-- [x] Owner accepts Phase 6 and specifically authorizes public repository creation/source upload.
-- [x] Owner confirms target repository does not exist; connected account verified as ignabelitzky.
-
-## Repository preparation — separate specific authorization
-
-- [ ] Confirm exact target while signed in; inspect existing content, workflows, settings and deployments.
-- [x] Owner approves creating the absent repository as public and uploading reviewed source.
-- [ ] Decide source visibility/plan later without assuming private-source Pages is private hosting.
-- [ ] Review repository upload ZIP tree, committed files and source privacy; choose a license only if desired.
-- [ ] Push to agreed main/feature branch, inspect actual CI run and supported branch controls.
-- [ ] Until successful CI on the release commit, keep Pages deployment unexecuted and the approval marker unset. Phase 7 itself is already authorized.
-
-## Phase 7 before publication
-
-- [x] Explicit authorization received for public source and public portfolio publication.
-- [ ] Accept exact public inventory and empty Writing/CV-disabled/media/content decisions.
-- [x] Indexing enabled by explicit authorization; build/E2E/source assertions and SEO gate updated. Fresh checks are recorded in the candidate report; hosted execution remains pending.
-- [ ] Run clean locked install and all critical tests on exact intended main commit; successful actual CI.
-- [ ] Review screenshots/accessibility/Lighthouse results and remaining limits; no known high/critical defects.
-- [ ] Confirm current supported Node/npm/actions, plan usage/budget and Pages prerequisites.
-- [ ] Pages Source set to GitHub Actions only after approval; correct root URL/no custom domain.
-- [ ] Protect github-pages environment with main-only branch and reviewers when supported; confirm effective UI state.
-- [ ] Record the full approved SHA; no main changes after approval.
-- [ ] Set repository variable PAGES_APPROVED_SHA to that SHA; manually dispatch main with same SHA and PUBLISH.
-
-## After dispatch
-
-- [ ] Build/test/lockfile validation succeeds; correct tested dist-only Pages artifact and manifest.
-- [ ] Confirm required environment approval if configured; actual deployment job succeeds.
-- [ ] Download run evidence; capture run URLs, full SHA, timestamps and artifact hashes.
-- [ ] Independently check HTTPS EN/ES routes, eight project details, media/link behavior, assets/MIME, themes, mobile/keyboard, 404, canonical/hreflang, robots and sitemap.
-- [ ] Re-run hosted critical browser and mobile Lighthouse checks; actual hosted SEO matches approved state.
-- [ ] Verify no unexpected private content, scripts, cookies or third-party runtime requests.
-- [ ] Clear PAGES_APPROVED_SHA. If approval is withdrawn, cancel any run already beyond guard.
-- [ ] Owner accepts the live site; fill RELEASE_RECORD.md with actual evidence and known-good rollback SHA.
-- [ ] Stop. Do not add automatic deployment, domains/DNS or a purchased service.
-
-## Failure/rollback
-
-- [ ] Record failing step; cancel pending releases and clear approval marker.
-- [ ] For sensitive exposure, unpublish promptly; acknowledge that rollback cannot erase caches/history.
-- [ ] Select known-good source, review a new revert/fix commit, pass tests/CI, obtain exact-SHA approval.
-- [ ] Manually redeploy rollback; a source push alone does not deploy.
-- [ ] Smoke-test rollback, archive record/evidence, clear marker and notify owner with actual outcome.
+**STOP — awaiting publication authorization.** No push, merge, dispatch or production change has occurred in these improvement phases. Read GITHUB_PAGES_DEPLOYMENT.md for the precise procedure and rollback.
