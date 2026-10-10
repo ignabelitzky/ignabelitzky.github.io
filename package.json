@@ -17,7 +17,7 @@
     "check:ts": "tsc --noEmit",
     "format": "prettier --write src tests scripts astro.config.mjs eslint.config.mjs package.json tsconfig.json playwright.config.ts .github/workflows/*.yml",
     "format:check": "prettier --check src tests scripts astro.config.mjs eslint.config.mjs package.json tsconfig.json playwright.config.ts .github/workflows/*.yml",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
     "test:build": "node scripts/validate-build.mjs",
     "validate": "npm run format:check && npm run lint && npm run check && npm run check:ts && npm test && npm run build && npm run test:build && npm run audit:source",
     "test:e2e": "playwright test",
