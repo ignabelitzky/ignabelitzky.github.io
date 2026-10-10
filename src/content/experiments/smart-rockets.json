@@ -7,10 +7,10 @@
   "technologies": ["C++", "SFML"],
   "translations": {
     "en": {
-      "summary": "A visual evolutionary experiment using selection, crossover, and mutation to evolve rocket trajectories toward a target."
+      "summary": "An evolutionary simulation in which rocket populations are evaluated by target proximity, then combined and mutated to form new generations."
     },
     "es": {
-      "summary": "Un experimento evolutivo visual que usa selección, cruce y mutación para desarrollar trayectorias hacia un objetivo."
+      "summary": "Una simulación evolutiva que evalúa poblaciones de cohetes según su cercanía al objetivo y combina y muta sus datos para formar nuevas generaciones."
     }
   },
   "recording": "https://www.youtube.com/watch?v=qhOWHsmHPQg"

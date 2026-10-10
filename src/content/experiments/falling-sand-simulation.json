@@ -7,10 +7,10 @@
   "technologies": ["C++", "SFML"],
   "translations": {
     "en": {
-      "summary": "A basic grid experiment in which randomly spawned grains fall into empty cells below."
+      "summary": "A grid-based falling-sand experiment where local movement rules produce accumulating particle patterns."
     },
     "es": {
-      "summary": "Un experimento básico de cuadrícula en el que los granos aparecen en columnas aleatorias y caen a las celdas vacías inferiores."
+      "summary": "Un experimento de arena en una grilla, donde reglas locales de movimiento generan patrones de partículas que se acumulan."
     }
   }
 }
