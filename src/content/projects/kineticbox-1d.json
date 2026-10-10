@@ -9,18 +9,28 @@
   "technologies": ["C99", "OpenMP", "GCC", "GNU Make"],
   "translations": {
     "en": {
-      "summary": "A one-dimensional gas simulation in C/OpenMP, with a limited contribution to an existing academic codebase.",
-      "engineeringFocus": "Parallel particle updates, statistical output, input validation, and checkpoint handling are visible in the public code.",
-      "features": [],
-      "role": "My contribution to the existing simulation code was small relative to the broader research team's work.",
-      "context": "KineticBox 1D is connected to the collaborative preprint The problem of relaxation to equilibrium."
+      "summary": "A C/OpenMP simulation of a confined one-dimensional gas, presented here as a small software contribution to an existing academic project.",
+      "context": "The simulation follows particle positions and momenta under boundary interactions and records their statistical distributions. It is associated with the research preprint The problem of relaxation to equilibrium.",
+      "features": [
+        "Evolve particles in a one-dimensional container with configurable parameters.",
+        "Apply stochastic changes at boundary interactions.",
+        "Record position and momentum histograms and χ²-based statistics.",
+        "Save and resume simulation state; parallelize selected loops with OpenMP."
+      ],
+      "engineeringFocus": "The existing code separates parameter loading, particle evolution, and statistical output. OpenMP is used in selected loops, and per-thread random states support the stochastic calculations.",
+      "role": "I made a small contribution to the existing simulation code. The physical model and the vast majority of the research were developed by the broader team. I am listed as a coauthor of the preprint; that authorship is distinct from the limited scope of my software contribution."
     },
     "es": {
-      "summary": "Una simulación de gas unidimensional en C y OpenMP, con una contribución limitada a un código académico existente.",
-      "engineeringFocus": "El código público muestra actualizaciones paralelas de partículas, salidas estadísticas, validación de parámetros y manejo de archivos para guardar o retomar la simulación.",
-      "features": [],
-      "role": "Mi aporte al código existente de la simulación fue pequeño en relación con el trabajo del equipo de investigación.",
-      "context": "KineticBox 1D está vinculado al preprint colaborativo The problem of relaxation to equilibrium."
+      "summary": "Una simulación en C y OpenMP de un gas unidimensional confinado, presentada como una pequeña contribución de software a un proyecto académico existente.",
+      "context": "La simulación sigue las posiciones y los momentos lineales de las partículas cuando interactúan con los límites y registra sus distribuciones estadísticas. Está vinculada con el preprint The problem of relaxation to equilibrium.",
+      "features": [
+        "Evolucionar partículas en un recipiente unidimensional con parámetros configurables.",
+        "Aplicar cambios aleatorios durante las interacciones con los límites.",
+        "Registrar histogramas de posición y momento lineal, y medidas basadas en χ².",
+        "Guardar y retomar el estado de la simulación; paralelizar ciertos bucles con OpenMP."
+      ],
+      "engineeringFocus": "El código existente separa la carga de parámetros, la evolución de las partículas y la salida estadística. OpenMP se utiliza en determinados bucles y los estados aleatorios por hilo intervienen en los cálculos estocásticos.",
+      "role": "Realicé una pequeña contribución al código existente de la simulación. El modelo físico y la gran mayoría de la investigación fueron desarrollados por el equipo. Figuro como coautor del preprint; esa autoría es distinta del alcance limitado de mi contribución al software."
     }
   },
   "research": {

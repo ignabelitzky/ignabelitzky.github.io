@@ -9,28 +9,28 @@
   "technologies": ["C++23", "SFML", "GNU Make"],
   "translations": {
     "en": {
-      "summary": "An interactive C++/SFML flocking simulation built around separation, alignment, and cohesion.",
-      "context": "Exploring how simple local rules combine into group movement.",
-      "engineeringFocus": "Each agent combines nearby agents' positions and velocities into steering forces. Adjustable parameters make the relationship between individual rules and the visible flock easier to explore.",
-      "role": "Development work represented in my public repository.",
+      "summary": "An interactive C++/SFML flocking simulation with adjustable separation, alignment, and cohesion parameters.",
+      "context": "A visual exploration of how local steering rules produce collective movement. Sliders make the influence of those rules visible while the simulation runs.",
       "features": [
-        "Three flocking rules",
-        "wraparound movement",
-        "on-screen controls for steering parameters and perception radius",
-        "graphical rendering with SFML"
-      ]
+        "Simulate agents following separation, alignment, and cohesion rules.",
+        "Adjust steering speeds and forces through sliders.",
+        "Wrap agents around the window boundaries.",
+        "Render each agent’s orientation from its velocity."
+      ],
+      "engineeringFocus": "Each steering rule examines nearby agents within a perception radius and contributes to acceleration. The update loop uses a fixed simulation interval and renders with SFML. Neighbor checks scan the flock directly, making this a clear baseline implementation for studying flocking behavior.",
+      "role": "I implemented the agent behavior, simulation loop, visual presentation, and interactive parameter controls."
     },
     "es": {
-      "summary": "Una simulación interactiva de movimiento colectivo en C++ y SFML, basada en separación, alineación y cohesión.",
-      "context": "Explorar cómo reglas locales simples producen movimiento en grupo.",
-      "engineeringFocus": "Cada agente combina posiciones y velocidades de agentes cercanos para calcular fuerzas de dirección. Los parámetros ajustables permiten explorar la relación entre las reglas individuales y el movimiento visible del grupo.",
-      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "summary": "Una simulación interactiva de comportamiento de bandada en C++ y SFML, con parámetros ajustables de separación, alineación y cohesión.",
+      "context": "Una exploración visual de cómo reglas locales de movimiento producen un comportamiento colectivo. Los controles permiten observar el efecto de esas reglas durante la simulación.",
       "features": [
-        "Tres reglas de movimiento colectivo",
-        "continuidad entre bordes",
-        "controles en pantalla para los parámetros de movimiento y el radio de percepción",
-        "representación gráfica con SFML"
-      ]
+        "Simular agentes con reglas de separación, alineación y cohesión.",
+        "Ajustar velocidades y fuerzas de movimiento mediante controles deslizantes.",
+        "Hacer que los agentes reaparezcan al cruzar los bordes de la ventana.",
+        "Representar la orientación de cada agente a partir de su velocidad."
+      ],
+      "engineeringFocus": "Cada regla examina los agentes dentro de un radio de percepción y aporta a la aceleración. El bucle usa un intervalo fijo de simulación y renderiza con SFML. La búsqueda de vecinos recorre directamente la bandada, por lo que ofrece una implementación base clara para estudiar su comportamiento.",
+      "role": "Implementé el comportamiento de los agentes, el bucle de simulación, la representación visual y los controles interactivos de parámetros."
     }
   },
   "recording": "https://www.youtube.com/watch?v=skfMvKqt_Qw"

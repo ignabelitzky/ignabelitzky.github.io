@@ -9,30 +9,28 @@
   "technologies": ["C++17", "Qt Widgets", "JSON", "CMake"],
   "translations": {
     "en": {
-      "summary": "A C++/Qt application for exploring chemical elements through a searchable, color-coded periodic table.",
-      "context": "Bringing structured element information into a desktop interface.",
-      "engineeringFocus": "Element data is loaded separately from the interface, then used to build navigable table entries and detailed views.",
-      "role": "Development work represented in my public repository.",
+      "summary": "A C++/Qt desktop periodic table with element-name search, category colors, and detailed property dialogs.",
+      "context": "An interactive reference for browsing chemical elements and inspecting their properties in a desktop interface.",
       "features": [
-        "Clickable elements",
-        "detail dialogs",
-        "search by name with completion",
-        "category colors and legend",
-        "JSON-backed element data"
-      ]
+        "Browse elements in a color-coded periodic-table layout.",
+        "Search element names with completion suggestions.",
+        "Open a property dialog for a selected element.",
+        "Show contextual element information on hover."
+      ],
+      "engineeringFocus": "Element data is loaded from JSON into C++ objects. The Qt interface connects element buttons to property dialogs, while a completer supports name-based lookup. Category styling and the legend organize the reference visually.",
+      "role": "I developed the Qt interface, element-data loading, search, and property-display interactions."
     },
     "es": {
-      "summary": "Una aplicación en C++ y Qt para explorar elementos químicos mediante una tabla periódica con búsqueda y categorías identificadas por color.",
-      "context": "Llevar información estructurada de los elementos a una interfaz de escritorio.",
-      "engineeringFocus": "Los datos se cargan por separado de la interfaz y se usan para construir la tabla y sus vistas de información detallada.",
-      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "summary": "Una tabla periódica de escritorio en C++ y Qt, con búsqueda por nombre, colores por categoría y ventanas con propiedades de cada elemento.",
+      "context": "Una referencia interactiva para recorrer los elementos químicos y consultar sus propiedades desde una interfaz de escritorio.",
       "features": [
-        "Elementos seleccionables",
-        "ventanas de información detallada",
-        "búsqueda por nombre con autocompletado",
-        "colores y referencias de categorías",
-        "datos de elementos en JSON"
-      ]
+        "Recorrer los elementos en una tabla periódica con colores por categoría.",
+        "Buscar por nombre con sugerencias de autocompletado.",
+        "Abrir una ventana con las propiedades del elemento seleccionado.",
+        "Mostrar información contextual al pasar el cursor sobre un elemento."
+      ],
+      "engineeringFocus": "Los datos se cargan desde JSON en objetos de C++. La interfaz de Qt conecta los botones de cada elemento con sus ventanas de propiedades y utiliza un autocompletador para la búsqueda por nombre. Los colores y la leyenda organizan visualmente las categorías.",
+      "role": "Desarrollé la interfaz en Qt, la carga de datos, la búsqueda y las interacciones para mostrar las propiedades."
     }
   }
 }

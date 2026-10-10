@@ -9,30 +9,28 @@
   "technologies": ["Python", "Tkinter", "Whisper", "FFmpeg"],
   "translations": {
     "en": {
-      "summary": "A Python desktop tool that combines Whisper transcription and FFmpeg audio extraction in a dialog-based subtitle workflow.",
-      "context": "Connecting existing transcription and media tools through a small graphical workflow.",
-      "engineeringFocus": "The workflow connects file selection, audio preparation, transcription, and timestamped text output. Model and language choices are available through Tkinter dialogs.",
-      "role": "Development of the integration workflow represented in my public repository; Whisper is an existing external model.",
+      "summary": "A Python prototype combining FFmpeg audio extraction, Whisper transcription, and a Tkinter workflow for preparing subtitles.",
+      "context": "A dialog-based tool for taking a video through audio extraction and transcription to a timestamped subtitle file.",
       "features": [
-        "Video-file selection",
-        "selectable Whisper models and language options",
-        "audio extraction",
-        "segment-based transcription",
-        "user-selected subtitle output path"
-      ]
+        "Select an input video and an output location.",
+        "Extract mono, 16 kHz WAV audio through FFmpeg.",
+        "Choose a Whisper model and a language.",
+        "Write the transcription segments with their start and end times."
+      ],
+      "engineeringFocus": "The workflow separates file selection, extraction, model options, and transcription into modules. FFmpeg prepares the audio for Whisper, and the transcription segments supply the text and timing for the output. This version remains a prototype.",
+      "role": "I developed the Python workflow and integrated the file dialogs, audio-extraction command, model options, and transcription output."
     },
     "es": {
-      "summary": "Una herramienta de escritorio en Python que integra la transcripción con Whisper y la extracción de audio con FFmpeg en un flujo de subtitulado basado en diálogos.",
-      "context": "Conectar herramientas existentes de transcripción y procesamiento multimedia mediante una interfaz gráfica sencilla.",
-      "engineeringFocus": "El flujo conecta la selección del archivo, la preparación del audio, la transcripción y la escritura de texto con marcas de tiempo. Los modelos e idiomas se eligen mediante diálogos de Tkinter.",
-      "role": "Desarrollo del flujo de integración reflejado en mi repositorio público; Whisper es un modelo externo existente.",
+      "summary": "Un prototipo en Python que combina extracción de audio con FFmpeg, transcripción con Whisper y un flujo en Tkinter para preparar subtítulos.",
+      "context": "Una herramienta basada en diálogos para extraer el audio de un video, transcribirlo y preparar un archivo de subtítulos con marcas de tiempo.",
       "features": [
-        "Selección del video",
-        "elección del modelo de Whisper y del idioma",
-        "extracción de audio",
-        "transcripción por segmentos",
-        "elección de la ubicación del archivo de subtítulos"
-      ]
+        "Seleccionar un video de entrada y una ubicación de salida.",
+        "Extraer audio WAV mono de 16 kHz mediante FFmpeg.",
+        "Elegir un modelo de Whisper y un idioma.",
+        "Escribir los segmentos transcritos con sus tiempos de inicio y fin."
+      ],
+      "engineeringFocus": "El flujo separa en módulos la selección de archivos, la extracción, las opciones del modelo y la transcripción. FFmpeg prepara el audio para Whisper y los segmentos obtenidos aportan el texto y los tiempos de salida. Esta versión sigue siendo un prototipo.",
+      "role": "Desarrollé el flujo en Python e integré los diálogos, el comando de extracción de audio, las opciones del modelo y la salida de la transcripción."
     }
   }
 }

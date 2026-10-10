@@ -9,30 +9,28 @@
   "technologies": ["C++17", "Qt Widgets", "Qt Network", "Qt SQL", "SQLite", "qmake"],
   "translations": {
     "en": {
-      "summary": "A C++/Qt desktop reader that fetches RSS and Atom feeds, manages feed settings locally, and displays articles through Qt's Model/View architecture.",
-      "context": "A desktop workflow for following multiple feeds and opening articles in a browser.",
-      "engineeringFocus": "Fetching, parsing, persistence, and presentation have separate responsibilities. Qt table models connect feed and article data to the interface, while the parser handles common date formats and differences between RSS and Atom.",
-      "role": "Development work represented in my public repository.",
+      "summary": "A C++/Qt feed reader with asynchronous RSS and Atom fetching, searchable feed settings, and local SQLite storage.",
+      "context": "A desktop application for following several feeds in one place and opening individual articles in a web browser.",
       "features": [
-        "Asynchronous feed fetching",
-        "RSS and Atom parsing",
-        "feed-name search and editable settings",
-        "SQLite storage for feed metadata",
-        "article links that open in the browser"
-      ]
+        "Add, edit, enable, and remove feed sources.",
+        "Fetch and parse RSS and Atom feeds through Qt’s event-driven networking.",
+        "Search feed names and store source settings locally.",
+        "Display article data in Qt models and open article links in the browser."
+      ],
+      "engineeringFocus": "Fetching, XML parsing, persistence, and presentation are handled by separate components. Network replies carry a feed identifier so completed requests can be associated with the correct source. The parser handles RSS text links and Atom link attributes, and accepts several date formats.",
+      "role": "I developed the desktop application and its feed-management workflow, including the Qt interface, networking, parsing, and local persistence."
     },
     "es": {
-      "summary": "Un lector de escritorio en C++ y Qt que consulta fuentes RSS y Atom, guarda su configuración localmente y muestra artículos mediante la arquitectura Model/View de Qt.",
-      "context": "Una forma de seguir varias fuentes desde el escritorio y abrir sus artículos en el navegador.",
-      "engineeringFocus": "Las consultas, el análisis de datos, la persistencia y la presentación tienen responsabilidades separadas. Los modelos de tabla de Qt conectan los datos con la interfaz, mientras que el analizador contempla formatos de fecha comunes y diferencias entre RSS y Atom.",
-      "role": "Trabajo de desarrollo reflejado en mi repositorio público.",
+      "summary": "Un lector de feeds en C++ y Qt con descarga asíncrona de RSS y Atom, búsqueda de fuentes y almacenamiento local en SQLite.",
+      "context": "Una aplicación de escritorio para seguir varias fuentes desde un mismo lugar y abrir cada artículo en el navegador.",
       "features": [
-        "Consultas de fuentes asincrónicas",
-        "análisis de RSS y Atom",
-        "búsqueda de fuentes por nombre y configuración editable",
-        "almacenamiento de sus metadatos en SQLite",
-        "apertura de artículos en el navegador"
-      ]
+        "Agregar, editar, activar y eliminar fuentes.",
+        "Descargar y procesar feeds RSS y Atom mediante la red orientada a eventos de Qt.",
+        "Buscar fuentes por nombre y guardar su configuración de forma local.",
+        "Mostrar los artículos mediante modelos de Qt y abrir sus enlaces en el navegador."
+      ],
+      "engineeringFocus": "La descarga, el procesamiento de XML, la persistencia y la presentación se resuelven en componentes separados. Cada respuesta de red conserva el identificador de su fuente. El parser contempla enlaces de texto en RSS, atributos de enlace en Atom y distintos formatos de fecha.",
+      "role": "Desarrollé la aplicación de escritorio y su flujo de gestión de fuentes, incluida la interfaz en Qt, la descarga, el procesamiento y la persistencia local."
     }
   }
 }
