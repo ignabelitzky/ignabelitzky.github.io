@@ -143,7 +143,9 @@ for (const locale of ['en', 'es'] as const) {
       await expect(
         page.locator('main .project-row h3').getByRole('link', { name: project.name, exact: true }),
       ).toHaveAttribute('href', detailPath(locale, 'projects', project.slug));
-      await expect(page.locator(`main a[href="${project.source}"]`)).toHaveCount(1);
+      if (project.source) {
+        await expect(page.locator(`main a[href="${project.source}"]`)).toHaveCount(1);
+      }
     }
     await page.goto(routePath(locale, 'writing'));
     await expect(
@@ -267,7 +269,7 @@ test('JavaScript-disabled core navigation, content and OS-aware theme remain usa
     const nav = await navigation(page);
     await nav.getByRole('link', { name: 'Proyectos', exact: true }).click();
     await expect(page).toHaveURL('http://127.0.0.1:4321/es/projects/');
-    await expect(page.locator('main .project-row')).toHaveCount(9);
+    await expect(page.locator('main .project-row')).toHaveCount(projects.length);
   } finally {
     await context.close();
   }
