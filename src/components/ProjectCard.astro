@@ -34,9 +34,11 @@ const p = project.data;
       >
         {editorial[locale].detail} <span aria-hidden="true">→</span>
       </a>
-      <a class="text-link" href={p.source} aria-label={`${ui[locale].source} — ${p.name}`}>
-        {ui[locale].source} <span aria-hidden="true">↗</span>
-      </a>
+      {p.source && (
+        <a class="text-link" href={p.source} aria-label={`${ui[locale].source} — ${p.name}`}>
+          {ui[locale].source} <span aria-hidden="true">↗</span>
+        </a>
+      )}
     </div>
   </div>
 </article>

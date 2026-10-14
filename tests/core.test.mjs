@@ -92,8 +92,8 @@ const projectFiles = readdirSync(new URL('../src/content/projects/', import.meta
 const entries = projectFiles.map((file) =>
   JSON.parse(readFileSync(new URL('../src/content/projects/' + file, import.meta.url), 'utf8')),
 );
-test('All nine public project entries validate against the actual project schema', () => {
-  assert.equal(entries.length, 9);
+test('All ten portfolio project entries validate against the actual project schema', () => {
+  assert.equal(entries.length, 10);
   for (const entry of entries) assert.equal(projectSchema.safeParse(entry).success, true);
   assert.equal(new Set(entries.map((p) => p.slug)).size, entries.length);
   assert.deepEqual(
@@ -108,6 +108,7 @@ test('All nine public project entries validate against the actual project schema
       'Tiny Programs',
       'KineticBox 1D',
       'Veterinaria DACOR',
+      'ElectroCuprum',
     ],
   );
 });
@@ -133,6 +134,10 @@ test('Schema rejects missing translations, unsafe URLs, invalid slugs and unveri
       'https://www.veterinariadacor.com/?token=fixture',
       'https://name@www.veterinariadacor.com/',
       'https://www.veterinariadacor.com/path/',
+      'http://www.electrocuprum.com/',
+      'https://www.electrocuprum.com/?token=fixture',
+      'https://name@www.electrocuprum.com/',
+      'https://www.electrocuprum.com/path/',
     ].map((website) => ({ ...source, website })),
   ];
   for (const entry of failures) assert.equal(projectSchema.safeParse(entry).success, false);
@@ -166,7 +171,12 @@ test('Featured order, public source attribution and research credit remain exact
         : p.slug === 'kineticbox-1d'
           ? 'kinetic-box-1d'
           : p.slug;
-    assert.equal(p.source, `https://github.com/ignabelitzky/${repo}`);
+    if (p.slug === 'electrocuprum') {
+      assert.equal(p.source, undefined);
+      assert.equal(p.website, 'https://www.electrocuprum.com/');
+    } else {
+      assert.equal(p.source, `https://github.com/ignabelitzky/${repo}`);
+    }
     for (const locale of ['en', 'es']) {
       assert.ok(p.translations[locale].context);
       assert.ok(p.translations[locale].engineeringFocus);

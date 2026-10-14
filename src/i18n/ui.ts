@@ -21,6 +21,8 @@ interface Copy {
   explore: string;
   touch: string;
   selected: string;
+  latestWebWork: string;
+  webWorkIntroduction: string;
   all: string;
   source: string;
   aboutHeading: string;
@@ -72,9 +74,9 @@ export const ui = {
     descriptions: {
       home: 'Ignacio Belitzky, Software Developer in Córdoba, Argentina. Explore C++ and Qt applications, visual simulations, tools, and practical web development.',
       projects:
-        'Explore Ignacio Belitzky’s desktop applications, simulations, software tools, and work for Veterinaria DACOR.',
+        'Explore Ignacio Belitzky’s desktop applications, simulations, software tools, and websites for ElectroCuprum and Veterinaria DACOR.',
       about:
-        'Ignacio Belitzky’s software-development work, technical interests, and ongoing website development and IT support for Veterinaria DACOR.',
+        'Ignacio Belitzky’s software-development work, technical interests, websites for ElectroCuprum and Veterinaria DACOR, and ongoing IT support.',
       contact: 'Contact Ignacio Belitzky about software-development opportunities or his projects.',
       gallery:
         'Explore Tiny Programs: Ignacio Belitzky’s experiments in graphics, particle behavior, numerical simulation, and algorithms.',
@@ -99,11 +101,14 @@ export const ui = {
     explore: 'Explore projects',
     touch: 'Get in touch',
     selected: 'Selected work',
+    latestWebWork: 'Latest web development work',
+    webWorkIntroduction:
+      'Websites built for local businesses, from service information and contact paths to content management and deployment.',
     all: 'All projects',
     source: 'View source',
     aboutHeading: 'About my work',
     biography:
-      'My public work ranges from Qt applications and C++ simulations to Python tools and interactive Unity projects. I also develop and maintain the website for Veterinaria DACOR and provide ongoing IT support.',
+      'My public work ranges from Qt applications and C++ simulations to Python tools and interactive Unity projects. I also build websites for local businesses, including ElectroCuprum and Veterinaria DACOR, where I provide ongoing website maintenance and IT support.',
     more: 'More about me',
     interests: 'Technical interests',
     interestItems: [
@@ -158,9 +163,9 @@ export const ui = {
     descriptions: {
       home: 'Ignacio Belitzky, Software Developer de Córdoba, Argentina. Aplicaciones en C++ y Qt, simulaciones visuales, herramientas y desarrollo web.',
       projects:
-        'Explorá las aplicaciones de escritorio, simulaciones, herramientas y el trabajo de Ignacio Belitzky para Veterinaria DACOR.',
+        'Explorá las aplicaciones de escritorio, simulaciones, herramientas y los sitios de Ignacio Belitzky para ElectroCuprum y Veterinaria DACOR.',
       about:
-        'El trabajo de Ignacio Belitzky en desarrollo de software, sus intereses técnicos y el desarrollo web y soporte informático continuo para Veterinaria DACOR.',
+        'El trabajo de Ignacio Belitzky en desarrollo de software, sus intereses técnicos, los sitios para ElectroCuprum y Veterinaria DACOR y el soporte informático continuo.',
       contact:
         'Contactá a Ignacio Belitzky por oportunidades de desarrollo de software o consultas sobre sus proyectos.',
       gallery:
@@ -186,11 +191,14 @@ export const ui = {
     explore: 'Explorá los proyectos',
     touch: 'Contactame',
     selected: 'Proyectos destacados',
+    latestWebWork: 'Últimos trabajos en desarrollo web',
+    webWorkIntroduction:
+      'Sitios para empresas locales, desde la presentación de servicios y las opciones de contacto hasta la administración de contenido y la publicación.',
     all: 'Todos los proyectos',
     source: 'Ver código fuente',
     aboutHeading: 'Sobre mi trabajo',
     biography:
-      'Mis proyectos públicos incluyen aplicaciones en Qt, simulaciones en C++, herramientas en Python y proyectos interactivos en Unity. También desarrollo y mantengo el sitio de Veterinaria DACOR y brindo soporte informático continuo.',
+      'Mis proyectos públicos incluyen aplicaciones en Qt, simulaciones en C++, herramientas en Python y proyectos interactivos en Unity. También desarrollo sitios para empresas locales, como ElectroCuprum y Veterinaria DACOR, donde brindo mantenimiento web y soporte informático continuo.',
     more: 'Más sobre mí',
     interests: 'Intereses técnicos',
     interestItems: [

@@ -1,0 +1,38 @@
+{
+  "slug": "electrocuprum",
+  "name": "ElectroCuprum",
+  "category": "web",
+  "order": 10,
+  "featured": false,
+  "treatment": "neutral",
+  "website": "https://www.electrocuprum.com/",
+  "technologies": ["Astro", "TypeScript", "CSS", "JavaScript", "Sanity", "Cloudflare Pages"],
+  "translations": {
+    "en": {
+      "summary": "A website for an electrical services and solar energy business, with a service directory, project gallery, WhatsApp inquiries, and content managed through Sanity.",
+      "context": "ElectroCuprum provides electrical installation and maintenance services and photovoltaic solar energy solutions. In 2026, I developed its website to present the business, explain its services, showcase completed work, and make it easier for visitors to get in touch. The site applies ElectroCuprum’s visual identity across desktop and mobile layouts.",
+      "features": [
+        "Browse electrical services and photovoltaic solar energy solutions.",
+        "Explore featured work and a paginated photo gallery, with an accessible image viewer.",
+        "Prepare an inquiry and continue the conversation through WhatsApp, or contact the business by email and social links.",
+        "Edit services, photographs, texts, and contact details in a dedicated Sanity Studio.",
+        "Automatically rebuild and publish the website when code or published CMS content changes."
+      ],
+      "engineeringFocus": "Astro generates static pages from published Sanity content at build time. TypeScript, CSS, and native JavaScript handle the responsive interface, gallery, and WhatsApp inquiry flow. Images use Sanity’s CDN with responsive sizes and lazy loading. Cloudflare Pages hosts the site, with automated deployment from GitHub and rebuilds triggered by Sanity content updates. Domain configuration connects electrocuprum.com and www.electrocuprum.com to the published site over HTTPS.",
+      "role": "I implemented the website, applied the brand identity, configured Sanity Studio and its content schemas, and connected GitHub, Cloudflare Pages, and the custom domain. I also prepared administrator documentation and verified the content publishing workflow, responsive layouts, and contact interactions."
+    },
+    "es": {
+      "summary": "Un sitio para una empresa de servicios eléctricos y energía solar, con información de servicios, galería de trabajos, consultas por WhatsApp y contenido administrable desde Sanity.",
+      "context": "ElectroCuprum ofrece servicios de instalación y mantenimiento eléctrico y soluciones de energía solar fotovoltaica. En 2026 desarrollé su sitio para presentar la empresa, explicar sus servicios, mostrar trabajos realizados y facilitar el contacto. El diseño aplica la identidad visual de ElectroCuprum en computadoras y dispositivos móviles.",
+      "features": [
+        "Consultar servicios eléctricos y soluciones de energía solar fotovoltaica.",
+        "Recorrer trabajos destacados y una galería de fotos con paginación y un visor de imágenes accesible.",
+        "Preparar una consulta y continuar la conversación por WhatsApp, o contactar a la empresa por correo y enlaces a redes sociales.",
+        "Editar servicios, fotografías, textos y datos de contacto desde un Sanity Studio independiente.",
+        "Compilar y publicar automáticamente el sitio cuando cambia el código o el contenido publicado en el CMS."
+      ],
+      "engineeringFocus": "Astro genera páginas estáticas a partir del contenido publicado en Sanity durante la compilación. TypeScript, CSS y JavaScript nativo resuelven la interfaz adaptable, la galería y el flujo de consultas por WhatsApp. Las imágenes utilizan la CDN de Sanity con tamaños responsive y carga diferida. Cloudflare Pages aloja el sitio, con despliegues automáticos desde GitHub y recompilaciones al actualizar contenido en Sanity. La configuración del dominio conecta electrocuprum.com y www.electrocuprum.com con el sitio publicado mediante HTTPS.",
+      "role": "Implementé el sitio, apliqué la identidad de marca, configuré Sanity Studio y sus esquemas de contenido, y conecté GitHub, Cloudflare Pages y el dominio propio. También preparé documentación para el administrador y verifiqué el circuito de publicación de contenido, las vistas en distintos dispositivos y las interacciones de contacto."
+    }
+  }
+}

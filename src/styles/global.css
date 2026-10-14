@@ -1182,17 +1182,18 @@ figure {
   align-items: center;
 }
 
-.dacor-preview {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
+.web-work-preview {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
 }
-.dacor-preview > div {
+.web-work-preview > p {
   max-width: 70ch;
 }
-.dacor-preview .text-link {
-  flex: none;
+.web-work-preview h3 a {
+  text-decoration: none;
+}
+.web-work-preview h3 a:hover {
+  text-decoration: underline;
 }
 .responsibilities {
   color: var(--muted);
@@ -1205,9 +1206,6 @@ figure {
   max-width: 70ch;
 }
 @media (max-width: 767px) {
-  .dacor-preview {
-    display: block;
-  }
   .hero .eyebrow {
     letter-spacing: 0.02em;
   }

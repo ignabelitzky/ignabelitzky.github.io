@@ -33,30 +33,35 @@ export const projectSchema = z
     order: z.number().int().positive(),
     featured: z.boolean().default(false),
     treatment: z.enum(['neutral', 'inverse', 'soft']).default('neutral'),
-    source: z.url().refine((value) => {
-      const url = new URL(value);
-      return (
-        url.origin === 'https://github.com' &&
-        !url.username &&
-        !url.password &&
-        !url.search &&
-        !url.hash &&
-        /^\/ignabelitzky\/[A-Za-z0-9_.-]+\/?$/.test(url.pathname)
-      );
-    }, 'Use the approved public GitHub project source'),
+    source: z
+      .url()
+      .refine((value) => {
+        const url = new URL(value);
+        return (
+          url.origin === 'https://github.com' &&
+          !url.username &&
+          !url.password &&
+          !url.search &&
+          !url.hash &&
+          /^\/ignabelitzky\/[A-Za-z0-9_.-]+\/?$/.test(url.pathname)
+        );
+      }, 'Use the approved public GitHub project source')
+      .optional(),
     website: z
       .url()
       .refine((value) => {
         const url = new URL(value);
         return (
-          url.origin === 'https://www.veterinariadacor.com' &&
+          ['https://www.veterinariadacor.com', 'https://www.electrocuprum.com'].includes(
+            url.origin,
+          ) &&
           !url.username &&
           !url.password &&
           !url.search &&
           !url.hash &&
           url.pathname === '/'
         );
-      }, 'Use the approved HTTPS DACOR website')
+      }, 'Use an approved HTTPS client website')
       .optional(),
     technologies: z.array(nonempty).min(1),
     recording: recordingSchema.optional(),
@@ -76,7 +81,8 @@ export const projectSchema = z
       .optional(),
     translations: z.object({ en: localizedProjectSchema, es: localizedProjectSchema }).strict(),
   })
-  .strict();
+  .strict()
+  .refine((entry) => Boolean(entry.source || entry.website), 'Provide a public source or website');
 
 export type ProjectData = z.infer<typeof projectSchema>;
 
