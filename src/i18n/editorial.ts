@@ -39,7 +39,7 @@ export const editorial = {
     research_text:
       'I made a small software contribution to KineticBox 1D, a C/OpenMP simulation associated with the preprint The problem of relaxation to equilibrium. The project page explains my contribution and credits the research team.',
     projects_intro:
-      'Desktop applications, visual simulations, developer tools, and a website built for a local business. Explore the projects to see how they work and the code behind them.',
+      'Desktop applications, visual simulations, developer tools, and websites built for local businesses. Explore the projects to see how they work and, where available, the code behind them.',
     back: 'Back to projects',
     context: 'Project overview',
     features: 'What it does',
@@ -70,6 +70,7 @@ export const editorial = {
       'My public projects include feed readers, terminal video rendering, visual simulations, and tools for working with data. I also use Python and Unity when the project calls for a different approach.',
       'I’m particularly interested in parallel computing, algorithms, and software performance. Building and sharing these projects gives me a practical way to explore those areas.',
       'Since 2023, I have also worked with Veterinaria DACOR on its website, digital brand assets, computer assembly, and ongoing technical support.',
+      'In 2026, I developed ElectroCuprum’s website with Astro and Sanity, including its service pages, project gallery, contact flow, and automated publication on Cloudflare Pages.',
     ],
     technologyGroups: [
       ['Desktop development', 'C++, Qt Widgets, Qt Network, Qt SQL, SQLite'],
@@ -77,7 +78,7 @@ export const editorial = {
       ['Tools and interactive applications', 'Python, Whisper, FFmpeg, Tkinter; C# and Unity'],
       [
         'Web development',
-        'HTML, CSS, JavaScript; Astro, Tailwind CSS, and TypeScript in this portfolio',
+        'Astro, TypeScript, HTML, CSS, JavaScript, Sanity, Cloudflare Pages; Tailwind CSS in this portfolio',
       ],
       ['Build tools', 'qmake, CMake, GNU Make'],
     ],
@@ -88,7 +89,7 @@ export const editorial = {
     research_text:
       'Realicé una pequeña contribución de software a KineticBox 1D, una simulación en C y OpenMP vinculada con el preprint The problem of relaxation to equilibrium. La página del proyecto explica mi participación y reconoce al equipo de investigación.',
     projects_intro:
-      'Aplicaciones de escritorio, simulaciones visuales, herramientas y un sitio desarrollado para un comercio local. Explorá los proyectos para conocer cómo funcionan y consultar su código.',
+      'Aplicaciones de escritorio, simulaciones visuales, herramientas y sitios desarrollados para empresas locales. Explorá los proyectos para conocer cómo funcionan y, cuando esté disponible, consultar su código.',
     back: 'Volver a proyectos',
     context: 'Descripción general',
     features: 'Qué hace',
@@ -119,6 +120,7 @@ export const editorial = {
       'Mis proyectos públicos incluyen lectores de feeds, reproducción de video en la terminal, simulaciones visuales y herramientas para trabajar con datos. También utilizo Python y Unity cuando el proyecto requiere otro enfoque.',
       'Me interesan especialmente la computación paralela, los algoritmos y el rendimiento del software. Desarrollar y compartir estos proyectos me permite explorar esas áreas de manera práctica.',
       'Desde 2023 también trabajo con Veterinaria DACOR en su sitio web, recursos de identidad digital, armado de computadoras y soporte técnico continuo.',
+      'En 2026 desarrollé el sitio de ElectroCuprum con Astro y Sanity, con páginas de servicios, galería de trabajos, flujo de contacto y publicación automática en Cloudflare Pages.',
     ],
     technologyGroups: [
       ['Desarrollo de escritorio', 'C++, Qt Widgets, Qt Network, Qt SQL, SQLite'],
@@ -126,7 +128,7 @@ export const editorial = {
       ['Herramientas y aplicaciones interactivas', 'Python, Whisper, FFmpeg, Tkinter; C# y Unity'],
       [
         'Desarrollo web',
-        'HTML, CSS, JavaScript; Astro, Tailwind CSS y TypeScript en este portfolio',
+        'Astro, TypeScript, HTML, CSS, JavaScript, Sanity, Cloudflare Pages; Tailwind CSS en este portfolio',
       ],
       ['Herramientas de compilación', 'qmake, CMake, GNU Make'],
     ],

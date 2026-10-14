@@ -49,7 +49,7 @@ for file in DIST.rglob('*.html'):
     p=Page();p.feed(file.read_text());pages[file.resolve()]=p
 projects = sorted([json.loads(p.read_text()) for p in (ROOT/'src/content/projects').glob('*.json')],key=lambda p:p['order'])
 experiments = sorted([json.loads(p.read_text()) for p in (ROOT/'src/content/experiments').glob('*.json')],key=lambda e:e['order'])
-check('32 localized core, project and error pages built',len(pages)==32,len(pages))
+check('All localized core, project and error pages built',len(pages)==2*(6+len(projects))+2,len(pages))
 expected=['','projects','gallery','about','writing','contact'] + ['projects/'+p['slug'] for p in projects]
 for lang in ('en','es'):
     prefix='es/' if lang=='es' else ''
@@ -94,7 +94,7 @@ check('Sitemap generated',sitemap.is_file() and index.is_file())
 if sitemap.is_file():
     xml=ET.parse(sitemap);ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     urls=[node.text for node in xml.findall('.//s:loc',ns)]
-    check('Sitemap has exactly 30 core and project URLs, no 404/article routes',len(urls)==30 and len(set(urls))==30 and all(u.startswith(ORIGIN+'/') and '/404' not in u for u in urls),urls)
+    check('Sitemap has all localized core and project URLs, no 404/article routes',len(urls)==2*(6+len(projects)) and len(set(urls))==len(urls) and all(u.startswith(ORIGIN+'/') and '/404' not in u for u in urls),urls)
 css='\n'.join(p.read_text() for p in (DIST/'_astro').glob('*.css'))
 check('Tailwind v4 and approved design tokens compiled','tailwindcss' in css and '--bg:' in css and '--accent:' in css)
 check('Responsive/reduced-motion/focus rules retained', 'prefers-reduced-motion' in css and 'prefers-color-scheme' in css and ':focus-visible' in css and '767px' in css)
@@ -109,7 +109,11 @@ for lang in ('en','es'):
     home=(DIST/(prefix+'index.html')).read_text()
     about=(DIST/(prefix+'about/index.html')).read_text()
     writing=(DIST/(prefix+'writing/index.html')).read_text()
-    check(lang+' full index links all nine details and exact sources',all('/'+prefix+'projects/'+p['slug']+'/' in index and p['source'] in index for p in projects))
+    check(lang+' full index links all details and available sources or websites',all('/'+prefix+'projects/'+p['slug']+'/' in index and (p.get('source') or p['website']) in index for p in projects))
+    web_projects=[p for p in projects if p['category']=='web']
+    check(lang+' home links both web case studies and live websites', ('Últimos trabajos en desarrollo web' if lang=='es' else 'Latest web development work') in home and all('/'+prefix+'projects/'+p['slug']+'/' in home and p['website'] in home for p in web_projects))
+    electrocuprum=(DIST/(prefix+'projects/electrocuprum/index.html')).read_text()
+    check(lang+' private client source is not advertised', 'https://github.com/' not in electrocuprum.split('<main',1)[1].split('</main>',1)[0])
     check(lang+' home keeps the three approved featured projects',all('/'+prefix+'projects/'+p['slug']+'/' in home for p in projects[:3]) and '/'+prefix+'projects/periodic-table/' not in home)
     check(lang+' all six gallery entries and source directories',all(e['name'] in gallery and e['source'] in gallery and e['translations'][lang]['summary'] in unescape(gallery) for e in experiments))
     check(lang+' gallery experimental/prototype labels',('Experimental' if lang=='es' else 'Experimental') in gallery and ('Prototipo' if lang=='es' else 'Prototype') in gallery)
