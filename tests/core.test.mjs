@@ -174,6 +174,9 @@ test('Featured order, public source attribution and research credit remain exact
     if (p.slug === 'electrocuprum') {
       assert.equal(p.source, undefined);
       assert.equal(p.website, 'https://www.electrocuprum.com/');
+    } else if (p.slug === 'veterinaria-dacor') {
+      assert.equal(p.source, undefined);
+      assert.equal(p.website, 'https://www.veterinariadacor.com/');
     } else {
       assert.equal(p.source, `https://github.com/ignabelitzky/${repo}`);
     }
