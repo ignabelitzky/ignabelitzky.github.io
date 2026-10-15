@@ -23,6 +23,9 @@ interface Copy {
   selected: string;
   latestWebWork: string;
   webWorkIntroduction: string;
+  businessWebHeading: string;
+  businessWebText: string;
+  businessWebContact: string;
   all: string;
   source: string;
   aboutHeading: string;
@@ -101,6 +104,10 @@ export const ui = {
     explore: 'Explore projects',
     touch: 'Get in touch',
     selected: 'Selected work',
+    businessWebHeading: 'A website for your business',
+    businessWebText:
+      'I’m available to build websites for small and medium-sized businesses, with clear service information, easy content updates, and straightforward ways for customers to get in touch.',
+    businessWebContact: 'Discuss your website',
     latestWebWork: 'Latest web development work',
     webWorkIntroduction:
       'Websites built for local businesses, from service information and contact paths to content management and deployment.',
@@ -118,7 +125,8 @@ export const ui = {
       'Computational simulations',
     ],
     contactHeading: 'Let’s discuss software.',
-    contactText: 'For software-development opportunities or questions about my work, email me.',
+    contactText:
+      'For software-development opportunities, a website for your business, or questions about my work, email me.',
     emailText: 'Send me an email.',
     githubText: 'Explore my applications, tools, and experiments on GitHub.',
     linkedinText: 'View my professional profile and connect with me on LinkedIn.',
@@ -191,6 +199,10 @@ export const ui = {
     explore: 'Explorá los proyectos',
     touch: 'Contactame',
     selected: 'Proyectos destacados',
+    businessWebHeading: 'Un sitio web para tu negocio',
+    businessWebText:
+      'Desarrollo sitios web para pequeñas y medianas empresas, con información clara sobre sus servicios, contenido fácil de actualizar y opciones directas para que sus clientes se pongan en contacto.',
+    businessWebContact: 'Hablemos de tu sitio web',
     latestWebWork: 'Últimos trabajos en desarrollo web',
     webWorkIntroduction:
       'Sitios para empresas locales, desde la presentación de servicios y las opciones de contacto hasta la administración de contenido y la publicación.',
@@ -209,7 +221,7 @@ export const ui = {
     ],
     contactHeading: 'Hablemos de software.',
     contactText:
-      'Si querés conversar sobre una oportunidad de desarrollo de software o consultar por mis proyectos, escribime por correo.',
+      'Si querés conversar sobre una oportunidad de desarrollo de software, un sitio web para tu negocio o mis proyectos, escribime por correo.',
     emailText: 'Escribime por correo.',
     githubText: 'Explorá mis aplicaciones, herramientas y experimentos en GitHub.',
     linkedinText: 'Conocé mi perfil profesional y conectá conmigo en LinkedIn.',
