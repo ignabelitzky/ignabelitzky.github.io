@@ -102,7 +102,8 @@ const checks = [
   },
   {
     name: 'Explicit indexing policy; CV download remains disabled',
-    pass: /indexable:\s*(?:true|false)/.test(site) && /const cv:[\s\S]*?enabled:\s*false/.test(site),
+    pass:
+      /indexable:\s*(?:true|false)/.test(site) && /const cv:[\s\S]*?enabled:\s*false/.test(site),
   },
   {
     name: 'GA4 loads only with a valid configured ID on non-404 pages; ad signals stay disabled',
@@ -127,7 +128,10 @@ const checks = [
       combined,
     ),
   },
-  { name: 'No excluded private project in source content/config', pass: !/moki/i.test(combined) },
+  {
+    name: 'No excluded private project in source content/config',
+    pass: !/moki/i.test(combined),
+  },
   {
     name: 'No remote CSS/font imports',
     pass: !/@import\s+(?:url\()?\s*["']?https?:\/\/|url\(["']?https?:\/\//.test(css),
