@@ -53,6 +53,8 @@ jobs:
         run: npx --no-install playwright install --with-deps chromium
       - name: Official Astro build and Pages artifact
         uses: withastro/action@3eafd002e65cc31b4f0eae0bb05450d521562247 # v6
+        env:
+          GA_MEASUREMENT_ID: '${{ vars.GA_MEASUREMENT_ID }}'
         with:
           node-version: '24.19.0'
           # Let the official action detect package-lock.json for its cache key.
