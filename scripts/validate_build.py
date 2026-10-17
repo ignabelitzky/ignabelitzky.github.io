@@ -8,6 +8,10 @@ from html import unescape
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist'
 ORIGIN = 'https://ignaciobelitzky.dev'
+GA_MEASUREMENT_ID = os.environ.get('PUBLIC_GA_MEASUREMENT_ID', '').strip()
+if GA_MEASUREMENT_ID and not re.fullmatch(r'G-[A-Z0-9]{4,}', GA_MEASUREMENT_ID):
+    raise RuntimeError('Invalid public GA4 web measurement ID')
+GA_SCRIPT_URL = f'https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}' if GA_MEASUREMENT_ID else None
 indexing_match = re.search(r'\bindexable:\s*(true|false)', (ROOT/'src/data/site.ts').read_text())
 if not indexing_match: raise RuntimeError('Explicit indexing policy is required')
 INDEXABLE = indexing_match.group(1) == 'true'
@@ -68,7 +72,12 @@ for file,p in pages.items():
     check(relative+' semantic core',sum(t=='h1' for t,a in p.tags)==1 and sum(t=='main' for t,a in p.tags)==1 and sum(t=='header' for t,a in p.tags)==1 and sum(t=='footer' for t,a in p.tags)==1 and len(p.ids)==len(set(p.ids)))
     check(relative+' accessible shell hooks',any(t=='summary' for t,a in p.tags) and all(a.get('aria-label') for t,a in p.tags if t=='nav') and all('alt' in a and a.get('width') and a.get('height') for t,a in p.tags if t=='img') and any(t=='a' and a.get('href')=='#main' for t,a in p.tags))
     check(relative+' no unsupported public claims/content',not re.search(r'Moki|Software Engineer|Download CV|Internal notes|Notas internas|10x faster',text,re.I))
-    check(relative+' no islands or remote runtime resources',not any(t in ('astro-island','iframe','form') for t,a in p.tags) and not any(t=='script' and urlsplit(a.get('src','')).netloc for t,a in p.tags) and not any(t=='link' and a.get('rel')=='stylesheet' and urlsplit(a.get('href','')).netloc for t,a in p.tags))
+    external_scripts=[a.get('src','') for t,a in p.tags if t=='script' and urlsplit(a.get('src','')).netloc]
+    expected_ga_scripts=[GA_SCRIPT_URL] if GA_SCRIPT_URL and '404' not in relative else []
+    check(relative+' GA4 appears only when configured and never on 404 pages',external_scripts==expected_ga_scripts)
+    check(relative+' no islands or unapproved remote runtime resources',not any(t in ('astro-island','iframe','form') for t,a in p.tags) and all(url==GA_SCRIPT_URL for url in external_scripts) and not any(t=='link' and a.get('rel')=='stylesheet' and urlsplit(a.get('href','')).netloc for t,a in p.tags))
+    has_ad_signal_opt_out=bool(re.search(r'allow_google_signals\s*:\s*false',text) and re.search(r'allow_ad_personalization_signals\s*:\s*false',text))
+    check(relative+' GA4 keeps Google advertising signals disabled',has_ad_signal_opt_out if expected_ga_scripts else not has_ad_signal_opt_out)
     for tag,key,url in p.refs:
         resolved=resolve(url,file)
         if resolved is None:continue

@@ -27,6 +27,5 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/ignacio-belitzky',
   origin: 'https://ignaciobelitzky.dev',
   indexable: true,
-  analytics: { enabled: false },
   cv,
 } as const;

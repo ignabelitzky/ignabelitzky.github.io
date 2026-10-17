@@ -1,5 +1,11 @@
 # Current publication and rollback workflow
 
+## Google Analytics configuration
+
+After creating the GA4 web stream for `https://ignaciobelitzky.dev`, add its `G-...` Measurement ID under repository Settings → Secrets and variables → Actions → Variables as `GA_MEASUREMENT_ID`. It is an identifier intended to appear in public page source, so it is a repository variable, not a secret. The guarded release workflow checks this value and passes it to the final production build as `PUBLIC_GA_MEASUREMENT_ID`. CI and release QA stay uninstrumented, so test visits do not inflate the portfolio's visitor count. The production build must contain a valid ID; the tag is omitted from 404 pages, and Google advertising signals are disabled.
+
+After release, use Analytics → Reports → Realtime to confirm the site receives page views. Google notes that new data may take up to 30 minutes to appear in standard reports.
+
 Improvement Phase 3 prepares an unpublished candidate for ignabelitzky/ignabelitzky.github.io and https://ignaciobelitzky.dev/. Current remote main was read-only rechecked: 5cd8094ec58f838e18172d3cf0c4b89e9749c4fa. Its successful Manual Pages release is run 37971203049 (2026-10-09); CI run 37970737642 also succeeded. This is the current rollback source, superseding the older initial-release SHA in historical notes. Evidence includes the retrieved run state. No new push, merge, release dispatch, Pages setting or DNS change occurred.
 
 CI runs on push/PR with read-only permissions. The tracked deploy.yml has workflow_dispatch only. Integrating/pushing source does not invoke that release workflow. Publication requires the full current main SHA to match both PAGES_APPROVED_SHA and approved_sha, confirmation PUBLISH, and the target-repo/main guards. The workflow validates, browser-tests, audits and uploads only dist; a dependent job deploys the tested artifact. Do not substitute a source ZIP for a Pages artifact.
