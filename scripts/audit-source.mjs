@@ -72,6 +72,10 @@ for (const [theme, tokens] of [
 const packageData = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
 const config = readFileSync(resolve(root, 'astro.config.mjs'), 'utf8');
 const site = readFileSync(resolve(root, 'src/data/site.ts'), 'utf8');
+const layout = readFileSync(resolve(root, 'src/layouts/SiteLayout.astro'), 'utf8');
+const ciWorkflow = readFileSync(resolve(root, '.github/workflows/ci.yml'), 'utf8');
+const deployWorkflow = readFileSync(resolve(root, '.github/workflows/deploy.yml'), 'utf8');
+const releaseScript = readFileSync(resolve(root, 'scripts/verify-release.sh'), 'utf8');
 function files(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) =>
     entry.isDirectory() ? files(resolve(directory, entry.name)) : [resolve(directory, entry.name)],
@@ -97,11 +101,21 @@ const checks = [
     ),
   },
   {
-    name: 'Explicit indexing policy; analytics and CV remain disabled',
+    name: 'Explicit indexing policy; CV download remains disabled',
+    pass: /indexable:\s*(?:true|false)/.test(site) && /const cv:[\s\S]*?enabled:\s*false/.test(site),
+  },
+  {
+    name: 'GA4 loads only with a valid configured ID on non-404 pages; ad signals stay disabled',
     pass:
-      /indexable:\s*(?:true|false)/.test(site) &&
-      /analytics:\s*\{\s*enabled:\s*false/.test(site) &&
-      /const cv:[\s\S]*?enabled:\s*false/.test(site),
+      layout.includes('PUBLIC_GA_MEASUREMENT_ID') &&
+      layout.includes('/^G-[A-Z0-9]{4,}$/') &&
+      layout.includes('!is404') &&
+      layout.includes('allow_google_signals: false') &&
+      layout.includes('allow_ad_personalization_signals: false') &&
+      !ciWorkflow.includes('GA_MEASUREMENT_ID') &&
+      deployWorkflow.includes("GA_MEASUREMENT_ID: '${{ vars.GA_MEASUREMENT_ID }}'") &&
+      releaseScript.includes('PUBLIC_GA_MEASUREMENT_ID="${GA_MEASUREMENT_ID}" npm run build') &&
+      releaseScript.includes('GA_MEASUREMENT_ID must contain a valid GA4 web measurement ID.'),
   },
   {
     name: 'No unsafe string-to-HTML/eval injection in portfolio source',
