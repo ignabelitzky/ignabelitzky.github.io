@@ -57,7 +57,8 @@ export default defineConfig({
   ],
   webServer: {
     // Keep Astro's agent-aware preview in the foreground so Playwright owns it.
-    command: 'npm run preview -- --port 4321 --ignore-lock',
+    command:
+      'PUBLIC_GA_MEASUREMENT_ID=G-TEST1234 npm run build && npm run preview -- --port 4321 --ignore-lock',
     env: { ASTRO_TELEMETRY_DISABLED: '1' },
     url: 'http://127.0.0.1:4321/',
     reuseExistingServer: false,

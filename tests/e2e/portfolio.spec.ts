@@ -52,6 +52,7 @@ for (const entry of pages) {
       if (new URL(request.url()).origin !== 'http://127.0.0.1:4321')
         remoteRequests.push(request.url());
     });
+    await page.addInitScript(() => localStorage.setItem('ib-analytics-consent-v1', 'rejected'));
     const response = await page.goto(entry.path);
     expect(response).not.toBeNull();
     expect(entry.error ? [200, 404] : [200]).toContain(response!.status());
@@ -120,6 +121,64 @@ for (const entry of pages) {
     expect(remoteRequests).toEqual([]);
   });
 }
+
+test('Cookie consent: first visit, reject persistence, reopen, accept and revoke', async ({
+  page,
+}) => {
+  const analyticsRequests: string[] = [];
+  await page.route('https://www.googletagmanager.com/**', async (route) => {
+    analyticsRequests.push(route.request().url());
+    await route.fulfill({ status: 200, contentType: 'application/javascript', body: '' });
+  });
+  await page.goto('/');
+  expect(await page.evaluate(() => localStorage.getItem('ib-analytics-consent-v1'))).toBeNull();
+  await expect(page.locator('[data-consent]')).toBeVisible();
+  await expect(page.getByRole('link', { name: ui.en.cookies.settings })).toBeVisible();
+  expect(analyticsRequests).toEqual([]);
+  await page.getByRole('button', { name: ui.en.cookies.reject }).click();
+  await expect(page.locator('[data-consent]')).toBeHidden();
+  await page.reload();
+  await expect(page.locator('[data-consent]')).toBeHidden();
+  await page.goto('/es/about/');
+  await expect(page.locator('[data-consent]')).toBeHidden();
+  await page.getByRole('link', { name: ui.es.cookies.settings }).click();
+  await expect(page.locator('[data-consent]')).toBeVisible();
+  await page.getByRole('button', { name: ui.es.cookies.accept }).click();
+  await expect.poll(() => analyticsRequests.length).toBe(1);
+  await page.reload();
+  await expect.poll(() => analyticsRequests.length).toBe(2);
+  await page.getByRole('link', { name: ui.es.cookies.settings }).click();
+  await page.getByRole('button', { name: ui.es.cookies.reject }).click();
+  await expect(page).toHaveURL(/about/);
+  await expect(page.locator('[data-consent]')).toBeHidden();
+  await page.waitForTimeout(250);
+  await expect(page.locator('[data-consent]')).toBeHidden();
+  expect(await page.evaluate(() => localStorage.getItem('ib-theme'))).toBeNull();
+});
+
+test('Cookie consent respects locale, theme, mobile layout and keyboard focus', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.addInitScript(() => {
+    localStorage.removeItem('ib-analytics-consent-v1');
+    localStorage.setItem('ib-theme', 'dark');
+  });
+  await page.goto('/es/');
+  const panel = page.locator('[data-consent]');
+  await expect(panel).toBeVisible();
+  await expect(panel.getByRole('heading', { name: ui.es.cookies.title })).toBeVisible();
+  await expect(panel.getByRole('button', { name: ui.es.cookies.accept })).toBeVisible();
+  await expect(panel.getByRole('button', { name: ui.es.cookies.reject })).toBeVisible();
+  await panel.getByRole('button', { name: ui.es.cookies.accept }).focus();
+  await expect(panel.getByRole('button', { name: ui.es.cookies.accept })).toBeFocused();
+  expect(await page.evaluate(() => localStorage.getItem('ib-theme'))).toBe('dark');
+  expect(await panel.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(
+    'rgb(16, 44, 32)',
+  );
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+});
 
 test('Robots and sitemap follow the configured release indexing policy', async ({ request }) => {
   const robots = await request.get('/robots.txt');

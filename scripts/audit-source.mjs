@@ -73,6 +73,7 @@ const packageData = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8
 const config = readFileSync(resolve(root, 'astro.config.mjs'), 'utf8');
 const site = readFileSync(resolve(root, 'src/data/site.ts'), 'utf8');
 const layout = readFileSync(resolve(root, 'src/layouts/SiteLayout.astro'), 'utf8');
+const consent = readFileSync(resolve(root, 'src/components/CookieConsent.astro'), 'utf8');
 const ciWorkflow = readFileSync(resolve(root, '.github/workflows/ci.yml'), 'utf8');
 const deployWorkflow = readFileSync(resolve(root, '.github/workflows/deploy.yml'), 'utf8');
 const releaseScript = readFileSync(resolve(root, 'scripts/verify-release.sh'), 'utf8');
@@ -106,13 +107,16 @@ const checks = [
       /indexable:\s*(?:true|false)/.test(site) && /const cv:[\s\S]*?enabled:\s*false/.test(site),
   },
   {
-    name: 'GA4 loads only with a valid configured ID on non-404 pages; ad signals stay disabled',
+    name: 'GA4 is offered only with a valid ID on non-404 pages and dynamically loads after consent',
     pass:
       layout.includes('PUBLIC_GA_MEASUREMENT_ID') &&
       layout.includes('/^G-[A-Z0-9]{4,}$/') &&
       layout.includes('!is404') &&
-      layout.includes('allow_google_signals: false') &&
-      layout.includes('allow_ad_personalization_signals: false') &&
+      !layout.includes('googletagmanager.com/gtag/js') &&
+      consent.includes("current === 'accepted'") &&
+      consent.includes('document.head.append(script)') &&
+      consent.includes('allow_google_signals: false') &&
+      consent.includes('allow_ad_personalization_signals: false') &&
       !ciWorkflow.includes('GA_MEASUREMENT_ID') &&
       deployWorkflow.includes("GA_MEASUREMENT_ID: '${{ vars.GA_MEASUREMENT_ID }}'") &&
       releaseScript.includes('PUBLIC_GA_MEASUREMENT_ID="${GA_MEASUREMENT_ID}" npm run build') &&

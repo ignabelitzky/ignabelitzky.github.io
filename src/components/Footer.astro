@@ -17,6 +17,9 @@ const { locale } = Astro.props;
       <a href={site.github}>GitHub</a>
       <a href={site.linkedin}>LinkedIn</a>
       <a href={routePath(locale, 'contact')}>{ui[locale].nav.contact}</a>
+      <a href="/" data-cookie-settings>
+        {ui[locale].cookies.settings}
+      </a>
     </div>
   </div>
 </footer>
