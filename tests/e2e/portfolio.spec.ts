@@ -126,12 +126,12 @@ test('Cookie consent: first visit, reject persistence, reopen, accept and revoke
   page,
 }) => {
   const analyticsRequests: string[] = [];
-  await page.addInitScript(() => localStorage.removeItem('ib-analytics-consent-v1'));
   await page.route('https://www.googletagmanager.com/**', async (route) => {
     analyticsRequests.push(route.request().url());
     await route.fulfill({ status: 200, contentType: 'application/javascript', body: '' });
   });
   await page.goto('/');
+  expect(await page.evaluate(() => localStorage.getItem('ib-analytics-consent-v1'))).toBeNull();
   await expect(page.locator('[data-consent]')).toBeVisible();
   await expect(page.getByRole('link', { name: ui.en.cookies.settings })).toBeVisible();
   expect(analyticsRequests).toEqual([]);
