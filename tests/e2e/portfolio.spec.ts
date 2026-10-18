@@ -49,7 +49,7 @@ for (const entry of pages) {
     const remoteRequests: string[] = [];
     page.on('pageerror', (error) => runtimeErrors.push(error.message));
     page.on('request', (request) => {
-      if (new URL(request.url()).origin !== 'http://127.0.0.1:4321')
+      if (new URL(request.url()).origin !== new URL(String(testInfo.project.use.baseURL)).origin)
         remoteRequests.push(request.url());
     });
     await page.addInitScript(() => localStorage.setItem('ib-analytics-consent-v1', 'rejected'));
@@ -322,12 +322,14 @@ test('JavaScript-disabled core navigation, content and OS-aware theme remain usa
   });
   const page = await context.newPage();
   try {
-    await page.goto('http://127.0.0.1:4321/es/');
+    await page.goto(new URL('/es/', String(testInfo.project.use.baseURL)).href);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(ui.es.hero);
     await expect(page.locator('[data-theme-control]')).toBeHidden();
     const nav = await navigation(page);
     await nav.getByRole('link', { name: 'Proyectos', exact: true }).click();
-    await expect(page).toHaveURL('http://127.0.0.1:4321/es/projects/');
+    await expect(page).toHaveURL(
+      new URL('/es/projects/', String(testInfo.project.use.baseURL)).href,
+    );
     await expect(page.locator('main .project-row')).toHaveCount(projects.length);
   } finally {
     await context.close();

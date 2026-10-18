@@ -274,7 +274,7 @@ export const ui = {
         'Si lo activás, Google Analytics recibe información sobre las visitas e interacciones, como las páginas vistas, una ubicación aproximada derivada de información de red, datos del dispositivo y navegador y el sitio de referencia. Esto ayuda a entender cómo se usa el portfolio. Google puede guardar cookies y procesar estos datos según sus propios términos y políticas.',
       accept: 'Aceptar analíticas',
       reject: 'Rechazar analíticas',
-      settings: 'Preferencias de cookies',
+      settings: 'Preferencias de privacidad',
     },
   },
 } as const satisfies Record<Locale, Copy>;
