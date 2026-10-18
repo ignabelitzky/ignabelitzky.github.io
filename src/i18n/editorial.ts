@@ -56,7 +56,7 @@ export const editorial = {
     practical: 'Practical experience',
     dacor: 'Website development & technical support — Veterinaria DACOR',
     dacor_text:
-      'I work with Veterinaria DACOR on its website and day-to-day IT needs. Since 2023, my responsibilities have included web development, preparing usable digital brand assets, assembling computers, and technical support.',
+      'Since 2023, I have worked with Veterinaria DACOR on developing and maintaining its website and Sanity content-management setup, alongside preparing digital brand assets, assembling computers, and providing technical support.',
     paper: 'Read the preprint',
     tech: 'Technologies used in my projects',
     team: 'Preprint authors',
@@ -106,7 +106,7 @@ export const editorial = {
     practical: 'Experiencia práctica',
     dacor: 'Desarrollo web y soporte técnico — Veterinaria DACOR',
     dacor_text:
-      'Trabajo con Veterinaria DACOR en su sitio web y sus necesidades informáticas cotidianas. Desde 2023, mis responsabilidades incluyen desarrollo web, preparación de recursos de identidad digital, armado de computadoras y soporte técnico.',
+      'Desde 2023 trabajo con Veterinaria DACOR en el desarrollo y mantenimiento de su sitio y su sistema de gestión de contenidos en Sanity, además de preparar recursos de identidad digital, armar computadoras y brindar soporte técnico.',
     paper: 'Leé el preprint',
     tech: 'Tecnologías presentes en mis proyectos',
     team: 'Autores del preprint',
