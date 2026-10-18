@@ -168,7 +168,7 @@ export const ui = {
         'If enabled, Google Analytics receives information about page visits and interactions, such as the pages viewed, approximate location derived from network information, device and browser details, and referral source. This helps understand how the portfolio is used. Google may set cookies and process this data under its own terms and policies.',
       accept: 'Accept analytics',
       reject: 'Reject analytics',
-      settings: 'Cookie settings',
+      settings: 'Privacy preferences',
     },
   },
   es: {
