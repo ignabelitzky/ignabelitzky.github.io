@@ -8,6 +8,7 @@ import { site } from '../data/site.ts';
 import { ui } from '../i18n/ui.ts';
 import { routePath, otherLocale, type Locale, type RouteKey } from '../i18n/routes.ts';
 import '../styles/global.css';
+import CookieConsent from '../components/CookieConsent.astro';
 interface Props {
   locale: Locale;
   route: RouteKey;
@@ -20,7 +21,7 @@ interface Props {
 const { locale, route, title, description, noindex = false, article } = Astro.props;
 const is404 = route === 'notFound';
 const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim() ?? '';
-const shouldLoadAnalytics = !is404 && /^G-[A-Z0-9]{4,}$/.test(gaMeasurementId);
+const shouldOfferAnalytics = !is404 && /^G-[A-Z0-9]{4,}$/.test(gaMeasurementId);
 const section = route === 'project' ? 'projects' : route === 'article' ? 'writing' : route;
 const pageTitle =
   title ?? (section === 'notFound' ? ui[locale].notFound : ui[locale].titles[section]);
@@ -49,26 +50,6 @@ const imageUrl = new URL(social.src, origin);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {shouldLoadAnalytics && (
-      <>
-        <script
-          is:inline
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-        ></script>
-        <script is:inline define:vars={{ gaMeasurementId }}>
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            window.dataLayer.push(arguments);
-          }
-          gtag('js', new Date());
-          gtag('config', gaMeasurementId, {
-            allow_google_signals: false,
-            allow_ad_personalization_signals: false,
-          });
-        </script>
-      </>
-    )}
     <meta name="color-scheme" content="light dark" />
     <title>{fullTitle}</title>
     <meta name="description" content={summary} />
@@ -139,5 +120,6 @@ const imageUrl = new URL(social.src, origin);
       <slot />
     </main>
     <Footer locale={locale} />
+    {shouldOfferAnalytics && <CookieConsent locale={locale} measurementId={gaMeasurementId} />}
   </body>
 </html>

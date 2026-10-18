@@ -14,6 +14,15 @@ interface Copy {
   close: string;
   visitWebsite: string;
   experienceLink: string;
+  cookies: {
+    title: string;
+    description: string;
+    detailsLabel: string;
+    details: string;
+    accept: string;
+    reject: string;
+    settings: string;
+  };
   theme: string;
   themes: { system: string; light: string; dark: string };
   hero: string;
@@ -150,6 +159,17 @@ export const ui = {
     close: 'Close menu',
     visitWebsite: 'Visit website',
     experienceLink: 'About my work for DACOR',
+    cookies: {
+      title: 'Your privacy matters',
+      description:
+        'This website uses essential storage for your preferences and optional Google Analytics to understand how visitors use the site. Analytics is enabled only with your consent.',
+      detailsLabel: 'What does Analytics collect?',
+      details:
+        'If enabled, Google Analytics receives information about page visits and interactions, such as the pages viewed, approximate location derived from network information, device and browser details, and referral source. This helps understand how the portfolio is used. Google may set cookies and process this data under its own terms and policies.',
+      accept: 'Accept analytics',
+      reject: 'Reject analytics',
+      settings: 'Cookie settings',
+    },
   },
   es: {
     nav: {
@@ -245,5 +265,16 @@ export const ui = {
     close: 'Cerrar menú',
     visitWebsite: 'Visitar sitio web',
     experienceLink: 'Sobre mi trabajo para DACOR',
+    cookies: {
+      title: 'Tu privacidad importa',
+      description:
+        'Este sitio utiliza almacenamiento esencial para tus preferencias y Google Analytics opcional para conocer cómo se utiliza. Analytics solo se activa con tu consentimiento.',
+      detailsLabel: '¿Qué recopila Analytics?',
+      details:
+        'Si lo activás, Google Analytics recibe información sobre las visitas e interacciones, como las páginas vistas, una ubicación aproximada derivada de información de red, datos del dispositivo y navegador y el sitio de referencia. Esto ayuda a entender cómo se usa el portfolio. Google puede guardar cookies y procesar estos datos según sus propios términos y políticas.',
+      accept: 'Aceptar analíticas',
+      reject: 'Rechazar analíticas',
+      settings: 'Preferencias de cookies',
+    },
   },
 } as const satisfies Record<Locale, Copy>;

@@ -2,7 +2,13 @@
 
 ## Google Analytics configuration
 
-After creating the GA4 web stream for `https://ignaciobelitzky.dev`, add its `G-...` Measurement ID under repository Settings → Secrets and variables → Actions → Variables as `GA_MEASUREMENT_ID`. It is an identifier intended to appear in public page source, so it is a repository variable, not a secret. The guarded release workflow checks this value and passes it to the final production build as `PUBLIC_GA_MEASUREMENT_ID`. CI and release QA stay uninstrumented, so test visits do not inflate the portfolio's visitor count. The production build must contain a valid ID; the tag is omitted from 404 pages, and Google advertising signals are disabled.
+After creating the GA4 web stream for `https://ignaciobelitzky.dev`, add its `G-...` Measurement ID under repository Settings → Secrets and variables → Actions → Variables as `GA_MEASUREMENT_ID`. It is an identifier intended to appear in public page source, so it is a repository variable, not a secret. The guarded release workflow checks this value and passes it to the final production build as `PUBLIC_GA_MEASUREMENT_ID`. CI and release QA stay uninstrumented, so test visits do not inflate the portfolio's visitor count. The production build does not automatically request the GA script. The consent interface is omitted from 404 pages and appears only when a valid ID is configured. Google advertising and ad personalization signals remain disabled.
+
+### Visitor consent
+
+Analytics is disabled until a visitor explicitly accepts. The choice is stored in localStorage under `ib-analytics-consent-v1` as `accepted` or `rejected`; missing or invalid values keep Analytics off and show the choice again. Acceptance loads GA4 dynamically and records the initial page view. Rejection prevents future loads. The footer's Cookie settings / Preferencias de cookies link reopens the choices at any time. Changing an accepted choice to rejected disables further tracking, attempts to remove accessible `_ga*`, `_gid` and `_gat*` cookies, and reloads the page to unload the runtime. Previously transmitted data cannot be recalled from Google.
+
+If localStorage is unavailable, Analytics remains off for that visit and consent is requested again on the next page load. Essential theme preference storage remains independent. To test locally, build with a valid `PUBLIC_GA_MEASUREMENT_ID` such as `G-TEST1234`, open the site with browser storage cleared, and intercept `www.googletagmanager.com` in browser tests; automated checks must mock the endpoint and never transmit real events. The existing release variable `GA_MEASUREMENT_ID` continues to feed `PUBLIC_GA_MEASUREMENT_ID` during the production build.
 
 After release, use Analytics → Reports → Realtime to confirm the site receives page views. Google notes that new data may take up to 30 minutes to appear in standard reports.
 
