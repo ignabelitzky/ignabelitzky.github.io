@@ -168,7 +168,7 @@ export const ui = {
         'If enabled, Google Analytics receives information about page visits and interactions, such as the pages viewed, approximate location derived from network information, device and browser details, and referral source. This helps understand how the portfolio is used. Google may set cookies and process this data under its own terms and policies.',
       accept: 'Accept analytics',
       reject: 'Reject analytics',
-      settings: 'Cookie settings',
+      settings: 'Privacy preferences',
     },
   },
   es: {
@@ -274,7 +274,7 @@ export const ui = {
         'Si lo activás, Google Analytics recibe información sobre las visitas e interacciones, como las páginas vistas, una ubicación aproximada derivada de información de red, datos del dispositivo y navegador y el sitio de referencia. Esto ayuda a entender cómo se usa el portfolio. Google puede guardar cookies y procesar estos datos según sus propios términos y políticas.',
       accept: 'Aceptar analíticas',
       reject: 'Rechazar analíticas',
-      settings: 'Preferencias de cookies',
+      settings: 'Preferencias de privacidad',
     },
   },
 } as const satisfies Record<Locale, Copy>;

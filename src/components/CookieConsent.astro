@@ -23,7 +23,12 @@ const copy = ui[locale].cookies;
       <p id="consent-description">{copy.description}</p>
       <details class="consent-details">
         <summary>{copy.detailsLabel}</summary>
-        <p>{copy.details}</p>
+        <p>
+          {copy.details}{' '}
+          <a href="https://policies.google.com/privacy">
+            {locale === 'es' ? 'Política de privacidad de Google' : 'Google privacy policy'}
+          </a>
+        </p>
       </details>
     </div>
     <div class="consent-actions">
@@ -50,6 +55,7 @@ const copy = ui[locale].cookies;
     };
     const measurementId = consentPanel.dataset.measurementId ?? '';
     let initialized = false;
+    let currentChoice: 'accepted' | 'rejected' | null = null;
     let openingControl: HTMLElement | null = null;
     let reloadTimer: number | undefined;
 
@@ -58,7 +64,11 @@ const copy = ui[locale].cookies;
         const name = cookie.split('=')[0]?.trim();
         if (!name || !/^(_ga(?:_|$)|_gid$|_gat(?:_|$))/.test(name)) continue;
         const host = location.hostname;
-        const domains = [host, `.${host}`];
+        const parts = host.split('.');
+        const domains = parts
+          .map((_, i) => parts.slice(i).join('.'))
+          .filter((domain) => domain.includes('.'));
+        domains.push(host);
         for (const domain of domains) {
           document.cookie = `${name}=; Max-Age=0; path=/; domain=${domain}; SameSite=Lax`;
         }
@@ -66,10 +76,13 @@ const copy = ui[locale].cookies;
       }
     }
 
-    function stopAnalytics() {
-      if (!initialized) return;
+    function stopAnalytics(reload = false) {
       analyticsWindow[`ga-disable-${measurementId}`] = true;
       removeAnalyticsCookies();
+      analyticsWindow.gtag = () => {};
+      analyticsWindow.dataLayer = [];
+      document.querySelector('[data-analytics]')?.remove();
+      if (!initialized || !reload) return;
       if (reloadTimer) window.clearTimeout(reloadTimer);
       reloadTimer = window.setTimeout(() => location.reload(), 120);
     }
@@ -78,8 +91,10 @@ const copy = ui[locale].cookies;
       if (initialized || !measurementId || analyticsWindow[`ga-disable-${measurementId}`]) return;
       initialized = true;
       analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
-      analyticsWindow.gtag = function gtag(...args: unknown[]) {
-        analyticsWindow.dataLayer?.push(args);
+      analyticsWindow.gtag = function gtag() {
+        // gtag.js consumes Arguments objects, not arrays.
+        // eslint-disable-next-line prefer-rest-params -- Google requires an Arguments command.
+        analyticsWindow.dataLayer?.push(arguments);
       };
       analyticsWindow.gtag('js', new Date());
       analyticsWindow.gtag('config', measurementId, {
@@ -94,6 +109,14 @@ const copy = ui[locale].cookies;
     }
 
     function show(focus = false) {
+      consentPanel
+        .querySelectorAll<HTMLButtonElement>('[data-consent-choice]')
+        .forEach((button) => {
+          button.setAttribute(
+            'aria-pressed',
+            String(button.dataset.consentChoice === currentChoice),
+          );
+        });
       consentPanel.hidden = false;
       if (focus) consentPanel.querySelector<HTMLButtonElement>('[data-consent-choice]')?.focus();
     }
@@ -104,9 +127,13 @@ const copy = ui[locale].cookies;
     }
 
     function synchronize(value: unknown) {
-      if (value === 'accepted') startAnalytics();
-      else if (value === 'rejected') stopAnalytics();
-      show();
+      currentChoice = value === 'accepted' || value === 'rejected' ? value : null;
+      if (currentChoice === 'accepted') {
+        if (analyticsWindow[`ga-disable-${measurementId}`]) location.reload();
+        else startAnalytics();
+      } else stopAnalytics(true);
+      if (!currentChoice) show();
+      else hide();
     }
 
     let safeStorage: Storage | null = null;
@@ -119,6 +146,7 @@ const copy = ui[locale].cookies;
     const persist = (choice: 'accepted' | 'rejected') =>
       safeStorage ? writeConsent(safeStorage, choice) : false;
     const current = consent();
+    currentChoice = current;
     if (current === 'accepted') startAnalytics();
     else if (!current) show();
 
@@ -126,13 +154,17 @@ const copy = ui[locale].cookies;
       button.addEventListener('click', () => {
         const choice = button.dataset.consentChoice;
         if (choice !== 'accepted' && choice !== 'rejected') return;
-        const previous = consent();
-        persist(choice);
-        if (choice === 'accepted') startAnalytics();
-        else if (previous === 'accepted') {
-          stopAnalytics();
-          removeAnalyticsCookies();
-        }
+        const saved = persist(choice);
+        currentChoice = choice;
+        if (choice === 'accepted') {
+          if (analyticsWindow[`ga-disable-${measurementId}`] && initialized) {
+            // Resume after a revocation only through a clean document.
+            if (saved) location.reload();
+          } else {
+            analyticsWindow[`ga-disable-${measurementId}`] = false;
+            startAnalytics();
+          }
+        } else stopAnalytics(saved);
         hide(true);
       });
     });
@@ -145,8 +177,12 @@ const copy = ui[locale].cookies;
       });
     });
 
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) synchronize(consent());
+    });
+
     window.addEventListener('storage', (event) => {
-      if (event.key === analyticsConsentKey) synchronize(event.newValue);
+      if (event.key === analyticsConsentKey || event.key === null) synchronize(event.newValue);
     });
   }
 </script>

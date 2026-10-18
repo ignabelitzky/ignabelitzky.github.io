@@ -21,7 +21,8 @@ interface Props {
 const { locale, route, title, description, noindex = false, article } = Astro.props;
 const is404 = route === 'notFound';
 const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim() ?? '';
-const shouldOfferAnalytics = !is404 && /^G-[A-Z0-9]{4,}$/.test(gaMeasurementId);
+const hasAnalyticsId = /^G-[A-Z0-9]{4,}$/.test(gaMeasurementId);
+const shouldOfferAnalytics = !is404 && hasAnalyticsId;
 const section = route === 'project' ? 'projects' : route === 'article' ? 'writing' : route;
 const pageTitle =
   title ?? (section === 'notFound' ? ui[locale].notFound : ui[locale].titles[section]);
@@ -120,6 +121,8 @@ const imageUrl = new URL(social.src, origin);
       <slot />
     </main>
     <Footer locale={locale} />
-    {shouldOfferAnalytics && <CookieConsent locale={locale} measurementId={gaMeasurementId} />}
+    {hasAnalyticsId && (
+      <CookieConsent locale={locale} measurementId={shouldOfferAnalytics ? gaMeasurementId : ''} />
+    )}
   </body>
 </html>

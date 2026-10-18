@@ -1,5 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
+const qaPort = process.env.QA_PORT ?? '4321';
+
 const evidenceDirectory = process.env.QA_EVIDENCE_DIR ?? 'evidence/phase5';
 
 export default defineConfig({
@@ -17,7 +19,7 @@ export default defineConfig({
     ['html', { outputFolder: `${evidenceDirectory}/browser/html-report`, open: 'never' }],
   ],
   use: {
-    baseURL: 'http://127.0.0.1:4321',
+    baseURL: `http://127.0.0.1:${qaPort}`,
     browserName: 'chromium',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
@@ -57,10 +59,9 @@ export default defineConfig({
   ],
   webServer: {
     // Keep Astro's agent-aware preview in the foreground so Playwright owns it.
-    command:
-      'PUBLIC_GA_MEASUREMENT_ID=G-TEST1234 npm run build && npm run preview -- --port 4321 --ignore-lock',
+    command: `PUBLIC_GA_MEASUREMENT_ID=G-TEST1234 npm run build && npm run preview -- --port ${qaPort} --ignore-lock`,
     env: { ASTRO_TELEMETRY_DISABLED: '1' },
-    url: 'http://127.0.0.1:4321/',
+    url: `http://127.0.0.1:${qaPort}/`,
     reuseExistingServer: false,
     timeout: 30_000,
     stdout: 'pipe',

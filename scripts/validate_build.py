@@ -72,7 +72,7 @@ for file,p in pages.items():
     check(relative+' accessible shell hooks',any(t=='summary' for t,a in p.tags) and all(a.get('aria-label') for t,a in p.tags if t=='nav') and all('alt' in a and a.get('width') and a.get('height') for t,a in p.tags if t=='img') and any(t=='a' and a.get('href')=='#main' for t,a in p.tags))
     check(relative+' no unsupported public claims/content',not re.search(r'Moki|Software Engineer|Download CV|Internal notes|Notas internas|10x faster',text,re.I))
     external_scripts=[a.get('src','') for t,a in p.tags if t=='script' and urlsplit(a.get('src','')).netloc]
-    expected_consent=bool(GA_MEASUREMENT_ID) and '404' not in relative
+    expected_consent=bool(GA_MEASUREMENT_ID)
     check(relative+' GA4 absent from static HTML; consent UI only when configured',not external_scripts and (('data-consent' in text)==expected_consent))
     check(relative+' no islands or unapproved remote runtime resources',not any(t in ('astro-island','iframe','form') for t,a in p.tags) and not external_scripts and not any(t=='link' and a.get('rel')=='stylesheet' and urlsplit(a.get('href','')).netloc for t,a in p.tags))
     # Vite's production minifier can emit false as !1 in the inlined module.
