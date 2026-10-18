@@ -75,7 +75,8 @@ for file,p in pages.items():
     expected_consent=bool(GA_MEASUREMENT_ID) and '404' not in relative
     check(relative+' GA4 absent from static HTML; consent UI only when configured',not external_scripts and (('data-consent' in text)==expected_consent))
     check(relative+' no islands or unapproved remote runtime resources',not any(t in ('astro-island','iframe','form') for t,a in p.tags) and not external_scripts and not any(t=='link' and a.get('rel')=='stylesheet' and urlsplit(a.get('href','')).netloc for t,a in p.tags))
-    has_ad_signal_opt_out=bool(re.search(r'allow_google_signals\s*:\s*false',text) and re.search(r'allow_ad_personalization_signals\s*:\s*false',text))
+    # Vite's production minifier can emit false as !1 in the inlined module.
+    has_ad_signal_opt_out=bool(re.search(r'allow_google_signals\s*:\s*(?:false|!1)',text) and re.search(r'allow_ad_personalization_signals\s*:\s*(?:false|!1)',text))
     check(relative+' consent runtime disables Google advertising signals',has_ad_signal_opt_out if expected_consent else not has_ad_signal_opt_out)
     for tag,key,url in p.refs:
         resolved=resolve(url,file)
