@@ -25,9 +25,9 @@ export const dacor = {
   translations: {
     en: {
       title: 'Website development & technical support — Veterinaria DACOR',
-      text: 'I work with Veterinaria DACOR on its website and day-to-day IT needs. Since 2023, my responsibilities have included web development, preparing usable digital brand assets, assembling computers, and technical support.',
+      text: 'Since 2023, I have worked with Veterinaria DACOR on developing and maintaining its website and Sanity content-management setup, alongside preparing digital brand assets, assembling computers, and providing technical support.',
       responsibilities: [
-        'Develop and maintain the business website, including its catalog, service information, and contact paths.',
+        'Contribute to the development and maintenance of the Astro website and its Sanity content-management setup, including catalog, service, and contact content.',
         'Reconstruct the existing logo from a PNG into vector and production assets for digital and physical use.',
         'Assemble computers and provide ongoing support with computer systems and programming needs.',
       ],
@@ -37,9 +37,9 @@ export const dacor = {
     },
     es: {
       title: 'Desarrollo web y soporte técnico — Veterinaria DACOR',
-      text: 'Trabajo con Veterinaria DACOR en su sitio web y sus necesidades informáticas cotidianas. Desde 2023, mis responsabilidades incluyen desarrollo web, preparación de recursos de identidad digital, armado de computadoras y soporte técnico.',
+      text: 'Desde 2023 trabajo con Veterinaria DACOR en el desarrollo y mantenimiento de su sitio y su sistema de gestión de contenidos en Sanity, además de preparar recursos de identidad digital, armar computadoras y brindar soporte técnico.',
       responsibilities: [
-        'Desarrollar y mantener el sitio del comercio, incluido su catálogo, la información de servicios y las opciones de contacto.',
+        'Participar en el desarrollo y mantenimiento del sitio en Astro y su sistema de gestión de contenidos en Sanity, con catálogo, servicios y opciones de contacto.',
         'Reconstruir el logo existente a partir de un PNG para obtener recursos vectoriales y de producción destinados a usos digitales y físicos.',
         'Armar computadoras y brindar soporte continuo para sus sistemas informáticos y necesidades de programación.',
       ],

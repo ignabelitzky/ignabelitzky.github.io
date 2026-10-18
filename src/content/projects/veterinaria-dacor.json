@@ -6,31 +6,33 @@
   "featured": false,
   "treatment": "neutral",
   "website": "https://www.veterinariadacor.com/",
-  "technologies": ["HTML", "CSS", "JavaScript", "GitHub Pages"],
+  "technologies": ["Astro", "TypeScript", "Tailwind CSS", "Sanity", "Cloudflare Pages"],
   "translations": {
     "en": {
-      "summary": "A website for a veterinary clinic and pet shop, combining a searchable product catalog, service information, and direct contact paths.",
-      "context": "Veterinaria DACOR is a veterinary clinic and pet shop in Córdoba, Argentina. I developed and maintain its website as part of an ongoing working relationship that began in 2023. The site gives visitors a place to browse products, consult services, and contact the appropriate area of the business.",
+      "summary": "An SSR website with public catalogs for pet-shop products, food, and veterinary services, managed through Sanity Studio.",
+      "context": "Veterinaria DACOR is a veterinary clinic and pet shop in Córdoba, Argentina. I develop and maintain its current website and content-management solution, which supports public browsing and editorial updates without rebuilding the site.",
       "features": [
-        "Browse products with search, category and subcategory filters, sorting, and availability filtering.",
-        "View product variants, prices, and images with client-side pagination.",
-        "Consult service information and business contact details.",
-        "Choose a contact path for veterinary consultations or pet-shop questions."
+        "Browse the Pet Shop catalog with search, filters, sorting, and pagination.",
+        "Explore a separate dog and cat food catalog with filters for brands, life stages, formats, and needs.",
+        "View product and service details, including published presentations, prices, and availability.",
+        "Find featured products and services, business information, and guidance for coordinating orders.",
+        "Prepare WhatsApp messages for veterinary or Pet Shop inquiries."
       ],
-      "engineeringFocus": "The current site uses HTML, CSS, and JavaScript and is hosted on GitHub Pages. JavaScript loads catalog data from a spreadsheet-backed feed, normalizes product variants, and applies filters before rendering each page of results. Separate scripts handle service content and contact interactions.",
-      "role": "I developed and maintain the website and its catalog and contact interactions. I also reconstructed the business’s existing logo from a PNG into vector and production assets for digital and physical use, preserving the supplied design."
+      "engineeringFocus": "The site uses Astro with server-side rendering on Cloudflare Pages, served through a Worker. It reads published content from Sanity at runtime, with an instance cache of up to 10 seconds. Sanity Studio manages the catalog, product variants, prices, availability, services, schedules, images, and business information across separate staging and production datasets. Editorial changes publish without rebuilding or deploying the site; GitHub Actions validates and deploys code changes.",
+      "role": "I contribute to the development, implementation, administration, and maintenance of the website and its Sanity content-management setup. My work includes the public catalog and service experience, the administrative tools, and ongoing technical support."
     },
     "es": {
-      "summary": "Un sitio para una veterinaria y pet shop, con catálogo de productos con búsqueda, información de servicios y opciones directas de contacto.",
-      "context": "Veterinaria DACOR es una veterinaria y pet shop de Córdoba, Argentina. Desarrollé y mantengo su sitio como parte de una relación de trabajo que comenzó en 2023 y continúa. El sitio permite recorrer productos, consultar servicios y contactar al área correspondiente del comercio.",
+      "summary": "Un sitio con renderizado del lado del servidor y catálogos públicos de Pet Shop, alimentos y servicios veterinarios, gestionados desde Sanity Studio.",
+      "context": "Veterinaria DACOR es una veterinaria y pet shop de Córdoba, Argentina. Desarrollo y mantengo su sitio actual y la solución de gestión de contenidos, que permite recorrer la oferta y publicar actualizaciones editoriales sin reconstruir el sitio.",
       "features": [
-        "Recorrer productos con búsqueda, filtros por categoría y subcategoría, ordenamiento y filtro de disponibilidad.",
-        "Consultar variantes, precios e imágenes, con paginación del catálogo en el navegador.",
-        "Consultar información de servicios y datos de contacto del comercio.",
-        "Elegir una vía de contacto para consultas veterinarias o del pet shop."
+        "Recorrer el catálogo de Pet Shop con búsqueda, filtros, ordenamiento y paginación.",
+        "Explorar un catálogo independiente de alimentos para perros y gatos, con filtros por marca, etapa de vida, formato y necesidad.",
+        "Consultar fichas de productos y servicios, con presentaciones, precios y disponibilidad cuando están publicados.",
+        "Encontrar productos y servicios destacados, información comercial e indicaciones para coordinar pedidos.",
+        "Preparar mensajes de WhatsApp para consultas de veterinaria o Pet Shop."
       ],
-      "engineeringFocus": "El sitio actual utiliza HTML, CSS y JavaScript, y está alojado en GitHub Pages. JavaScript carga el catálogo desde una fuente vinculada con una planilla, normaliza las variantes de los productos y aplica los filtros antes de mostrar cada página de resultados. Otros scripts resuelven los servicios y las interacciones de contacto.",
-      "role": "Desarrollé y mantengo el sitio y sus interacciones de catálogo y contacto. También reconstruí el logo existente a partir de un PNG para obtener recursos vectoriales y de producción destinados a usos digitales y físicos, conservando el diseño suministrado."
+      "engineeringFocus": "El sitio utiliza Astro con renderizado del lado del servidor en Cloudflare Pages y un Worker. Lee en tiempo de ejecución el contenido publicado en Sanity, con caché por instancia de hasta 10 segundos. Sanity Studio gestiona el catálogo, las variantes, los precios, la disponibilidad, los servicios, los horarios, las imágenes y la información comercial, con datasets separados para staging y producción. Las actualizaciones editoriales se publican sin reconstruir ni desplegar el sitio; GitHub Actions valida y despliega los cambios de código.",
+      "role": "Participo en el desarrollo, la implementación, la administración y el mantenimiento del sitio y su sistema de gestión de contenidos en Sanity. Mi trabajo incluye la experiencia pública de catálogos y servicios, las herramientas administrativas y el soporte técnico continuo."
     }
   }
 }
