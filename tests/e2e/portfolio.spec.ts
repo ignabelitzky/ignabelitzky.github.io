@@ -183,6 +183,28 @@ test('Back to top is localized, accessible and available on supported routes', a
   }
 });
 
+test('Back to top clears the footer on desktop and keeps its mobile position', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('ib-analytics-consent-v1', 'rejected'));
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('/');
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    const button = page.locator('[data-scroll-to-top]');
+    await expect(button).toBeVisible();
+    const buttonBox = await button.boundingBox();
+    const footerBox = await page.locator('footer').boundingBox();
+    expect(buttonBox).not.toBeNull();
+    expect(footerBox).not.toBeNull();
+    if (width >= 768) {
+      expect(buttonBox!.x + buttonBox!.width).toBeCloseTo(width - 16, 0);
+      expect(buttonBox!.y + buttonBox!.height).toBeLessThanOrEqual(footerBox!.y - 23);
+    } else {
+      expect(buttonBox!.x + buttonBox!.width).toBeCloseTo(width - 24, 0);
+      expect(buttonBox!.y + buttonBox!.height).toBeCloseTo(800 - 24, 0);
+    }
+  }
+});
+
 test('Back to top respects the cookie panel, themes and reduced motion', async ({ page }) => {
   await page.goto('/');
   const button = page.locator('[data-scroll-to-top]');
