@@ -1184,7 +1184,7 @@ figure {
 .scroll-to-top {
   position: fixed;
   z-index: 45;
-  right: max(24px, calc((100vw - var(--max)) / 2));
+  right: max(24px, calc((100vw - var(--max)) / 2 - 80px));
   bottom: calc(24px + env(safe-area-inset-bottom));
   display: inline-flex;
   align-items: center;
