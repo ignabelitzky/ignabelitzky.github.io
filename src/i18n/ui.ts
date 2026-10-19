@@ -5,6 +5,7 @@ interface Copy {
   titles: Record<CoreRoute, string>;
   descriptions: Record<CoreRoute, string>;
   skip: string;
+  scrollToTop: string;
   mainNav: string;
   mobileNav: string;
   menu: string;
@@ -95,6 +96,7 @@ export const ui = {
       writing: 'Technical notes by Ignacio Belitzky. No articles are currently published.',
     },
     skip: 'Skip to content',
+    scrollToTop: 'Back to top',
     mainNav: 'Main navigation',
     mobileNav: 'Mobile navigation',
     menu: 'Menu',
@@ -201,6 +203,7 @@ export const ui = {
       writing: 'Notas técnicas de Ignacio Belitzky. Por el momento no hay artículos publicados.',
     },
     skip: 'Saltar al contenido',
+    scrollToTop: 'Volver arriba',
     mainNav: 'Navegación principal',
     mobileNav: 'Navegación móvil',
     menu: 'Menú',

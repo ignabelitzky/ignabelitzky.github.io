@@ -156,6 +156,89 @@ test('Cookie consent: first visit, reject persistence, reopen, accept and revoke
   expect(await page.evaluate(() => localStorage.getItem('ib-theme'))).toBeNull();
 });
 
+test('Back to top is localized, accessible and available on supported routes', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.addInitScript(() => localStorage.setItem('ib-analytics-consent-v1', 'rejected'));
+  for (const locale of ['en', 'es'] as const) {
+    const project = projects[0]!;
+    const paths = [
+      routePath(locale, 'home'),
+      routePath(locale, 'projects'),
+      routePath(locale, 'about'),
+      detailPath(locale, 'projects', project.slug),
+    ];
+    for (const path of paths) {
+      await page.goto(path);
+      const button = page.locator('[data-scroll-to-top]');
+      await expect(button).toBeHidden();
+      await expect(button).toHaveAttribute('title', ui[locale].scrollToTop);
+      await page.evaluate(() => window.scrollTo(0, 500));
+      await expect(button).toBeVisible();
+      await button.focus();
+      await expect(button).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+      await expect(button).toBeHidden();
+    }
+  }
+});
+
+test('Back to top respects the cookie panel, themes and reduced motion', async ({ page }) => {
+  await page.goto('/');
+  const button = page.locator('[data-scroll-to-top]');
+  await expect(button).toBeHidden();
+  const consent = page.locator('[data-consent]');
+  if (await consent.count()) {
+    await expect(consent).toBeVisible();
+    await consent.getByRole('button', { name: ui.en.cookies.reject }).click();
+  }
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await expect(button).toBeVisible();
+
+  // Exercise the overlay state even when this build has no Analytics measurement ID.
+  await page.locator('[data-consent]').evaluate((panel) => {
+    if (panel instanceof HTMLElement) panel.hidden = false;
+    else {
+      const overlay = document.createElement('aside');
+      overlay.dataset.consent = '';
+      overlay.className = 'consent';
+      document.body.append(overlay);
+    }
+  });
+  await expect(button).toBeHidden();
+  await page.locator('[data-consent]').evaluate((panel) => {
+    if (panel instanceof HTMLElement) panel.hidden = true;
+  });
+  await expect(button).toBeVisible();
+
+  for (const theme of ['light', 'dark'] as const) {
+    await page.locator('html').evaluate((element, value) => {
+      element.setAttribute('data-theme', value);
+    }, theme);
+    await expect(button).toHaveCSS(
+      'background-color',
+      theme === 'dark' ? 'rgb(16, 44, 32)' : 'rgb(255, 255, 255)',
+    );
+  }
+
+  await page.evaluate(() => {
+    const testWindow = window as Window & { __scrollToBehavior?: ScrollBehavior };
+    testWindow.__scrollToBehavior = undefined;
+    const original = window.scrollTo.bind(window);
+    window.scrollTo = ((options: ScrollToOptions) => {
+      testWindow.__scrollToBehavior = options.behavior;
+      original(options);
+    }) as typeof window.scrollTo;
+  });
+  await button.click();
+  expect(
+    await page.evaluate(
+      () => (window as Window & { __scrollToBehavior?: ScrollBehavior }).__scrollToBehavior,
+    ),
+  ).toBe('instant');
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+});
+
 test('Cookie consent respects locale, theme, mobile layout and keyboard focus', async ({
   page,
 }) => {

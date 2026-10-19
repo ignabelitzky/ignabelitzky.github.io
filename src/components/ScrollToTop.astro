@@ -1,0 +1,59 @@
+---
+import type { Locale } from '../i18n/routes.ts';
+import { ui } from '../i18n/ui.ts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const label = ui[locale].scrollToTop;
+---
+
+<button
+  class="scroll-to-top"
+  type="button"
+  aria-label={label}
+  title={label}
+  data-scroll-to-top
+  hidden
+>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+    <path d="M12 19V5m0 0L5.5 11.5M12 5l6.5 6.5" />
+  </svg>
+</button>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-scroll-to-top]');
+
+  if (button) {
+    const consentPanel = document.querySelector<HTMLElement>('.consent');
+    let consentIsVisible = consentPanel ? !consentPanel.hidden : false;
+
+    const updateVisibility = () => {
+      button.hidden = window.scrollY <= 380 || consentIsVisible;
+    };
+
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('pageshow', updateVisibility);
+
+    if (consentPanel) {
+      const observer = new MutationObserver(() => {
+        consentIsVisible = !consentPanel.hidden;
+        updateVisibility();
+      });
+      observer.observe(consentPanel, { attributes: true, attributeFilter: ['hidden'] });
+    }
+
+    button.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'instant'
+          : 'smooth',
+      });
+    });
+
+    updateVisibility();
+  }
+</script>
