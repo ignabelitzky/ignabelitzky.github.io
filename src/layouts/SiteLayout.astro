@@ -9,6 +9,7 @@ import { ui } from '../i18n/ui.ts';
 import { routePath, otherLocale, type Locale, type RouteKey } from '../i18n/routes.ts';
 import '../styles/global.css';
 import CookieConsent from '../components/CookieConsent.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
 interface Props {
   locale: Locale;
   route: RouteKey;
@@ -121,6 +122,7 @@ const imageUrl = new URL(social.src, origin);
       <slot />
     </main>
     <Footer locale={locale} />
+    {['home', 'projects', 'about', 'project'].includes(route) && <ScrollToTop locale={locale} />}
     {hasAnalyticsId && (
       <CookieConsent locale={locale} measurementId={shouldOfferAnalytics ? gaMeasurementId : ''} />
     )}
