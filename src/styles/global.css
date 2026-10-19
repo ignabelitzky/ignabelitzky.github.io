@@ -1184,8 +1184,8 @@ figure {
 .scroll-to-top {
   position: fixed;
   z-index: 45;
-  right: max(24px, calc((100vw - var(--max)) / 2 - 80px));
-  bottom: calc(24px + env(safe-area-inset-bottom));
+  right: 16px;
+  bottom: calc(24px + env(safe-area-inset-bottom) + var(--footer-clearance, 0px));
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1220,6 +1220,12 @@ figure {
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+@media (max-width: 767px) {
+  .scroll-to-top {
+    right: max(24px, calc((100vw - var(--max)) / 2));
+    bottom: calc(24px + env(safe-area-inset-bottom));
+  }
 }
 .consent[hidden] {
   display: none;

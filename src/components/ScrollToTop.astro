@@ -28,13 +28,22 @@ const label = ui[locale].scrollToTop;
 
   if (button) {
     const consentPanel = document.querySelector<HTMLElement>('.consent');
+    const footer = document.querySelector<HTMLElement>('footer');
+    const desktop = window.matchMedia('(min-width: 768px)');
     let consentIsVisible = consentPanel ? !consentPanel.hidden : false;
 
     const updateVisibility = () => {
       button.hidden = window.scrollY <= 380 || consentIsVisible;
+      if (desktop.matches && footer) {
+        const footerOverlap = Math.max(0, window.innerHeight - footer.getBoundingClientRect().top);
+        button.style.setProperty('--footer-clearance', `${footerOverlap}px`);
+      } else {
+        button.style.removeProperty('--footer-clearance');
+      }
     };
 
     window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('resize', updateVisibility);
     window.addEventListener('pageshow', updateVisibility);
 
     if (consentPanel) {
