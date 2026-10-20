@@ -65,6 +65,29 @@ for lang in ('en','es'):
         check(relative+' canonical/locales',p.lang==lang and len(p.links('canonical'))==1 and p.links('canonical')[0]['href']==canonical and {a.get('hreflang'):a.get('href') for a in p.links('alternate')}=={'en':ORIGIN+'/'+(path+'/' if path else ''),'es':ORIGIN+'/es/'+(path+'/' if path else ''),'x-default':ORIGIN+'/'+(path+'/' if path else '')})
         check(relative+' metadata',bool(p.meta('name','description')) and p.meta('name','robots')==ROBOTS_META and p.meta('property','og:image:width')=='1200' and p.meta('property','og:image:height')=='630' and bool(p.meta('name','twitter:image')))
 
+# SEO regressions are checked against emitted HTML, not just source templates.
+for file,p in pages.items():
+    relative=str(file.relative_to(DIST.resolve()))
+    head=file.read_text().split('</head>',1)[0]
+    raw=re.findall(r'<script\b[^>]*type=[\"\']application/ld\+json[\"\'][^>]*>(.*?)</script>',head,re.S)
+    if '404' in relative:
+        check(relative+' no structured identity on error pages',not raw)
+        continue
+    try:
+        schema=json.loads(raw[0]) if len(raw)==1 else {}
+        graph=schema.get('@graph',[])
+        canonical=p.links('canonical')[0]['href']
+        web=next((node for node in graph if node.get('@id')==canonical+'#webpage'),{})
+        person=next((node for node in graph if node.get('@type')=='Person'),{})
+        check(relative+' valid linked page and person schema',schema.get('@context')=='https://schema.org' and web.get('url')==canonical and web.get('inLanguage')==p.lang and person.get('name')=='Ignacio Belitzky' and person.get('jobTitle')=='Software Developer' and len({node.get('@id') for node in graph})==len(graph))
+        check(relative+' coherent social metadata',p.meta('property','og:url')==canonical and p.meta('property','og:image')==p.meta('name','twitter:image') and p.meta('property','og:image:type')=='image/png' and p.meta('name','twitter:image:alt')=='Ignacio Belitzky — Software Developer')
+        target=resolve(p.meta('property','og:image'),file)[0]
+        import struct
+        data=target.read_bytes()
+        check(relative+' actual social PNG is 1200x630',data[:8]==b'\x89PNG\r\n\x1a\n' and struct.unpack('>II',data[16:24])==(1200,630))
+    except (ValueError,KeyError,IndexError,TypeError,OSError) as error:
+        check(relative+' parseable SEO metadata',False,str(error))
+
 errors=[];refs=0
 for file,p in pages.items():
     relative=str(file.relative_to(DIST.resolve()));text=file.read_text()
