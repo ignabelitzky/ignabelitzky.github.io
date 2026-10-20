@@ -87,6 +87,12 @@ const publicFiles = [...sourceFiles, ...files(resolve(root, 'public'))].filter((
   /\.(ts|astro|json|css|js|mjs|svg|txt)$/.test(path),
 );
 const combined = publicFiles.map((path) => readFileSync(path, 'utf8')).join('\n');
+// This one raw-text script receives only JSON with '<' escaped by the tested serializer.
+// Keep rejecting every other raw HTML sink, including any new set:html expression.
+const injectionCheckedSource = combined.replaceAll(
+  'set:html={serializeStructuredData(schema)}',
+  '',
+);
 const checks = [
   {
     name: 'Static Astro, approved custom-domain root origin, no SSR adapter or repo base',
@@ -124,7 +130,9 @@ const checks = [
   },
   {
     name: 'No unsafe string-to-HTML/eval injection in portfolio source',
-    pass: !/(set:html|\.innerHTML\s*=|\beval\s*\(|\bnew Function\s*\()/.test(combined),
+    pass: !/(set:html|\.innerHTML\s*=|\beval\s*\(|\bnew Function\s*\()/.test(
+      injectionCheckedSource,
+    ),
   },
   {
     name: 'No known credential patterns in portfolio source/public assets',
