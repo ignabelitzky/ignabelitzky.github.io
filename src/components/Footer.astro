@@ -11,7 +11,8 @@ const { locale } = Astro.props;
 <footer>
   <div class="wrap footer">
     <span>
-      {site.name} · {site.location}
+      © <span data-copyright-year>{new Date().getFullYear()}</span> {site.name}
+      · {site.location}
     </span>
     <div class="footer-links">
       <a href={site.github}>GitHub</a>
@@ -23,3 +24,21 @@ const { locale } = Astro.props;
     </div>
   </div>
 </footer>
+
+<!-- Refresh cached static HTML without requests, timers or a yearly rebuild. -->
+<script is:inline>
+  (() => {
+    const updateYear = () => {
+      const year = String(new Date().getFullYear());
+      document.querySelectorAll('[data-copyright-year]').forEach((element) => {
+        element.textContent = year;
+      });
+    };
+
+    updateYear();
+    window.addEventListener('pageshow', updateYear);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) updateYear();
+    });
+  })();
+</script>
