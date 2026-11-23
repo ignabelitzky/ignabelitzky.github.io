@@ -89,9 +89,7 @@ test('CI and release enforce one lockfile, runtime and full audit path', () => {
     assert.equal(setup.with['node-version'], '24.19.0');
     assert.equal(setup.with['cache-dependency-path'], 'package-lock.json');
     assert.ok(job.steps.some((s) => s.run === 'npm ci --no-fund'));
-    assert.ok(
-      job.steps.some((s) => s.run === 'npx --no-install playwright install --with-deps chromium'),
-    );
+    assert.ok(job.steps.some((s) => s.run === 'npx --no-install playwright install chromium'));
   }
   const common = readFileSync(new URL('../scripts/verify-ci.sh', import.meta.url), 'utf8');
   for (const command of [
