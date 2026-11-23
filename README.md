@@ -10,7 +10,7 @@ Bilingual portfolio for Ignacio Belitzky, Software Developer from Córdoba, Arge
 
 ## Technology stack
 
-Astro **7.3.8**, TypeScript **5.9.3**, Tailwind CSS **4.3.3**, ESLint, Prettier, Node tests, Playwright **1.64.0**, axe and Lighthouse **13.5.0**. GitHub Actions runs validation; the official Astro and Pages actions publish the tested `dist/` artifact. There is **no Sanity CMS**.
+Astro **7.4.13**, TypeScript **5.9.3**, Tailwind CSS **4.3.3**, ESLint, Prettier, Node tests, Playwright **1.64.0**, axe and Lighthouse **13.5.0**. GitHub Actions runs validation; the official Astro and Pages actions publish the tested `dist/` artifact. There is **no Sanity CMS**.
 
 ## Architecture
 
