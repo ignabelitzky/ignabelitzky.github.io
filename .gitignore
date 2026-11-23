@@ -10,3 +10,4 @@ brief/
 evidence/phase5/browser/test-results/
 evidence/phase5/browser/html-report/
 evidence/phase5/lighthouse/.chrome-profile/
+.aider*
