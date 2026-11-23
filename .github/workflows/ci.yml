@@ -37,8 +37,9 @@ jobs:
         run: npm install --global npm@11.9.0
       - name: Install locked dependencies
         run: npm ci --no-fund
-      - name: Install browser and Linux dependencies
-        run: npx --no-install playwright install --with-deps chromium
+      # The hosted Ubuntu image already includes Chromium system libraries.
+      - name: Install pinned Chromium
+        run: npx --no-install playwright install chromium
       - name: Validate the exact production output
         run: bash scripts/verify-ci.sh
       - name: Keep diagnostic evidence

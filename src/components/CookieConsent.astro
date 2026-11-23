@@ -10,6 +10,7 @@ const copy = ui[locale].cookies;
 ---
 
 <aside
+  id="analytics-preferences"
   class="consent"
   data-consent
   hidden
@@ -39,15 +40,39 @@ const copy = ui[locale].cookies;
         {copy.reject}
       </button>
     </div>
+    <button type="button" class="consent-close" data-consent-close aria-label={copy.close} hidden>
+      <svg
+        aria-hidden="true"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="m6 6 12 12M18 6 6 18" />
+      </svg>
+    </button>
   </div>
 </aside>
 
 <script>
-  import { analyticsConsentKey, readConsent, writeConsent } from '../lib/analytics-consent';
+  import {
+    analyticsConsentKey,
+    normalizeConsent,
+    readConsent,
+    writeConsent,
+    type AnalyticsConsent,
+  } from '../lib/analytics-consent';
 
   const panel = document.querySelector<HTMLElement>('[data-consent]');
-  if (panel) {
-    const consentPanel: HTMLElement = panel;
+  const settings = document.querySelector<HTMLButtonElement>('[data-cookie-settings]');
+  const close = panel?.querySelector<HTMLButtonElement>('[data-consent-close]');
+  if (panel && settings && close) {
+    const consentPanel = panel;
+    const settingsButton = settings;
+    const closeButton = close;
+    const main = document.querySelector<HTMLElement>('#main');
     const analyticsWindow = window as unknown as Window & {
       dataLayer?: unknown[];
       gtag?: (...args: unknown[]) => void;
@@ -55,8 +80,8 @@ const copy = ui[locale].cookies;
     };
     const measurementId = consentPanel.dataset.measurementId ?? '';
     let initialized = false;
-    let currentChoice: 'accepted' | 'rejected' | null = null;
-    let openingControl: HTMLElement | null = null;
+    let currentChoice: AnalyticsConsent = null;
+    let openedFromSettings = false;
     let reloadTimer: number | undefined;
 
     function removeAnalyticsCookies() {
@@ -118,21 +143,30 @@ const copy = ui[locale].cookies;
           );
         });
       consentPanel.hidden = false;
+      closeButton.hidden = !openedFromSettings;
+      settingsButton.setAttribute('aria-expanded', 'true');
       if (focus) consentPanel.querySelector<HTMLButtonElement>('[data-consent-choice]')?.focus();
     }
 
-    function hide(restoreFocus = false) {
+    function hide() {
+      const focusInPanel = consentPanel.contains(document.activeElement);
+      const focusTarget = openedFromSettings ? settingsButton : main;
+      openedFromSettings = false;
       consentPanel.hidden = true;
-      if (restoreFocus) openingControl?.focus();
+      settingsButton.setAttribute('aria-expanded', 'false');
+      if (focusInPanel) focusTarget?.focus();
     }
 
-    function synchronize(value: unknown) {
-      currentChoice = value === 'accepted' || value === 'rejected' ? value : null;
-      if (currentChoice === 'accepted') {
-        if (analyticsWindow[`ga-disable-${measurementId}`]) location.reload();
-        else startAnalytics();
-      } else stopAnalytics(true);
-      if (!currentChoice) show();
+    function synchronize(value: AnalyticsConsent) {
+      currentChoice = value;
+      if (currentChoice === 'accepted' && measurementId) {
+        if (initialized && analyticsWindow[`ga-disable-${measurementId}`]) location.reload();
+        else {
+          analyticsWindow[`ga-disable-${measurementId}`] = false;
+          startAnalytics();
+        }
+      } else if (currentChoice !== 'accepted') stopAnalytics(true);
+      if (openedFromSettings || (!currentChoice && measurementId)) show();
       else hide();
     }
 
@@ -148,7 +182,8 @@ const copy = ui[locale].cookies;
     const current = consent();
     currentChoice = current;
     if (current === 'accepted') startAnalytics();
-    else if (!current) show();
+    else if (!current && measurementId) show();
+    settingsButton.hidden = false;
 
     consentPanel.querySelectorAll<HTMLButtonElement>('[data-consent-choice]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -165,16 +200,20 @@ const copy = ui[locale].cookies;
             startAnalytics();
           }
         } else stopAnalytics(saved);
-        hide(true);
+        hide();
       });
     });
 
-    document.querySelectorAll<HTMLAnchorElement>('[data-cookie-settings]').forEach((link) => {
-      link.addEventListener('click', (event) => {
+    settingsButton.addEventListener('click', () => {
+      openedFromSettings = true;
+      show(true);
+    });
+    closeButton.addEventListener('click', hide);
+    consentPanel.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && openedFromSettings) {
         event.preventDefault();
-        openingControl = link;
-        show(true);
-      });
+        hide();
+      }
     });
 
     window.addEventListener('pageshow', (event) => {
@@ -182,7 +221,12 @@ const copy = ui[locale].cookies;
     });
 
     window.addEventListener('storage', (event) => {
-      if (event.key === analyticsConsentKey || event.key === null) synchronize(event.newValue);
+      if (
+        event.storageArea === safeStorage &&
+        (event.key === analyticsConsentKey || event.key === null)
+      ) {
+        synchronize(normalizeConsent(event.newValue));
+      }
     });
   }
 </script>

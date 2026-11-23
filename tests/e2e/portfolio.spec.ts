@@ -133,7 +133,7 @@ test('Cookie consent: first visit, reject persistence, reopen, accept and revoke
   await page.goto('/');
   expect(await page.evaluate(() => localStorage.getItem('ib-analytics-consent-v1'))).toBeNull();
   await expect(page.locator('[data-consent]')).toBeVisible();
-  await expect(page.getByRole('link', { name: ui.en.cookies.settings })).toBeVisible();
+  await expect(page.getByRole('button', { name: ui.en.cookies.settings })).toBeVisible();
   expect(analyticsRequests).toEqual([]);
   await page.getByRole('button', { name: ui.en.cookies.reject }).click();
   await expect(page.locator('[data-consent]')).toBeHidden();
@@ -141,13 +141,13 @@ test('Cookie consent: first visit, reject persistence, reopen, accept and revoke
   await expect(page.locator('[data-consent]')).toBeHidden();
   await page.goto('/es/about/');
   await expect(page.locator('[data-consent]')).toBeHidden();
-  await page.getByRole('link', { name: ui.es.cookies.settings }).click();
+  await page.getByRole('button', { name: ui.es.cookies.settings }).click();
   await expect(page.locator('[data-consent]')).toBeVisible();
   await page.getByRole('button', { name: ui.es.cookies.accept }).click();
   await expect.poll(() => analyticsRequests.length).toBe(1);
   await page.reload();
   await expect.poll(() => analyticsRequests.length).toBe(2);
-  await page.getByRole('link', { name: ui.es.cookies.settings }).click();
+  await page.getByRole('button', { name: ui.es.cookies.settings }).click();
   await page.getByRole('button', { name: ui.es.cookies.reject }).click();
   await expect(page).toHaveURL(/about/);
   await expect(page.locator('[data-consent]')).toBeHidden();
@@ -165,6 +165,7 @@ test('Back to top is localized, accessible and available on supported routes', a
       routePath(locale, 'home'),
       routePath(locale, 'projects'),
       routePath(locale, 'about'),
+      routePath(locale, 'gallery'),
       detailPath(locale, 'projects', project.slug),
     ];
     for (const path of paths) {
@@ -178,12 +179,13 @@ test('Back to top is localized, accessible and available on supported routes', a
       await expect(button).toBeFocused();
       await page.keyboard.press('Enter');
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+      await expect(page.locator('header .brand')).toBeFocused();
       await expect(button).toBeHidden();
     }
   }
 });
 
-test('Back to top clears the footer on desktop and keeps its mobile position', async ({ page }) => {
+test('Back to top clears the footer on desktop and mobile', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('ib-analytics-consent-v1', 'rejected'));
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 800 });
@@ -195,13 +197,8 @@ test('Back to top clears the footer on desktop and keeps its mobile position', a
     const footerBox = await page.locator('footer').boundingBox();
     expect(buttonBox).not.toBeNull();
     expect(footerBox).not.toBeNull();
-    if (width >= 768) {
-      expect(buttonBox!.x + buttonBox!.width).toBeCloseTo(width - 16, 0);
-      expect(buttonBox!.y + buttonBox!.height).toBeLessThanOrEqual(footerBox!.y - 23);
-    } else {
-      expect(buttonBox!.x + buttonBox!.width).toBeCloseTo(width - 24, 0);
-      expect(buttonBox!.y + buttonBox!.height).toBeCloseTo(800 - 24, 0);
-    }
+    expect(buttonBox!.x + buttonBox!.width).toBeCloseTo(width - (width >= 768 ? 16 : 24), 0);
+    expect(buttonBox!.y + buttonBox!.height).toBeLessThanOrEqual(footerBox!.y - 23);
   }
 });
 

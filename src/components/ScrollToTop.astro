@@ -26,20 +26,19 @@ const label = ui[locale].scrollToTop;
 <script>
   const button = document.querySelector<HTMLButtonElement>('[data-scroll-to-top]');
 
-  if (button) {
+  const homeLink = document.querySelector<HTMLAnchorElement>('header .brand');
+
+  if (button && homeLink) {
     const consentPanel = document.querySelector<HTMLElement>('.consent');
     const footer = document.querySelector<HTMLElement>('footer');
-    const desktop = window.matchMedia('(min-width: 768px)');
     let consentIsVisible = consentPanel ? !consentPanel.hidden : false;
 
     const updateVisibility = () => {
+      const footerOverlap = footer
+        ? Math.max(0, window.innerHeight - footer.getBoundingClientRect().top)
+        : 0;
+      button.style.setProperty('--footer-clearance', `${footerOverlap}px`);
       button.hidden = window.scrollY <= 380 || consentIsVisible;
-      if (desktop.matches && footer) {
-        const footerOverlap = Math.max(0, window.innerHeight - footer.getBoundingClientRect().top);
-        button.style.setProperty('--footer-clearance', `${footerOverlap}px`);
-      } else {
-        button.style.removeProperty('--footer-clearance');
-      }
     };
 
     window.addEventListener('scroll', updateVisibility, { passive: true });
@@ -55,6 +54,7 @@ const label = ui[locale].scrollToTop;
     }
 
     button.addEventListener('click', () => {
+      homeLink.focus({ preventScroll: true });
       window.scrollTo({
         top: 0,
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches

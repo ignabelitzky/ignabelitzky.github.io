@@ -134,8 +134,8 @@ const schema = structuredData({
     <main id="main" tabindex="-1" class="wrap">
       <slot />
     </main>
-    <Footer locale={locale} />
-    {['home', 'projects', 'about', 'project'].includes(route) && <ScrollToTop locale={locale} />}
+    <Footer locale={locale} hasPrivacySettings={hasAnalyticsId} />
+    <ScrollToTop locale={locale} />
     {hasAnalyticsId && (
       <CookieConsent locale={locale} measurementId={shouldOfferAnalytics ? gaMeasurementId : ''} />
     )}

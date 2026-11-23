@@ -125,6 +125,29 @@ test('storage removal in another tab revokes an already running tag', async ({ p
   await expect(page.locator('script[data-analytics]')).toHaveCount(0);
 });
 
+test('a fresh tab picks up consent changes and ignores session storage', async ({
+  page,
+  context,
+}) => {
+  await context.route(tracking, (route) => route.fulfill({ body: '' }));
+  await page.goto('/');
+  const other = await context.newPage();
+  await other.goto('/');
+  await page.locator(reject).click();
+  await expect(other.locator(panel)).toBeHidden();
+  await other.evaluate((key) => sessionStorage.setItem(key, 'accepted'), key);
+  await expect(other.locator('script[data-analytics]')).toHaveCount(0);
+
+  const navigations: string[] = [];
+  other.on('framenavigated', (frame) => {
+    if (frame === other.mainFrame()) navigations.push(frame.url());
+  });
+  await page.locator(settings).click();
+  await page.locator(accept).click();
+  await expect(other.locator('script[data-analytics]')).toHaveCount(1);
+  expect(navigations).toEqual([]);
+});
+
 test('real Google library sends exactly one page_view after acceptance, none before or after revocation', async ({
   page,
 }) => {
@@ -161,7 +184,7 @@ test('real Google library sends exactly one page_view after acceptance, none bef
   expect(sent).toHaveLength(count);
 });
 
-test('responsive equal-weight actions and keyboard reopening', async ({ page }) => {
+test('responsive equal-weight actions and keyboard reopening', async ({ page }, testInfo) => {
   await page.goto('/');
   await expect(page.locator(panel)).toBeVisible();
   const actions = await page.locator('[data-consent-choice]').evaluateAll((buttons) =>
@@ -178,10 +201,21 @@ test('responsive equal-weight actions and keyboard reopening', async ({ page }) 
   await page.locator(settings).focus();
   await page.keyboard.press('Enter');
   await expect(page.locator(accept)).toBeFocused();
-  await page.screenshot({
-    path: `evidence/consent-${test.info().project.name}.png`,
-    fullPage: false,
+  await expect(page.locator(settings)).toHaveAttribute('aria-expanded', 'true');
+  await testInfo.attach('privacy-preferences.png', {
+    body: await page.screenshot(),
+    contentType: 'image/png',
   });
+  await page.keyboard.press('Escape');
+  await expect(page.locator(panel)).toBeHidden();
+  await expect(page.locator(settings)).toBeFocused();
+  await expect(page.locator(settings)).toHaveAttribute('aria-expanded', 'false');
+  await page.keyboard.press('Enter');
+  await expect(page.locator(reject)).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('[data-consent-close]').click();
+  await expect(page.locator(settings)).toBeFocused();
+  await expect(page.locator(panel)).toBeHidden();
+  expect(await page.evaluate((key) => localStorage.getItem(key), key)).toBe('rejected');
 });
 
 test('consent text and both actions have readable contrast', async ({ page }) => {

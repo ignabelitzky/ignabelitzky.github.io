@@ -23,6 +23,7 @@ interface Copy {
     accept: string;
     reject: string;
     settings: string;
+    close: string;
   };
   theme: string;
   themes: { system: string; light: string; dark: string };
@@ -171,6 +172,7 @@ export const ui = {
       accept: 'Accept analytics',
       reject: 'Reject analytics',
       settings: 'Privacy preferences',
+      close: 'Close privacy preferences',
     },
   },
   es: {
@@ -278,6 +280,7 @@ export const ui = {
       accept: 'Aceptar analíticas',
       reject: 'Rechazar analíticas',
       settings: 'Preferencias de privacidad',
+      close: 'Cerrar preferencias de privacidad',
     },
   },
 } as const satisfies Record<Locale, Copy>;

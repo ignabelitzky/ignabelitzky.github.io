@@ -4,23 +4,31 @@ import { ui } from '../i18n/ui.ts';
 import { routePath, type Locale } from '../i18n/routes.ts';
 interface Props {
   locale: Locale;
+  hasPrivacySettings: boolean;
 }
-const { locale } = Astro.props;
+const { locale, hasPrivacySettings } = Astro.props;
 ---
 
 <footer>
   <div class="wrap footer">
     <span>
-      © <span data-copyright-year>{new Date().getFullYear()}</span> {site.name}
-      · {site.location}
+      © <span data-copyright-year>{new Date().getFullYear()}</span> {site.name}· {site.location}
     </span>
     <div class="footer-links">
       <a href={site.github}>GitHub</a>
       <a href={site.linkedin}>LinkedIn</a>
       <a href={routePath(locale, 'contact')}>{ui[locale].nav.contact}</a>
-      <a href="/" data-cookie-settings>
-        {ui[locale].cookies.settings}
-      </a>
+      {hasPrivacySettings && (
+        <button
+          type="button"
+          data-cookie-settings
+          aria-controls="analytics-preferences"
+          aria-expanded="false"
+          hidden
+        >
+          {ui[locale].cookies.settings}
+        </button>
+      )}
     </div>
   </div>
 </footer>

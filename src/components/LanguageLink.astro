@@ -21,6 +21,8 @@ const label =
     : ui[locale].languageLabel;
 ---
 
-<a class="lang" href={path} lang={target} hreflang={target} aria-label={label}>
-  <span aria-hidden="true">{target === 'es' ? 'ES' : 'EN'}</span>
+<a class="lang" href={path} hreflang={target} aria-label={label}>
+  <span lang={target} aria-hidden="true">
+    {target === 'es' ? 'ES' : 'EN'}
+  </span>
 </a>

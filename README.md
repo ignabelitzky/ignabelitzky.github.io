@@ -92,7 +92,7 @@ npm run test:e2e
 npm run test:lighthouse
 ```
 
-Alternatively, `npx --no-install playwright install chromium` downloads the pinned browser. Fedora is not an officially supported Linux distribution in [Playwright's requirements](https://playwright.dev/docs/intro#system-requirements); do not use Ubuntu dependency-install commands on Fedora. If the downloaded browser lacks libraries, use Fedora Chromium or reproduce CI on Ubuntu. System Chromium can differ from CI's pinned browser. CI uses `playwright install --with-deps chromium` on Ubuntu 24.04.
+Alternatively, `npx --no-install playwright install chromium` downloads the pinned browser. Fedora is not an officially supported Linux distribution in [Playwright's requirements](https://playwright.dev/docs/intro#system-requirements); do not use Ubuntu dependency-install commands on Fedora. If the downloaded browser lacks libraries, use Fedora Chromium or reproduce CI on Ubuntu. System Chromium can differ from CI's pinned browser. CI downloads pinned Chromium with `playwright install chromium` and uses the system libraries preinstalled on GitHub’s Ubuntu 24.04 runner.
 
 ## CI/CD and deployment
 

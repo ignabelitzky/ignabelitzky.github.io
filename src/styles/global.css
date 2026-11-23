@@ -1176,14 +1176,26 @@ figure {
   padding: 0 0 60px;
   max-width: 750px;
 }
-.footer-links > a {
+.footer-links > :is(a, button) {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
 }
+.footer-links > button {
+  padding: 0;
+  color: var(--accent);
+  background: transparent;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+.footer-links > button:hover {
+  color: var(--accent-hover);
+}
 .scroll-to-top {
   position: fixed;
-  z-index: 45;
+  z-index: 35;
   right: 16px;
   bottom: calc(24px + env(safe-area-inset-bottom) + var(--footer-clearance, 0px));
   display: inline-flex;
@@ -1223,8 +1235,7 @@ figure {
 }
 @media (max-width: 767px) {
   .scroll-to-top {
-    right: max(24px, calc((100vw - var(--max)) / 2));
-    bottom: calc(24px + env(safe-area-inset-bottom));
+    right: 24px;
   }
 }
 .consent[hidden] {
@@ -1247,8 +1258,31 @@ figure {
   align-items: center;
   justify-content: space-between;
   gap: 28px;
+  position: relative;
   max-width: var(--max);
   margin-inline: auto;
+}
+.consent-inner:has(.consent-close:not([hidden])) h2 {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline-end: 52px;
+}
+.consent-close {
+  position: absolute;
+  inset: 0 0 auto auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--control);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.consent-close:hover {
+  background: var(--soft);
 }
 .consent-copy {
   max-width: 720px;
